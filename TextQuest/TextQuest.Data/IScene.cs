@@ -1,0 +1,19 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace TextQuest.Data
+{
+    public interface IScene
+    {
+        Scene GetScene(int id);
+        int GetBackground(int id);
+        string GetDescription(int id);
+        int GetLeftScene(int id);
+        int GetRightScene(int id);
+        int GetUpperScene(int id);
+        int GetDownScene(int id);
+        IEnumerable<SceneObject> GetSceneObjects(int id);
+    }
+}
+

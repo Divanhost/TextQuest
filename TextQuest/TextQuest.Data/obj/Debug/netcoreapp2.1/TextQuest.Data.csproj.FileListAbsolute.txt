@@ -1,0 +1,11 @@
+C:\Users\Student\source\repos\TextQuest\TextQuest.Data\bin\Debug\netcoreapp2.1\TextQuest.Data.deps.json
+C:\Users\Student\source\repos\TextQuest\TextQuest.Data\bin\Debug\netcoreapp2.1\TextQuest.Data.dll
+C:\Users\Student\source\repos\TextQuest\TextQuest.Data\obj\Debug\netcoreapp2.1\TextQuest.Data.csprojAssemblyReference.cache
+C:\Users\Student\source\repos\TextQuest\TextQuest.Data\obj\Debug\netcoreapp2.1\TextQuest.Data.csproj.CoreCompileInputs.cache
+C:\Users\Student\source\repos\TextQuest\TextQuest.Data\obj\Debug\netcoreapp2.1\TextQuest.Data.AssemblyInfoInputs.cache
+C:\Users\Student\source\repos\TextQuest\TextQuest.Data\obj\Debug\netcoreapp2.1\TextQuest.Data.AssemblyInfo.cs
+C:\Users\Student\source\repos\TextQuest\TextQuest.Data\bin\Debug\netcoreapp2.1\TextQuest.Data.runtimeconfig.json
+C:\Users\Student\source\repos\TextQuest\TextQuest.Data\bin\Debug\netcoreapp2.1\TextQuest.Data.runtimeconfig.dev.json
+C:\Users\Student\source\repos\TextQuest\TextQuest.Data\bin\Debug\netcoreapp2.1\TextQuest.Data.pdb
+C:\Users\Student\source\repos\TextQuest\TextQuest.Data\obj\Debug\netcoreapp2.1\TextQuest.Data.dll
+C:\Users\Student\source\repos\TextQuest\TextQuest.Data\obj\Debug\netcoreapp2.1\TextQuest.Data.pdb
