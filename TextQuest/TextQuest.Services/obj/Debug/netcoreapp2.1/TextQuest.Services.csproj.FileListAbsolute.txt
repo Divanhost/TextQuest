@@ -1,0 +1,12 @@
+C:\Users\Student\source\repos\TextQuest\TextQuest.Services\bin\Debug\netcoreapp2.1\TextQuest.Services.deps.json
+C:\Users\Student\source\repos\TextQuest\TextQuest.Services\bin\Debug\netcoreapp2.1\TextQuest.Services.dll
+C:\Users\Student\source\repos\TextQuest\TextQuest.Services\bin\Debug\netcoreapp2.1\TextQuest.Services.pdb
+C:\Users\Student\source\repos\TextQuest\TextQuest.Services\bin\Debug\netcoreapp2.1\TextQuest.Data.dll
+C:\Users\Student\source\repos\TextQuest\TextQuest.Services\bin\Debug\netcoreapp2.1\TextQuest.Data.pdb
+C:\Users\Student\source\repos\TextQuest\TextQuest.Services\obj\Debug\netcoreapp2.1\TextQuest.Services.csprojAssemblyReference.cache
+C:\Users\Student\source\repos\TextQuest\TextQuest.Services\obj\Debug\netcoreapp2.1\TextQuest.Services.csproj.CoreCompileInputs.cache
+C:\Users\Student\source\repos\TextQuest\TextQuest.Services\obj\Debug\netcoreapp2.1\TextQuest.Services.AssemblyInfoInputs.cache
+C:\Users\Student\source\repos\TextQuest\TextQuest.Services\obj\Debug\netcoreapp2.1\TextQuest.Services.AssemblyInfo.cs
+C:\Users\Student\source\repos\TextQuest\TextQuest.Services\obj\Debug\netcoreapp2.1\TextQuest.Services.csproj.CopyComplete
+C:\Users\Student\source\repos\TextQuest\TextQuest.Services\obj\Debug\netcoreapp2.1\TextQuest.Services.dll
+C:\Users\Student\source\repos\TextQuest\TextQuest.Services\obj\Debug\netcoreapp2.1\TextQuest.Services.pdb

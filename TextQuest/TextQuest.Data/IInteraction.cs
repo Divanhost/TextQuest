@@ -8,8 +8,8 @@ namespace TextQuest.Data
     {
         Interaction GetInteraction(int id);
         Interaction GetNextInteraction(int id);
-        SceneObject GetInteractedSceneObject { get; set; }
-        InventoryObject GetInteractedInventoryObject { get; set; }
+        int GetInteractedSceneObjectId(int id);
+        int GetInteractedInventoryObjectId(int id);
 
     }
 }

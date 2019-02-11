@@ -11,6 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TextQuest.Data;
+using TextQuest.Services;
 
 namespace TextQuest
 {
@@ -36,6 +37,8 @@ namespace TextQuest
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddDbContext<TextQuestDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TextQuestConnectionString")));
+            services.AddSingleton(Configuration);
+            services.AddScoped<IScene, SceneService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

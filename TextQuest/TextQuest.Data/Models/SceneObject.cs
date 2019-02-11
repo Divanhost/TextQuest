@@ -9,11 +9,15 @@ namespace TextQuest.Data
         public string Name { get; set; }
         [Required]
         public string Description { get; set; }
+
         public int x { get; set; }
         public int y { get; set; }
         public int z { get; set; }
         public bool IsPickable { get; set; }
         public bool HasAction { get; set; }
         public InventoryObject AssociatedInventoryObject { get; set; }
+        public string ImageUrl { get; set; }
+        public string AlternativeImageUrl { get; set; }
+
     }
 }

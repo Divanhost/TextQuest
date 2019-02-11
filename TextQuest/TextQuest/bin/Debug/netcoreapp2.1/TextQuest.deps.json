@@ -30,7 +30,8 @@
           "Microsoft.EntityFrameworkCore.SqlServer": "2.1.4",
           "Microsoft.EntityFrameworkCore.Tools": "2.1.4",
           "Microsoft.NETCore.App": "2.1.0",
-          "TextQuest.Data": "1.0.0"
+          "TextQuest.Data": "1.0.0",
+          "TextQuest.Services": "1.0.0"
         },
         "runtime": {
           "TextQuest.dll": {}
@@ -3620,6 +3621,17 @@
           "TextQuest.Data.dll": {}
         }
       },
+      "TextQuest.Services/1.0.0": {
+        "dependencies": {
+          "TextQuest.Data": "1.0.0"
+        },
+        "runtime": {
+          "TextQuest.Services.dll": {}
+        },
+        "compile": {
+          "TextQuest.Services.dll": {}
+        }
+      },
       "Microsoft.AspNet.WebApi.Client/5.2.6": {
         "dependencies": {
           "Newtonsoft.Json": "11.0.2",
@@ -6327,6 +6339,11 @@
       "hashPath": "windowsazure.storage.8.1.4.nupkg.sha512"
     },
     "TextQuest.Data/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "TextQuest.Services/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

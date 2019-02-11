@@ -78,11 +78,9 @@ namespace TextQuest.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("BackgroundImageUrl")
-                        .IsRequired();
+                    b.Property<string>("BackgroundImageUrl");
 
-                    b.Property<string>("Description")
-                        .IsRequired();
+                    b.Property<string>("Description");
 
                     b.Property<int>("DownSceneId");
 
@@ -105,12 +103,16 @@ namespace TextQuest.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("AlternativeImageUrl");
+
                     b.Property<int?>("AssociatedInventoryObjectId");
 
                     b.Property<string>("Description")
                         .IsRequired();
 
                     b.Property<bool>("HasAction");
+
+                    b.Property<string>("ImageUrl");
 
                     b.Property<bool>("IsPickable");
 

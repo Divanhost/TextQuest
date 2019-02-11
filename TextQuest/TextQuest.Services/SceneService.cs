@@ -15,31 +15,6 @@ namespace TextQuest.Services
             _context = context;
         }
 
-        public int GetBackground(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public string GetDescription(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int GetDownScene(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int GetLeftScene(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int GetRightScene(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public Scene GetScene(int id)
         {
             return _context.Scenes.FirstOrDefault(s => s.Id == id);
@@ -50,9 +25,46 @@ namespace TextQuest.Services
             return GetScene(id).SceneObjects;
         }
 
+        public string GetDescription(int id)
+        {
+            return GetScene(id).Description;
+        }
+
+        public string GetBackground(int id)
+        {
+            return GetScene(id).BackgroundImageUrl;
+        }
+
+       
+
+        public int GetDownScene(int id)
+        {
+            return GetScene(id).DownSceneId;
+        }
+
+        public int GetLeftScene(int id)
+        {
+            return GetScene(id).LeftSceneId;
+        }
+
+        public int GetRightScene(int id)
+        {
+            return GetScene(id).RightSceneId;
+        }
+
         public int GetUpperScene(int id)
         {
-            throw new NotImplementedException();
+            return GetScene(id).UpperSceneId;
+        }
+
+        public int GetInnerScene(int id)
+        {
+            return GetScene(id).InnerSceneId;
+        }
+
+        public IEnumerable<Scene> GetAll()
+        {
+            return _context.Scenes;
         }
     }
 }

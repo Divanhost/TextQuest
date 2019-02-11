@@ -1,4 +1,6 @@
-﻿namespace TextQuest.Data
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace TextQuest.Data
 {
     public class Interaction
     {

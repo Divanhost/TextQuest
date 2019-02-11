@@ -32,3 +32,6 @@ C:\Users\Student\source\repos\TextQuest\TextQuest\obj\Debug\netcoreapp2.1\TextQu
 C:\Users\Student\source\repos\TextQuest\TextQuest\obj\Debug\netcoreapp2.1\TextQuest.csproj.CopyComplete
 C:\Users\Student\source\repos\TextQuest\TextQuest\bin\Debug\netcoreapp2.1\TextQuest.Data.dll
 C:\Users\Student\source\repos\TextQuest\TextQuest\bin\Debug\netcoreapp2.1\TextQuest.Data.pdb
+C:\Users\Student\source\repos\TextQuest\TextQuest\bin\Debug\netcoreapp2.1\TextQuest.Services.dll
+C:\Users\Student\source\repos\TextQuest\TextQuest\bin\Debug\netcoreapp2.1\TextQuest.Services.pdb
+C:\Users\Student\source\repos\TextQuest\TextQuest\obj\Debug\netcoreapp2.1\Razor\Views\GamePage\Index.g.cshtml.cs

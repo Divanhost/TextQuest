@@ -1,0 +1,9 @@
+﻿@page
+@model SceneListModel
+<h1>Hello World</h1>
+@foreach (var scene in Model.Scenes)
+{
+    <div>
+        <img src="@scene.BackgroundImageUrl" />
+    </div>
+}
