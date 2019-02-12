@@ -17,7 +17,9 @@ namespace TextQuest.Services
 
         public Scene GetScene(int id)
         {
-            return _context.Scenes.FirstOrDefault(s => s.Id == id);
+            return _context.Scenes
+                .Include(s=>s.SceneObjects)
+                .FirstOrDefault(s => s.Id == id);
         }
 
         public IEnumerable<SceneObject> GetSceneObjects(int id)
@@ -64,7 +66,7 @@ namespace TextQuest.Services
 
         public IEnumerable<Scene> GetAll()
         {
-            return _context.Scenes;
+            return _context.Scenes.Include(s => s.SceneObjects);
         }
     }
 }

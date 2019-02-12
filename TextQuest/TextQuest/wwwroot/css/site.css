@@ -35,3 +35,13 @@ body {
         display: none;
     }
 }
+
+.sceneObject{
+    display:block;
+    position:center;
+    
+}
+.background{
+    position:absolute;
+    vertical-align:central;
+}

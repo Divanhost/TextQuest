@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,9 @@ namespace TextQuest.Services
 
         public Inventory GetInventory(int id)
         {
-            return _context.Inventories.FirstOrDefault(s => s.Id == id);
+            return _context.Inventories
+                .Include(i=>i.InventoryObjects)
+                .FirstOrDefault(s => s.Id == id);
         }
 
         public InventoryService(TextQuestDbContext context)
@@ -23,6 +26,7 @@ namespace TextQuest.Services
         public void Add(Inventory inventory)
         {
             _context.Add(inventory);
+            _context.SaveChanges();
         }
 
         public void Delete(int id)

@@ -1,9 +1,25 @@
-﻿@page
-@model SceneListModel
-<h1>Hello World</h1>
-@foreach (var scene in Model.Scenes)
-{
-    <div>
-        <img src="@scene.BackgroundImageUrl" />
-    </div>
+﻿
+@model TextQuest.Models.SceneListModel
+@{
+    ViewBag.Title = "Hello World";
 }
+
+
+
+<div class="background">
+    <img src="@Model.CurrentScene.BackgroundImageUrl" />
+
+    <div>
+        @foreach (var obj in Model.CurrentScene.SceneObjects)
+        {
+            string x = obj.x + "px";
+            string y = obj.y + "px";
+            <div class="sceneObject" style="position:absolute;left:@x;top:@y;">
+
+                <img src="@obj.ImageUrl" />
+
+            </div>
+        }
+    </div>
+</div>
+
