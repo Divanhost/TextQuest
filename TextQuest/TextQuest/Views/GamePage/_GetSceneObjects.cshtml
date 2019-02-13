@@ -7,7 +7,7 @@
         string y = obj.y + "px";
         string id = obj.Id.ToString();
         <div   id=@id class="sceneObject" style="position:absolute;left:@x;top:@y;">
-            <a title=@obj.Name><img src="@obj.ImageUrl" id="@id" onclick="inc(@obj.Id)"/></a>
+            <a title=@obj.Name><img src="@obj.ImageUrl" onclick="inc(@obj.Id)"/></a>
         </div>
     }
 </div>
@@ -35,6 +35,9 @@
                 success: function (data) {
                     //success
                     console.log(data);
+                    if (data.interactionType == 2) {
+                        $("#" + id).replaceWith($("<div>").attr("id", String(data.newId)).addClass("sceneObject").css("position", "absolute").css("left", data.x).css("top", data.y).append($("<a>").append($("<img>").attr("src", data.imageUrl))));
+                    }
                 },
                 error: function () {
                     alert("error");
@@ -43,7 +46,7 @@
 
 
 
-        $("#" + id).replaceWith($("<div>").addClass("sceneObject").css("position","absolute").css("left","@xs").css("top","@ys").append($("<a>").append($("<img>").attr("src", "@scobj.ImageUrl").attr("onclick", "inc()"))));
+       // $("#" + id).replaceWith($("<div>").addClass("sceneObject").css("position","absolute").css("left","@xs").css("top","@ys").append($("<a>").append($("<img>").attr("src", "@scobj.ImageUrl").attr("onclick", "inc()"))));
 
     }
 </script>

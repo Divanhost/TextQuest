@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,7 +19,10 @@ namespace TextQuest.Services
 
         public SceneObject GetSceneObject(int id)
         {
-            return _context.SceneObjects.FirstOrDefault(so => so.Id == id);
+            return _context.SceneObjects
+                .Include(so=>so.AssociatedInventoryObject)
+                .Include(so=>so.AssociatedSceneObject)
+                .FirstOrDefault(so => so.Id == id);
         }
 
         public string GetName(int id)

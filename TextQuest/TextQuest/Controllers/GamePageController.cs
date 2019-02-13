@@ -12,9 +12,11 @@ namespace TextQuest.Controllers
     public class GamePageController : Controller
     {
         private IScene _scene;
-        public GamePageController(IScene scene)
+        private ISceneObject _sceneObject;
+        public GamePageController(IScene scene,ISceneObject sceneObject)
         {
             _scene = scene;
+            _sceneObject = sceneObject;
         }
 
       
@@ -63,9 +65,25 @@ namespace TextQuest.Controllers
             // 
             StreamReader sr = new StreamReader(Request.Body);
             string data = sr.ReadToEnd();
-
+            int id = Int32.Parse(data);
+            var sceneObject = _sceneObject.GetSceneObject(id);
+            bool isPickable = sceneObject.IsPickable;
+            bool hasAction = sceneObject.HasAction;
+            bool isInnerPass = sceneObject.IsInnerPass;
+            if (isPickable)
+            {
+                return Ok(new { interactionType = 0,id, sceneObject.AssociatedInventoryObject.Id });
+            }
+            else if (isInnerPass)
+            {
+                return Ok(new { interactionType = 1, id, message="TODO Inner pass" });
+            }
+            else if (hasAction)
+            {
+                return Ok(new { interactionType = 2, id,newId = sceneObject.AssociatedSceneObject.Id, sceneObject.AssociatedSceneObject.x, sceneObject.AssociatedSceneObject.y, sceneObject.AssociatedSceneObject.ImageUrl });
+            }
             string result = "Сообщение " + data;
-            return Ok(result);
+            return Ok(new { result, data});
 
         }
 
