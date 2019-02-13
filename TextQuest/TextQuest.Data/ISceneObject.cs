@@ -9,6 +9,7 @@ namespace TextQuest.Data
         SceneObject GetSceneObject(int id);
         string GetName(int id);
         Location GetLocation(int id);
+        void SetLocation(int id,Location location);
         bool CheckPickable(int id);
         bool CheckAction(int id);
         InventoryObject GetAssociatedInventoryObject(int id);

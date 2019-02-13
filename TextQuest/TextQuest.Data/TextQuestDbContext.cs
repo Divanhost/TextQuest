@@ -10,12 +10,6 @@ namespace TextQuest.Data
         public DbSet<SceneObject> SceneObjects { get; set; }
         public DbSet<Inventory> Inventories { get; set; }
         public DbSet<InventoryObject> InventoryObjects { get; set; }
-
-        public void FirstOrDefault()
-        {
-            throw new NotImplementedException();
-        }
-
         public DbSet<Interaction> Interactions { get; set; }
 
     }

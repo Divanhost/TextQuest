@@ -10,8 +10,8 @@ using TextQuest.Data;
 namespace TextQuest.Data.Migrations
 {
     [DbContext(typeof(TextQuestDbContext))]
-    [Migration("20190211134300_Scene entity rework")]
-    partial class Sceneentityrework
+    [Migration("20190213073444_initial migration")]
+    partial class initialmigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -80,9 +80,11 @@ namespace TextQuest.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("BackgroundImageUrl");
+                    b.Property<string>("BackgroundImageUrl")
+                        .IsRequired();
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Description")
+                        .IsRequired();
 
                     b.Property<int>("DownSceneId");
 
@@ -105,9 +107,9 @@ namespace TextQuest.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("AlternativeImageUrl");
-
                     b.Property<int?>("AssociatedInventoryObjectId");
+
+                    b.Property<int?>("AssociatedSceneObjectId");
 
                     b.Property<string>("Description")
                         .IsRequired();
@@ -116,7 +118,11 @@ namespace TextQuest.Data.Migrations
 
                     b.Property<string>("ImageUrl");
 
+                    b.Property<bool>("IsInnerPass");
+
                     b.Property<bool>("IsPickable");
+
+                    b.Property<bool>("IsSpawned");
 
                     b.Property<string>("Name")
                         .IsRequired();
@@ -132,6 +138,8 @@ namespace TextQuest.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AssociatedInventoryObjectId");
+
+                    b.HasIndex("AssociatedSceneObjectId");
 
                     b.HasIndex("SceneId");
 
@@ -150,6 +158,10 @@ namespace TextQuest.Data.Migrations
                     b.HasOne("TextQuest.Data.InventoryObject", "AssociatedInventoryObject")
                         .WithMany()
                         .HasForeignKey("AssociatedInventoryObjectId");
+
+                    b.HasOne("TextQuest.Data.SceneObject", "AssociatedSceneObject")
+                        .WithMany()
+                        .HasForeignKey("AssociatedSceneObjectId");
 
                     b.HasOne("TextQuest.Data.Scene")
                         .WithMany("SceneObjects")

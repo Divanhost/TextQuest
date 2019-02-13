@@ -88,8 +88,12 @@ namespace TextQuest.Data.Migrations
                     y = table.Column<int>(nullable: false),
                     z = table.Column<int>(nullable: false),
                     IsPickable = table.Column<bool>(nullable: false),
+                    IsSpawned = table.Column<bool>(nullable: false),
+                    IsInnerPass = table.Column<bool>(nullable: false),
                     HasAction = table.Column<bool>(nullable: false),
                     AssociatedInventoryObjectId = table.Column<int>(nullable: true),
+                    AssociatedSceneObjectId = table.Column<int>(nullable: true),
+                    ImageUrl = table.Column<string>(nullable: true),
                     SceneId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -99,6 +103,12 @@ namespace TextQuest.Data.Migrations
                         name: "FK_SceneObjects_InventoryObjects_AssociatedInventoryObjectId",
                         column: x => x.AssociatedInventoryObjectId,
                         principalTable: "InventoryObjects",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_SceneObjects_SceneObjects_AssociatedSceneObjectId",
+                        column: x => x.AssociatedSceneObjectId,
+                        principalTable: "SceneObjects",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -118,6 +128,11 @@ namespace TextQuest.Data.Migrations
                 name: "IX_SceneObjects_AssociatedInventoryObjectId",
                 table: "SceneObjects",
                 column: "AssociatedInventoryObjectId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SceneObjects_AssociatedSceneObjectId",
+                table: "SceneObjects",
+                column: "AssociatedSceneObjectId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SceneObjects_SceneId",

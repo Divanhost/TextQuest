@@ -1,0 +1,75 @@
+﻿@model TextQuest.Models.SceneListModel
+
+<div>
+    @foreach (var obj in Model.CurrentScene.SceneObjects)
+    {
+        string x = obj.x + "px";
+        string y = obj.y + "px";
+        string id = obj.Id.ToString();
+        <div   id=@id class="sceneObject" style="position:absolute;left:@x;top:@y;">
+            <a title=@obj.Name><img src="@obj.ImageUrl" id="@id" onclick="inc(@obj.Id)"/></a>
+        </div>
+    }
+</div>
+<div class="container">
+    <div class="inner first" onclick="inc()">Hello</div>
+    <div class="inner second">And</div>
+    <div class="inner third">Goodbye</div>
+</div>
+<script>
+    function inc(data_id) {
+        console.log(data_id);
+
+        @{
+            var scobj = @Model.CurrentScene.SpawnedSceneObjects.FirstOrDefault(so => so.Id == 6);
+            string xs = scobj.x + "px";
+            string ys = scobj.y + "px";
+        }
+
+        var id = data_id;
+
+            $.ajax({
+                url: "/GamePage/DisplaySpawn",
+                type: "post",
+                data: String(id), //add parameter
+                success: function (data) {
+                    //success
+                    console.log(data);
+                },
+                error: function () {
+                    alert("error");
+                }
+            });
+
+
+
+        $("#" + id).replaceWith($("<div>").addClass("sceneObject").css("position","absolute").css("left","@xs").css("top","@ys").append($("<a>").append($("<img>").attr("src", "@scobj.ImageUrl").attr("onclick", "inc()"))));
+
+    }
+</script>
+
+
+
+
+
+
+
+
+
+<script>
+    function IncrementCount() {
+        $.ajax({
+            type: "POST",
+            url: "/GamePage/IncrementCount",
+            async: true,
+            data: "Hello",
+            success: function (msg) {
+                ServiceSucceeded(msg);
+            },
+            error: function () {
+                return "error";
+            }
+        });
+
+    }
+</script>

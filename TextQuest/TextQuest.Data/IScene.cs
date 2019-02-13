@@ -17,6 +17,7 @@ namespace TextQuest.Data
         int GetInnerScene(int id);
 
         IEnumerable<SceneObject> GetSceneObjects(int id);
+        IEnumerable<SceneObject> GetSpawnedSceneObjects(int id);
     }
 }
 

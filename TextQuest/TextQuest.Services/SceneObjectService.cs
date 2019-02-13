@@ -51,5 +51,11 @@ namespace TextQuest.Services
             
         }
 
+        public void SetLocation(int id, Location location)
+        {
+            GetSceneObject(id).x = location.x;
+            GetSceneObject(id).y = location.y;
+            GetSceneObject(id).z = location.z;
+        }
     }
 }

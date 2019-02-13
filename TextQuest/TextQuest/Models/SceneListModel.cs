@@ -6,15 +6,24 @@ using System.Threading.Tasks;
 
 namespace TextQuest.Models
 {
-    public class SceneListModel
+    public class SceneListModel:PageModel
     {
         public IEnumerable<SceneModel> Scenes;
         public SceneModel CurrentScene;
         public string Message { get; set; }
-        public void OnGet()
+        public void ChangeState(int id)
         {
-            Message = "Введите число";
+            var sobj = CurrentScene.SceneObjects.FirstOrDefault(so => so.Id == id);
+            var sobj2 = CurrentScene.SpawnedSceneObjects.FirstOrDefault(so => so.Id == 6);
+
+            
+            sobj = sobj2;
         }
-        
+
+        public void IncrementCount()
+        {
+            int i = 1;
+            i++;
+        }
     }
 }

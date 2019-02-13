@@ -26,7 +26,11 @@ namespace TextQuest.Services
         {
             return GetScene(id).SceneObjects;
         }
-
+        public IEnumerable<SceneObject> GetSpawnedSceneObjects(int id)
+        {
+            return GetSceneObjects(id).Where(so=>so.IsSpawned);
+        }
+        
         public string GetDescription(int id)
         {
             return GetScene(id).Description;

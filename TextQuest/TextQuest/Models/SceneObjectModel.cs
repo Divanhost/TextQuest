@@ -1,13 +1,15 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using TextQuest.Data;
 
-namespace TextQuest.Data
+namespace TextQuest.Models
 {
-    public class SceneObject
+    public class SceneObjectModel
     {
         public int Id { get; set; }
-        [Required]
         public string Name { get; set; }
-        [Required]
         public string Description { get; set; }
 
         public int x { get; set; }

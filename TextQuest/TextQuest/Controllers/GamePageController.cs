@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using TextQuest.Data;
@@ -11,11 +12,13 @@ namespace TextQuest.Controllers
     public class GamePageController : Controller
     {
         private IScene _scene;
-
         public GamePageController(IScene scene)
         {
             _scene = scene;
         }
+
+      
+        
         public IActionResult Index()
         {
             var scenes = _scene.GetAll();
@@ -24,55 +27,47 @@ namespace TextQuest.Controllers
                 Id = result.Id,
                 Description = result.Description,
                 BackgroundImageUrl = result.BackgroundImageUrl,
-                SceneObjects = result.SceneObjects.OrderByDescending(s => s.z),
+                SceneObjects = result.SceneObjects.Where(so => !so.IsSpawned).OrderByDescending(s => s.z),
+                SpawnedSceneObjects = result.SceneObjects.Where(so => so.IsSpawned).OrderByDescending(s => s.z),
                 UpperSceneId = result.UpperSceneId,
                 DownSceneId = result.DownSceneId,
                 LeftSceneId = result.LeftSceneId,
                 RightSceneId = result.RightSceneId,
                 InnerSceneId = result.InnerSceneId
             });
+            var curScene = listingResult.FirstOrDefault(s => s.Id == 1);
+
             var model = new SceneListModel()
             {
                 Scenes = listingResult,
-                CurrentScene = listingResult.FirstOrDefault(s => s.Id == 1)
+                CurrentScene = curScene,
             };
 
             return View(model);
 
         }
-        [HttpGet]
-        public IActionResult Starting()
+        public IActionResult GetSceneObjects()
         {
-            ViewBag.Message = "ZaWarudo";
-            return View();
+            ViewBag.Title = "Smth";
+            return PartialView("_GetSceneObjects");
         }
+        public void IncrementCount(int? iq)
+        {
+            int i = 0;
+            i++;
+        }
+
         [HttpPost]
-        public void ChangeRoom(int? direction)
+        public IActionResult DisplaySpawn()
         {
-            ViewBag.Message = direction.ToString();
-            /*switch (direction)
-            {
-                case 0:
-                    {
-                        Model.CurrentScene = Scenes.FirstOrDefault(s => s.Id == CurrentScene.LeftSceneId);
-                        break;
-                    }
-                case 1:
-                    {
-                        CurrentScene = Scenes.FirstOrDefault(s => s.Id == CurrentScene.UpperSceneId);
-                        break;
-                    }
-                case 2:
-                    {
-                        CurrentScene = Scenes.FirstOrDefault(s => s.Id == CurrentScene.RightSceneId);
-                        break;
-                    }
-                case 3:
-                    {
-                        CurrentScene = Scenes.FirstOrDefault(s => s.Id == CurrentScene.DownSceneId);
-                        break;
-                    }
-            }*/
+            // 
+            StreamReader sr = new StreamReader(Request.Body);
+            string data = sr.ReadToEnd();
+
+            string result = "Сообщение " + data;
+            return Ok(result);
+
         }
+
     }
 }
