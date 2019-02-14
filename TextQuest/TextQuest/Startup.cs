@@ -40,6 +40,7 @@ namespace TextQuest
             services.AddSingleton(Configuration);
             services.AddScoped<IScene, SceneService>();
             services.AddScoped<ISceneObject, SceneObjectService>();
+            services.AddScoped<IInteraction, InteractionService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

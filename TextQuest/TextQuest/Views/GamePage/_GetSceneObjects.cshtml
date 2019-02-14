@@ -7,47 +7,38 @@
         string y = obj.y + "px";
         string id = obj.Id.ToString();
         <div   id=@id class="sceneObject" style="position:absolute;left:@x;top:@y;">
-            <a title=@obj.Name><img src="@obj.ImageUrl" onclick="inc(@obj.Id)"/></a>
+            <a title=@obj.Name><img src="@obj.ImageUrl" onclick="inc(@obj.Id,@Model.CurrentScene.Id)"/></a>
         </div>
     }
 </div>
-<div class="container">
-    <div class="inner first" onclick="inc()">Hello</div>
-    <div class="inner second">And</div>
-    <div class="inner third">Goodbye</div>
-</div>
+
 <script>
-    function inc(data_id) {
+    function inc(data_id,scene_id) {
         console.log(data_id);
+        console.log(scene_id);
 
-        @{
-            var scobj = @Model.CurrentScene.SpawnedSceneObjects.FirstOrDefault(so => so.Id == 6);
-            string xs = scobj.x + "px";
-            string ys = scobj.y + "px";
-        }
 
-        var id = data_id;
-
-            $.ajax({
+        $.ajax({
                 url: "/GamePage/DisplaySpawn",
                 type: "post",
-                data: String(id), //add parameter
+                data: {
+                    item: String(data_id),
+                    scene: String(scene_id)
+                }, //add parameter
                 success: function (data) {
                     //success
                     console.log(data);
+                    if (data.interactionType == 1) {
+                        window.location.replace("@Url.RouteUrl(new { controller = "GamePage", action = "Index", id = Model.CurrentScene.InnerSceneId })");
+                    }
                     if (data.interactionType == 2) {
-                        $("#" + id).replaceWith($("<div>").attr("id", String(data.newId)).addClass("sceneObject").css("position", "absolute").css("left", data.x).css("top", data.y).append($("<a>").append($("<img>").attr("src", data.imageUrl))));
+                        $("#" + data_id).replaceWith($("<div>").attr("id", String(data.newId)).addClass("sceneObject").css("position", "absolute").css("left", data.x).css("top", data.y).append($("<a>").append($("<img>").attr("src", data.imageUrl).attr("onclick",String("inc("+data.newId+",@Model.CurrentScene.Id)")))));
                     }
                 },
                 error: function () {
                     alert("error");
                 }
             });
-
-
-
-       // $("#" + id).replaceWith($("<div>").addClass("sceneObject").css("position","absolute").css("left","@xs").css("top","@ys").append($("<a>").append($("<img>").attr("src", "@scobj.ImageUrl").attr("onclick", "inc()"))));
-
     }
 </script>
 
@@ -58,21 +49,3 @@
 
 
 
-
-<script>
-    function IncrementCount() {
-        $.ajax({
-            type: "POST",
-            url: "/GamePage/IncrementCount",
-            async: true,
-            data: "Hello",
-            success: function (msg) {
-                ServiceSucceeded(msg);
-            },
-            error: function () {
-                return "error";
-            }
-        });
-
-    }
-</script>

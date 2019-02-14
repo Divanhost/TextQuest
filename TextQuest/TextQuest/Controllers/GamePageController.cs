@@ -13,6 +13,7 @@ namespace TextQuest.Controllers
     {
         private IScene _scene;
         private ISceneObject _sceneObject;
+        private IInteraction _interaction;
         public GamePageController(IScene scene,ISceneObject sceneObject)
         {
             _scene = scene;
@@ -21,7 +22,7 @@ namespace TextQuest.Controllers
 
       
         
-        public IActionResult Index()
+        public IActionResult Index(int? id =1)
         {
             var scenes = _scene.GetAll();
             var listingResult = scenes.Select(result => new SceneModel
@@ -37,7 +38,7 @@ namespace TextQuest.Controllers
                 RightSceneId = result.RightSceneId,
                 InnerSceneId = result.InnerSceneId
             });
-            var curScene = listingResult.FirstOrDefault(s => s.Id == 1);
+            var curScene = listingResult.FirstOrDefault(s => s.Id == id);
 
             var model = new SceneListModel()
             {
@@ -53,11 +54,7 @@ namespace TextQuest.Controllers
             ViewBag.Title = "Smth";
             return PartialView("_GetSceneObjects");
         }
-        public void IncrementCount(int? iq)
-        {
-            int i = 0;
-            i++;
-        }
+      
 
         [HttpPost]
         public IActionResult DisplaySpawn()
@@ -65,7 +62,11 @@ namespace TextQuest.Controllers
             // 
             StreamReader sr = new StreamReader(Request.Body);
             string data = sr.ReadToEnd();
-            int id = Int32.Parse(data);
+            var items = data.Split('&');
+            
+            int id = Int32.Parse(items[0].Split('=')[1]);
+            int sceneId = Int32.Parse(items[1].Split('=')[1]);
+
             var sceneObject = _sceneObject.GetSceneObject(id);
             bool isPickable = sceneObject.IsPickable;
             bool hasAction = sceneObject.HasAction;
@@ -76,10 +77,13 @@ namespace TextQuest.Controllers
             }
             else if (isInnerPass)
             {
-                return Ok(new { interactionType = 1, id, message="TODO Inner pass" });
+                var nextSceneId = _scene.GetScene(sceneId).InnerSceneId;
+              
+                return Ok(new { interactionType = 1, nextRoomId = id});
             }
             else if (hasAction)
             {
+                var interacton = _interaction.GetInteraction
                 return Ok(new { interactionType = 2, id,newId = sceneObject.AssociatedSceneObject.Id, sceneObject.AssociatedSceneObject.x, sceneObject.AssociatedSceneObject.y, sceneObject.AssociatedSceneObject.ImageUrl });
             }
             string result = "Сообщение " + data;

@@ -17,17 +17,28 @@ namespace TextQuest.Services
 
         public int GetInteractedInventoryObjectId(int id)
         {
-            return GetInteraction(id).InventoryObjectId;
+            return GetInteraction(id).InteractingInventoryObjectId;
         }
 
         public int GetInteractedSceneObjectId(int id)
         {
-            return GetInteraction(id).SceneObjectId;
+            return GetInteraction(id).InteractingSceneObjectId;
         }
 
         public Interaction GetInteraction(int id)
         {
             return _context.Interactions.FirstOrDefault(i => i.Id == id);
+        }
+
+        public Interaction GetInteractionByInventoryObject(int id)
+        {
+            return _context.Interactions.FirstOrDefault(i => i.InventoryObjectId == id);
+        }
+
+        public Interaction GetInteractionBySceneObject(int id)
+        {
+            return _context.Interactions.FirstOrDefault(i => i.SceneObjectId == id);
+
         }
 
         public Interaction GetNextInteraction(int id)
