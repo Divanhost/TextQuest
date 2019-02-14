@@ -4,13 +4,16 @@
     ViewBag.Title = "Hello World";
 }
 
+
 <h3>@ViewBag.Title</h3>
+<body onunload="alert('Вы точно решили покинуть наш сайт ?')">
 
-<div class="background">
-    <img src="@Model.CurrentScene.BackgroundImageUrl" />
+    <div class="background">
+        <img src="@Model.CurrentScene.BackgroundImageUrl" />
 
-    @Html.Partial("_GetSceneObjects", Model)
-</div>
+        @Html.Partial("_GetSceneObjects", Model)
+    </div>
+</body>
 
 
 

@@ -32,12 +32,17 @@
                         window.location.replace("@Url.RouteUrl(new { controller = "GamePage", action = "Index", id = Model.CurrentScene.InnerSceneId })");
                     }
                     if (data.interactionType == 2) {
-                        $("#" + data_id).replaceWith($("<div>").attr("id", String(data.newId)).addClass("sceneObject").css("position", "absolute").css("left", data.x).css("top", data.y).append($("<a>").append($("<img>").attr("src", data.imageUrl).attr("onclick",String("inc("+data.newId+",@Model.CurrentScene.Id)")))));
+                        for (i = 0; i < data.responces.length; i++) {
+                            $("#" + data.responces[i].oldId)
+                                .replaceWith($("<div>").attr("id", String(data.responces[i].newId)).addClass("sceneObject").css("position", "absolute").css("left", data.responces[i].x).css("top", data.responces[i].y)
+                                    .append($("<a>")
+                                        .append($("<img>").attr("src", data.responces[i].imageUrl).attr("onclick", String("inc(" + data.responces[i].newId + ",@Model.CurrentScene.Id)")))));
+                        }
                     }
                 },
                 error: function () {
                     alert("error");
-                }
+            }
             });
     }
 </script>

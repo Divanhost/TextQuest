@@ -39,8 +39,10 @@ namespace TextQuest
             services.AddDbContext<TextQuestDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TextQuestConnectionString")));
             services.AddSingleton(Configuration);
             services.AddScoped<IScene, SceneService>();
-            services.AddScoped<ISceneObject, SceneObjectService>();
             services.AddScoped<IInteraction, InteractionService>();
+            services.AddScoped<ISceneObject, SceneObjectService>();
+            services.AddScoped<IInventory, InventoryService>();
+            services.AddScoped<IInventory_InventoryObject, Inventory_InventoryObjectService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

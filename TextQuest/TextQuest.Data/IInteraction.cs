@@ -6,12 +6,13 @@ namespace TextQuest.Data
 {
     public interface IInteraction
     {
-        Interaction GetInteraction(int id);
+        Interaction GetInteraction(int? id);
         Interaction GetInteractionBySceneObject(int id);
         Interaction GetInteractionByInventoryObject(int id);
         Interaction GetNextInteraction(int id);
-        int GetInteractedSceneObjectId(int id);
-        int GetInteractedInventoryObjectId(int id);
-
+        int? GetTargetSceneObjectId(int id);
+        int? GetInteractingSceneObjectId(int id);
+        int? GetTargetInventoryObjectId(int id);
+        int? GetInteractingInventoryObjectId(int id);
     }
 }

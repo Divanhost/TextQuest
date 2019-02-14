@@ -25,15 +25,17 @@ namespace TextQuest.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("InteractingInventoryObjectId");
+                    b.Property<int?>("InteractingInventoryObjectId");
 
-                    b.Property<int>("InteractingSceneObjectId");
+                    b.Property<int?>("InteractingObjectId");
 
-                    b.Property<int>("InventoryObjectId");
+                    b.Property<bool>("IsAllowed");
 
-                    b.Property<int>("NextInteractionId");
+                    b.Property<int?>("NextInteractionId");
 
-                    b.Property<int>("SceneObjectId");
+                    b.Property<int?>("TargetInventoryObjectId");
+
+                    b.Property<int?>("TargetObjectId");
 
                     b.HasKey("Id");
 
@@ -62,8 +64,6 @@ namespace TextQuest.Data.Migrations
 
                     b.Property<string>("ImageUrl");
 
-                    b.Property<int?>("InventoryId");
-
                     b.Property<bool>("IsInfinite");
 
                     b.Property<string>("Name")
@@ -71,9 +71,22 @@ namespace TextQuest.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("InventoryId");
-
                     b.ToTable("InventoryObjects");
+                });
+
+            modelBuilder.Entity("TextQuest.Data.Models.Inventory_InventoryObject", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("InventoryId");
+
+                    b.Property<int>("InventoryObjectId");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Inventory_InventoryObjects");
                 });
 
             modelBuilder.Entity("TextQuest.Data.Scene", b =>
@@ -146,13 +159,6 @@ namespace TextQuest.Data.Migrations
                     b.HasIndex("SceneId");
 
                     b.ToTable("SceneObjects");
-                });
-
-            modelBuilder.Entity("TextQuest.Data.InventoryObject", b =>
-                {
-                    b.HasOne("TextQuest.Data.Inventory")
-                        .WithMany("InventoryObjects")
-                        .HasForeignKey("InventoryId");
                 });
 
             modelBuilder.Entity("TextQuest.Data.SceneObject", b =>

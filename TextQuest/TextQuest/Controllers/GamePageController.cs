@@ -14,16 +14,23 @@ namespace TextQuest.Controllers
         private IScene _scene;
         private ISceneObject _sceneObject;
         private IInteraction _interaction;
-        public GamePageController(IScene scene,ISceneObject sceneObject)
+        public IInventory _inventory;
+        public IInventory_InventoryObject _inventoryHelper;
+        public GamePageController(IScene scene,ISceneObject sceneObject,IInteraction interaction, IInventory inventory,IInventory_InventoryObject inventoryHelper)
         {
             _scene = scene;
             _sceneObject = sceneObject;
+            _interaction = interaction;
+            _inventory = inventory;
+            _inventoryHelper = inventoryHelper;
         }
 
-      
-        
+
         public IActionResult Index(int? id =1)
         {
+
+            var userInventory = new Inventory();
+            _inventory.Add(userInventory);
             var scenes = _scene.GetAll();
             var listingResult = scenes.Select(result => new SceneModel
             {
@@ -44,6 +51,7 @@ namespace TextQuest.Controllers
             {
                 Scenes = listingResult,
                 CurrentScene = curScene,
+                inventory = userInventory
             };
 
             return View(model);
@@ -83,13 +91,62 @@ namespace TextQuest.Controllers
             }
             else if (hasAction)
             {
-                var interacton = _interaction.GetInteraction
-                return Ok(new { interactionType = 2, id,newId = sceneObject.AssociatedSceneObject.Id, sceneObject.AssociatedSceneObject.x, sceneObject.AssociatedSceneObject.y, sceneObject.AssociatedSceneObject.ImageUrl });
+                var responces = new List<Responce>();
+                var interacton = _interaction.GetInteractionBySceneObject(id);
+                if (interacton.IsAllowed)
+                {
+                    DoActions(responces, id);
+                }
+                return Ok(new { interactionType = 2, id, responces });
+                //return DoActions(id);
             }
-            string result = "Сообщение " + data;
-            return Ok(new { result, data});
+            return Ok();
 
         }
 
+        public void DoActions(List<Responce> responces,int id)
+        {
+            
+            var sceneObject = _sceneObject.GetSceneObject(id);
+            var interacton = _interaction.GetInteractionBySceneObject(id);
+            var associatedSceneObject = _sceneObject.GetSceneObject(interacton.InteractingObjectId ?? default(int));
+
+
+
+     
+            if(interacton.InteractingObjectId != id)
+            {
+                var responce = new Responce()
+                {
+                    oldId = sceneObject.Id,
+                    newId = associatedSceneObject.Id,
+                    x = associatedSceneObject.x,
+                    y = associatedSceneObject.y,
+                    ImageUrl = associatedSceneObject.ImageUrl
+                };
+                responces.Add(responce);
+                
+            }
+            if (interacton.NextInteractionId.HasValue)
+            {
+                interacton = _interaction.GetInteraction(interacton.NextInteractionId);
+                int newId = interacton.TargetObjectId ?? default(int);
+                DoActions(responces, newId);
+            }
+
+        }
+        public void SaveChanges()
+        {
+
+        }
+
+    }
+    public class Responce
+    {
+        public int oldId { get; set; }
+        public int newId { get; set; }
+        public int x { get; set; }
+        public int y { get; set; }
+        public string ImageUrl { get; set; }
     }
 }
