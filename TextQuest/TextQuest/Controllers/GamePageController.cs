@@ -153,6 +153,23 @@ namespace TextQuest.Controllers
             }
         }
 
+        public IActionResult HandleDescriptionShowing()
+        {
+            StreamReader sr = new StreamReader(Request.Body);
+            string data = sr.ReadToEnd();
+           
+            int id = Int32.Parse(data);
+            return Ok(_sceneObject.GetSceneObject(id).Description);
+        }
+        public IActionResult HandleInventoryDescriptionShowing()
+        {
+            StreamReader sr = new StreamReader(Request.Body);
+            string data = sr.ReadToEnd();
+
+            int id = Int32.Parse(data);
+            return Ok(_inventoryObject.GetDescription(id));
+        }
+
         //Do action or sequence of actions
         public void DoActions(List<Responce> responces,int id)
         {

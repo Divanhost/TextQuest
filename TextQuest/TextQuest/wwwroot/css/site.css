@@ -44,4 +44,5 @@ body {
 .background{
     position:absolute;
     vertical-align:central;
+    background-color:red;
 }

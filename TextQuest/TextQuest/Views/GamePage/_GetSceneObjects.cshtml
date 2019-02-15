@@ -16,13 +16,14 @@
     @foreach (var item in Model.InventoryItems)
     {
         <div id=@item.Id class="inventoryObject">
-            <a title=@item.Name><img src="@item.ImageUrl" onclick="invObjHandler(@item.Id)" /></a>
+            <a title=@item.Name><img src="@item.ImageUrl" onclick="invObjHandler(@item.Id)" onmouseover="ShowInventoryDescription(@item.Id)"/></a>
         </div>
     }
 </div>
 
 <script>
-    function scObjHandler(data_id,scene_id,inventory_id) {
+    function scObjHandler(data_id, scene_id, inventory_id) {
+        ShowDescription(data_id);
         console.log(data_id);
         console.log(scene_id);
         console.log(inventory_id);
@@ -46,7 +47,7 @@
                     console.log(data);
                     if (data.interactionType == 0) {
                          $(".inventory")
-                             .append($("<div>").attr("id", String(data.responce.newId)).addClass("inventoryObject")
+                             .append($("<div>").attr("id", String(data.responce.newId)).addClass("inventoryObject").attr("onmouseover", String("ShowInventoryDescription(" + data.responce.newId +")"))
                                     .append($("<a>")
                                         .append($("<img>").attr("src", data.responce.imageUrl)).attr("onclick", String("invObjHandler(" + data.responce.newId + ")"))));
                          $("#" + data.responce.oldId).remove();
@@ -83,19 +84,36 @@
 
         $(".inventoryObject").removeClass("selectedInventoryObject");
         $("#" + id + ".inventoryObject").addClass("selectedInventoryObject");
-        /*$.ajax({
-                    url: "/GamePage/HandleInventoryObjectClick",
-                    type: "post",
-                    data: {
-                        item: String(id),
-                    },
-                    success: function (data) {
+        
+    }
+    function ShowDescription(id) {
 
-                    },
-                    error: function () {
-                        alert("error");
-                }
-                });*/
+        $.ajax({
+            url: "/GamePage/HandleDescriptionShowing",
+            type: "post",
+            data: String(id),
+            success: function (data) {
+                console.log(data);
+            },
+            error: function () {
+                alert("error");
+            }
+            });
+
+    }
+    function ShowInventoryDescription(id) {
+        $.ajax({
+            url: "/GamePage/HandleInventoryDescriptionShowing",
+            type: "post",
+            data: String(id),
+            success: function (data) {
+                console.log(data);
+            },
+            error: function () {
+                alert("error");
+            }
+        });
+
     }
 </script>
 
