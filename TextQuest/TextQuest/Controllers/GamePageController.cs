@@ -16,21 +16,30 @@ namespace TextQuest.Controllers
         private IInteraction _interaction;
         public IInventory _inventory;
         public IInventory_InventoryObject _inventoryHelper;
-        public GamePageController(IScene scene,ISceneObject sceneObject,IInteraction interaction, IInventory inventory,IInventory_InventoryObject inventoryHelper)
+        public IInventoryObject _inventoryObject;
+        public GamePageController(IScene scene,ISceneObject sceneObject,IInteraction interaction, IInventory inventory,IInventory_InventoryObject inventoryHelper, IInventoryObject inventoryObject)
         {
             _scene = scene;
             _sceneObject = sceneObject;
             _interaction = interaction;
             _inventory = inventory;
             _inventoryHelper = inventoryHelper;
+            _inventoryObject = inventoryObject;
         }
 
-
+      
         public IActionResult Index(int? id =1)
         {
 
-            var userInventory = new Inventory();
-            _inventory.Add(userInventory);
+            Inventory userInventory = InventorySingleton.getInstance();
+            try
+            {
+                _inventory.Add(userInventory);
+            }
+            catch (Exception e)
+            {
+
+            }
             var scenes = _scene.GetAll();
             var listingResult = scenes.Select(result => new SceneModel
             {
@@ -51,7 +60,8 @@ namespace TextQuest.Controllers
             {
                 Scenes = listingResult,
                 CurrentScene = curScene,
-                inventory = userInventory
+                Inventory = userInventory,
+                InventoryItems = _inventoryHelper.GetItems(userInventory.Id)
             };
 
             return View(model);
@@ -62,7 +72,14 @@ namespace TextQuest.Controllers
             ViewBag.Title = "Smth";
             return PartialView("_GetSceneObjects");
         }
-      
+
+        public IActionResult GetInventory()
+        {
+            ViewBag.Title = "Smth";
+            return PartialView("_GetInventory");
+        }
+
+
 
         [HttpPost]
         public IActionResult DisplaySpawn()
@@ -74,6 +91,7 @@ namespace TextQuest.Controllers
             
             int id = Int32.Parse(items[0].Split('=')[1]);
             int sceneId = Int32.Parse(items[1].Split('=')[1]);
+            int inventoryId = Int32.Parse(items[2].Split('=')[1]);
 
             var sceneObject = _sceneObject.GetSceneObject(id);
             bool isPickable = sceneObject.IsPickable;
@@ -81,7 +99,16 @@ namespace TextQuest.Controllers
             bool isInnerPass = sceneObject.IsInnerPass;
             if (isPickable)
             {
-                return Ok(new { interactionType = 0,id, sceneObject.AssociatedInventoryObject.Id });
+                var interacton = _interaction.GetInteractionBySceneObject(id);
+                int inventoryItemId = interacton.InteractingInventoryObjectId.Value;
+                _inventoryHelper.AddItem(inventoryId, inventoryItemId);
+                var responce = new Responce()
+                {
+                    oldId =id,
+                    newId = inventoryItemId,
+                    ImageUrl = _inventoryObject.GetImage(inventoryItemId),
+                };
+                return Ok(new { interactionType = 0,id, responce});
             }
             else if (isInnerPass)
             {
@@ -98,7 +125,6 @@ namespace TextQuest.Controllers
                     DoActions(responces, id);
                 }
                 return Ok(new { interactionType = 2, id, responces });
-                //return DoActions(id);
             }
             return Ok();
 
@@ -122,7 +148,8 @@ namespace TextQuest.Controllers
                     newId = associatedSceneObject.Id,
                     x = associatedSceneObject.x,
                     y = associatedSceneObject.y,
-                    ImageUrl = associatedSceneObject.ImageUrl
+                    ImageUrl = associatedSceneObject.ImageUrl,
+
                 };
                 responces.Add(responce);
                 
@@ -135,6 +162,7 @@ namespace TextQuest.Controllers
             }
 
         }
+        
         public void SaveChanges()
         {
 
@@ -148,5 +176,22 @@ namespace TextQuest.Controllers
         public int x { get; set; }
         public int y { get; set; }
         public string ImageUrl { get; set; }
+    }
+    class InventorySingleton
+    {
+        private static Inventory instance;
+
+        private InventorySingleton()
+        { }
+
+        public static Inventory getInstance()
+        {
+            if (instance == null)
+            {
+                instance = new Inventory();
+
+            }
+            return instance;
+        }
     }
 }

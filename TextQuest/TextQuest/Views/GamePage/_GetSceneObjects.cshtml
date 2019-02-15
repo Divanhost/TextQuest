@@ -1,19 +1,30 @@
 ﻿@model TextQuest.Models.SceneListModel
 
-<div>
+<div class="sceneObjectsContainer">
     @foreach (var obj in Model.CurrentScene.SceneObjects)
     {
         string x = obj.x + "px";
         string y = obj.y + "px";
         string id = obj.Id.ToString();
-        <div   id=@id class="sceneObject" style="position:absolute;left:@x;top:@y;">
-            <a title=@obj.Name><img src="@obj.ImageUrl" onclick="inc(@obj.Id,@Model.CurrentScene.Id)"/></a>
+        <div id=@id class="sceneObject" style="position:absolute;left:@x;top:@y;">
+            <a title=@obj.Name><img src="@obj.ImageUrl" onclick="inc(@obj.Id,@Model.CurrentScene.Id,@Model.Inventory.Id)" /></a>
         </div>
     }
 </div>
+<div class="inventory">
+    <button onclick="console.log(@Model.Inventory.Id)">
+        Hello Za Warudo
+    </button>
+    @foreach (var item in Model.InventoryItems)
+    {
+        <div id=@item.Id class="inventoryObject">
+            <a title=@item.Name><img src="@item.ImageUrl"/></a>
+        </div>
+    }
+</div>>
 
 <script>
-    function inc(data_id,scene_id) {
+    function inc(data_id,scene_id,inventory_id) {
         console.log(data_id);
         console.log(scene_id);
 
@@ -23,20 +34,28 @@
                 type: "post",
                 data: {
                     item: String(data_id),
-                    scene: String(scene_id)
+                    scene: String(scene_id),
+                    inventory:String(inventory_id)
                 }, //add parameter
                 success: function (data) {
                     //success
                     console.log(data);
-                    if (data.interactionType == 1) {
+                    if (data.interactionType == 0) {
+                         $(".inventory")
+                                .append($("<div>").attr("id", String(data.responce.newId)).addClass("inventoryObject")
+                                    .append($("<a>")
+                                    .append($("<img>").attr("src", data.responce.imageUrl))));
+                        $("#" + data.responce.oldId).remove();
+                    }
+                    else if (data.interactionType == 1) {
                         window.location.replace("@Url.RouteUrl(new { controller = "GamePage", action = "Index", id = Model.CurrentScene.InnerSceneId })");
                     }
-                    if (data.interactionType == 2) {
+                    else if (data.interactionType == 2) {
                         for (i = 0; i < data.responces.length; i++) {
                             $("#" + data.responces[i].oldId)
                                 .replaceWith($("<div>").attr("id", String(data.responces[i].newId)).addClass("sceneObject").css("position", "absolute").css("left", data.responces[i].x).css("top", data.responces[i].y)
                                     .append($("<a>")
-                                        .append($("<img>").attr("src", data.responces[i].imageUrl).attr("onclick", String("inc(" + data.responces[i].newId + ",@Model.CurrentScene.Id)")))));
+                                        .append($("<img>").attr("src", data.responces[i].imageUrl).attr("onclick", String("inc(" + data.responces[i].newId + ",@Model.CurrentScene.Id,@Model.Inventory.Id)")))));
                         }
                     }
                 },

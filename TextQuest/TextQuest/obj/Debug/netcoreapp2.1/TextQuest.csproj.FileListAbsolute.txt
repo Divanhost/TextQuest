@@ -36,3 +36,4 @@ C:\Users\Student\source\repos\TextQuest\TextQuest\bin\Debug\netcoreapp2.1\TextQu
 C:\Users\Student\source\repos\TextQuest\TextQuest\bin\Debug\netcoreapp2.1\TextQuest.Services.pdb
 C:\Users\Student\source\repos\TextQuest\TextQuest\obj\Debug\netcoreapp2.1\Razor\Views\GamePage\Index.g.cshtml.cs
 C:\Users\Student\source\repos\TextQuest\TextQuest\obj\Debug\netcoreapp2.1\Razor\Views\GamePage\_GetSceneObjects.g.cshtml.cs
+C:\Users\Student\source\repos\TextQuest\TextQuest\obj\Debug\netcoreapp2.1\Razor\Views\GamePage\_GetInventory.g.cshtml.cs
