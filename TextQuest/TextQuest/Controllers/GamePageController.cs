@@ -117,6 +117,7 @@ namespace TextQuest.Controllers
                     oldId =id,
                     newId = inventoryItemId,
                     ImageUrl = _inventoryObject.GetImage(inventoryItemId),
+                    Name = _inventoryObject.GetName(inventoryItemId)
                 };
                 return Ok(new { interactionType = 0,id, responce});
             }

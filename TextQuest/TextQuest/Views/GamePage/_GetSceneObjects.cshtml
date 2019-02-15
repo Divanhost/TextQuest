@@ -6,8 +6,8 @@
         string x = obj.x + "px";
         string y = obj.y + "px";
         string id = obj.Id.ToString();
-        <div id=@id class="sceneObject" style="position:absolute;left:@x;top:@y;">
-            <a title=@obj.Name><img src="@obj.ImageUrl" onclick="scObjHandler(@obj.Id,@Model.CurrentScene.Id,@Model.Inventory.Id)" /></a>
+        <div id=@id class="sceneObject" title=@obj.Name style="position:absolute;left:@x;top:@y;" onmouseover="ShowAction(@obj.Id)" onmouseout="RemoveText()">
+            <a ><img src="@obj.ImageUrl" onclick="scObjHandler(@obj.Id,@Model.CurrentScene.Id,@Model.Inventory.Id)"  /></a>
         </div>
     }
 </div>
@@ -15,10 +15,14 @@
 <div class="inventory" style="display:flex;align-content:flex-start">
     @foreach (var item in Model.InventoryItems)
     {
-        <div id=@item.Id class="inventoryObject">
-            <a title=@item.Name><img src="@item.ImageUrl" onclick="invObjHandler(@item.Id)" onmouseover="ShowInventoryDescription(@item.Id)"/></a>
+        <div id=@item.Id class="inventoryObject" onclick="invObjHandler(@item.Id)" onmouseover="ShowInventoryDescription(@item.Id)" title=@item.Name>
+            <a><img src="@item.ImageUrl"/></a>
         </div>
     }
+</div>
+<div>
+    <h3>Текстовое поле</h3>
+    <div class="textfield"></div>
 </div>
 
 <script>
@@ -46,11 +50,13 @@
                 success: function (data) {
                     console.log(data);
                     if (data.interactionType == 0) {
+                        // Add item to inventory
                          $(".inventory")
-                             .append($("<div>").attr("id", String(data.responce.newId)).addClass("inventoryObject").attr("onmouseover", String("ShowInventoryDescription(" + data.responce.newId +")"))
+                             .append($("<div>").attr("id", String(data.responce.newId)).addClass("inventoryObject").attr("onmouseover", String("ShowInventoryDescription(" + data.responce.newId + ")")).attr("onclick", String("invObjHandler(" + data.responce.newId + ")")).attr("onmouseout", "RemoveText()").attr("title",String(data.responce.name))
                                     .append($("<a>")
-                                        .append($("<img>").attr("src", data.responce.imageUrl)).attr("onclick", String("invObjHandler(" + data.responce.newId + ")"))));
-                         $("#" + data.responce.oldId).remove();
+                                        .append($("<img>").attr("src", data.responce.imageUrl))));
+                        $("#" + data.responce.oldId).remove();
+                        $(".inventoryObject").removeClass("selectedInventoryObject");
                     }
                     else if (data.interactionType == 1) {
                         window.location.replace("@Url.RouteUrl(new { controller = "GamePage", action = "Index", id = Model.CurrentScene.InnerSceneId })");
@@ -61,9 +67,10 @@
                                 console.log("No");
                                 return;
                             }
+                            // Do set of animations
                             for (i = 0; i < data.responces.length; i++) {
                                 $("#" + data.responces[i].oldId)
-                                    .replaceWith($("<div>").attr("id", String(data.responces[i].newId)).addClass("sceneObject").css("position", "absolute").css("left", data.responces[i].x).css("top", data.responces[i].y)
+                                    .replaceWith($("<div>").attr("id", String(data.responces[i].newId)).addClass("sceneObject").css("position", "absolute").css("left", data.responces[i].x).css("top", data.responces[i].y).attr("onmouseout" ,"RemoveText()")
                                         .append($("<a>").attr("title", data.responces[i].Name) //todo: не ставится hover text
                                             .append($("<img>").attr("src", data.responces[i].imageUrl).attr("onclick", String("scObjHandler(" + data.responces[i].newId + ",@Model.CurrentScene.Id,@Model.Inventory.Id)")))));
                             }
@@ -75,16 +82,15 @@
                 error: function () {
                     alert("error");
             }
-            });
+        });
+        RemoveText();
+        
     }
 </script>
 
 <script>
     function invObjHandler(id) {
-
-        $(".inventoryObject").removeClass("selectedInventoryObject");
         $("#" + id + ".inventoryObject").addClass("selectedInventoryObject");
-        
     }
     function ShowDescription(id) {
 
@@ -93,7 +99,7 @@
             type: "post",
             data: String(id),
             success: function (data) {
-                console.log(data);
+                $(".textfield").append(document.createTextNode(data));
             },
             error: function () {
                 alert("error");
@@ -107,13 +113,26 @@
             type: "post",
             data: String(id),
             success: function (data) {
-                console.log(data);
+                $(".textfield").append(document.createTextNode(data));
             },
             error: function () {
                 alert("error");
             }
         });
 
+    }
+    function ShowAction(id) {
+        let inventoryObj = $(".selectedInventoryObject").attr("title");
+        let sceneObj = $("#" + id + ".sceneObject").attr("title");
+        let action = "Использовать " + inventoryObj + " c " + sceneObj;
+        if (inventoryObj)
+            $(".textfield").append(document.createTextNode(action));
+        else 
+            $(".textfield").append(document.createTextNode(sceneObj));
+        
+    }
+    function RemoveText() {
+        $(".textfield").empty();
     }
 </script>
 
