@@ -5,14 +5,12 @@
 }
 
 
-<h3>@ViewBag.Title</h3>
-<body onunload="alert('Вы точно решили покинуть наш сайт ?')">
+<body>
 
-    <div class="background">
+    <div class="background" >
         <img src="@Model.CurrentScene.BackgroundImageUrl" />
 
         @Html.Partial("_GetSceneObjects", Model)
-        @Html.Partial("_GetInventory", Model)
 
     </div>
 

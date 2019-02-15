@@ -32,6 +32,7 @@ namespace TextQuest.Controllers
         {
 
             Inventory userInventory = InventorySingleton.getInstance();
+            //This is quite bad
             try
             {
                 _inventory.Add(userInventory);
@@ -40,6 +41,7 @@ namespace TextQuest.Controllers
             {
 
             }
+            // Model assembly
             var scenes = _scene.GetAll();
             var listingResult = scenes.Select(result => new SceneModel
             {
@@ -67,36 +69,44 @@ namespace TextQuest.Controllers
             return View(model);
 
         }
+
+
+
         public IActionResult GetSceneObjects()
         {
             ViewBag.Title = "Smth";
             return PartialView("_GetSceneObjects");
         }
 
-        public IActionResult GetInventory()
-        {
-            ViewBag.Title = "Smth";
-            return PartialView("_GetInventory");
-        }
-
-
 
         [HttpPost]
-        public IActionResult DisplaySpawn()
+        public IActionResult HandleSceneObjectClick()
         {
-            // 
+            // Read request
             StreamReader sr = new StreamReader(Request.Body);
             string data = sr.ReadToEnd();
             var items = data.Split('&');
             
+            //temp Variables
             int id = Int32.Parse(items[0].Split('=')[1]);
             int sceneId = Int32.Parse(items[1].Split('=')[1]);
             int inventoryId = Int32.Parse(items[2].Split('=')[1]);
+            int? selectedInventoryObjectId = null;
 
+            string temp = items[3].Split('=')[1];
+            if(temp != "undefined")
+            {
+                selectedInventoryObjectId = Int32.Parse(temp);
+            }
+             
+            //Scene object related Variables;
             var sceneObject = _sceneObject.GetSceneObject(id);
             bool isPickable = sceneObject.IsPickable;
             bool hasAction = sceneObject.HasAction;
             bool isInnerPass = sceneObject.IsInnerPass;
+
+            //Choose the way
+            // We can pick item in inventory
             if (isPickable)
             {
                 var interacton = _interaction.GetInteractionBySceneObject(id);
@@ -110,33 +120,46 @@ namespace TextQuest.Controllers
                 };
                 return Ok(new { interactionType = 0,id, responce});
             }
+            // It is the pass into a new Scene
             else if (isInnerPass)
             {
                 var nextSceneId = _scene.GetScene(sceneId).InnerSceneId;
               
                 return Ok(new { interactionType = 1, nextRoomId = id});
             }
+            //It has action 
             else if (hasAction)
             {
                 var responces = new List<Responce>();
                 var interacton = _interaction.GetInteractionBySceneObject(id);
                 if (interacton.IsAllowed)
                 {
-                    DoActions(responces, id);
+                    if(interacton.InteractingInventoryObjectId != selectedInventoryObjectId)
+                    {
+                        responces.Add(new Responce { isValid = false });
+                    }
+                    else
+                    {
+                        if(selectedInventoryObjectId != null)
+                        _inventoryHelper.RemoveItem(inventoryId, selectedInventoryObjectId??default(int));
+                        DoActions(responces, id);
+                    }
                 }
                 return Ok(new { interactionType = 2, id, responces });
             }
-            return Ok();
-
+            else
+            {
+                return Ok();
+            }
         }
 
+        //Do action or sequence of actions
         public void DoActions(List<Responce> responces,int id)
         {
             
             var sceneObject = _sceneObject.GetSceneObject(id);
             var interacton = _interaction.GetInteractionBySceneObject(id);
             var associatedSceneObject = _sceneObject.GetSceneObject(interacton.InteractingObjectId ?? default(int));
-
 
 
      
@@ -146,6 +169,8 @@ namespace TextQuest.Controllers
                 {
                     oldId = sceneObject.Id,
                     newId = associatedSceneObject.Id,
+                    Name =associatedSceneObject.Name,
+                    Description = associatedSceneObject.Description,
                     x = associatedSceneObject.x,
                     y = associatedSceneObject.y,
                     ImageUrl = associatedSceneObject.ImageUrl,
@@ -162,6 +187,7 @@ namespace TextQuest.Controllers
             }
 
         }
+
         
         public void SaveChanges()
         {
@@ -173,10 +199,14 @@ namespace TextQuest.Controllers
     {
         public int oldId { get; set; }
         public int newId { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
         public int x { get; set; }
         public int y { get; set; }
         public string ImageUrl { get; set; }
+        public bool isValid { get; set; }
     }
+    
     class InventorySingleton
     {
         private static Inventory instance;

@@ -19,8 +19,8 @@ namespace TextQuest.Services
 
         public void AddItem(int id,int itemId)
         {
-            
-            _context.Inventory_InventoryObjects.Add(new Inventory_InventoryObject { InventoryId = id, InventoryObjectId = itemId });
+            // Как ты работаешь, чудовище
+            _context.Add(new Inventory_InventoryObject { InventoryId = id, InventoryObjectId = itemId });
             _context.SaveChanges();
         }
 
@@ -45,7 +45,8 @@ namespace TextQuest.Services
 
         public void RemoveItem(int id, int itemId)
         {
-            _context.Inventory_InventoryObjects.Remove(new Inventory_InventoryObject { InventoryId = id, InventoryObjectId = itemId });
+            var removingItem = _context.Inventory_InventoryObjects.Where(ri => ri.InventoryId == id && ri.InventoryObjectId == itemId);
+            _context.Remove(removingItem.First());
             _context.SaveChanges();
 
         }
