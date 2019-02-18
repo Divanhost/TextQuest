@@ -61,5 +61,10 @@ namespace TextQuest.Services
             GetSceneObject(id).y = location.y;
             GetSceneObject(id).z = location.z;
         }
+
+        public string GetDescription(int id)
+        {
+            return GetSceneObject(id).Description;
+        }
     }
 }

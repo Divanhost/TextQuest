@@ -12,8 +12,8 @@ namespace TextQuest.Models
         public int Id;
         public string BackgroundImageUrl;
         public string Description;
-        public IEnumerable<SceneObject> SceneObjects;
-        public IEnumerable<SceneObject> SpawnedSceneObjects;
+        public List<SceneObject> SceneObjects;
+        public List<SceneObject> SpawnedSceneObjects;
         public int UpperSceneId;
         public int DownSceneId;
         public int LeftSceneId;

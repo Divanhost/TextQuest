@@ -30,40 +30,43 @@ namespace TextQuest.Controllers
       
         public IActionResult Index(int? id =1)
         {
-
-            Inventory userInventory = InventorySingleton.getInstance();
+            UserSingleton user = UserSingleton.getInstance();
+            Inventory inventory = UserSingleton.getInventory();
             //This is quite bad
             try
             {
-                _inventory.Add(userInventory);
+                _inventory.Add(inventory);
             }
             catch (Exception e)
             {
 
             }
             // Model assembly
-            var scenes = _scene.GetAll();
-            var listingResult = scenes.Select(result => new SceneModel
+            var currentScene = UserSingleton.GetScene(id ?? default(int));
+            if (currentScene == null)
             {
-                Id = result.Id,
-                Description = result.Description,
-                BackgroundImageUrl = result.BackgroundImageUrl,
-                SceneObjects = result.SceneObjects.Where(so => !so.IsSpawned).OrderByDescending(s => s.z),
-                SpawnedSceneObjects = result.SceneObjects.Where(so => so.IsSpawned).OrderByDescending(s => s.z),
-                UpperSceneId = result.UpperSceneId,
-                DownSceneId = result.DownSceneId,
-                LeftSceneId = result.LeftSceneId,
-                RightSceneId = result.RightSceneId,
-                InnerSceneId = result.InnerSceneId
-            });
-            var curScene = listingResult.FirstOrDefault(s => s.Id == id);
-
+                var sc = _scene.GetScene(id ?? default(int));
+                currentScene = new SceneModel
+                {
+                    Id = sc.Id,
+                    Description = sc.Description,
+                    BackgroundImageUrl = sc.BackgroundImageUrl,
+                    SceneObjects = sc.SceneObjects.Where(so => !so.IsSpawned).OrderByDescending(s => s.z).ToList(),
+                    SpawnedSceneObjects = sc.SceneObjects.Where(so => so.IsSpawned).OrderByDescending(s => s.z).ToList(),
+                    UpperSceneId = sc.UpperSceneId,
+                    DownSceneId = sc.DownSceneId,
+                    LeftSceneId = sc.LeftSceneId,
+                    RightSceneId = sc.RightSceneId,
+                    InnerSceneId = sc.InnerSceneId
+                };
+                UserSingleton.AddScene(currentScene);
+            }
             var model = new SceneListModel()
             {
-                Scenes = listingResult,
-                CurrentScene = curScene,
-                Inventory = userInventory,
-                InventoryItems = _inventoryHelper.GetItems(userInventory.Id)
+                Scenes = UserSingleton.GetScenes(),
+                CurrentScene = currentScene,
+                Inventory = inventory,
+                InventoryItems = _inventoryHelper.GetItems(inventory.Id)
             };
 
             return View(model);
@@ -74,7 +77,6 @@ namespace TextQuest.Controllers
 
         public IActionResult GetSceneObjects()
         {
-            ViewBag.Title = "Smth";
             return PartialView("_GetSceneObjects");
         }
 
@@ -98,9 +100,10 @@ namespace TextQuest.Controllers
             {
                 selectedInventoryObjectId = Int32.Parse(temp);
             }
-             
+
             //Scene object related Variables;
-            var sceneObject = _sceneObject.GetSceneObject(id);
+            var sceneObject = UserSingleton.GetScene(sceneId).SceneObjects.FirstOrDefault(so => so.Id == id);
+            //var sceneObject = _sceneObject.GetSceneObject(id);
             bool isPickable = sceneObject.IsPickable;
             bool hasAction = sceneObject.HasAction;
             bool isInnerPass = sceneObject.IsInnerPass;
@@ -114,18 +117,18 @@ namespace TextQuest.Controllers
                 _inventoryHelper.AddItem(inventoryId, inventoryItemId);
                 var responce = new Responce()
                 {
-                    oldId =id,
+                    oldId = id,
                     newId = inventoryItemId,
                     ImageUrl = _inventoryObject.GetImage(inventoryItemId),
-                    Name = _inventoryObject.GetName(inventoryItemId)
+                    Name =  _inventoryObject.GetName(inventoryItemId)
                 };
+                UserSingleton.GetScene(sceneId).SceneObjects.Remove(UserSingleton.GetScene(sceneId).SceneObjects.FirstOrDefault(so=>so.Id ==id));
                 return Ok(new { interactionType = 0,id, responce});
             }
             // It is the pass into a new Scene
             else if (isInnerPass)
             {
-                var nextSceneId = _scene.GetScene(sceneId).InnerSceneId;
-              
+                var nextSceneId = UserSingleton.GetScene(sceneId).InnerSceneId;//_scene.GetScene(sceneId).InnerSceneId;
                 return Ok(new { interactionType = 1, nextRoomId = id});
             }
             //It has action 
@@ -143,7 +146,7 @@ namespace TextQuest.Controllers
                     {
                         if(selectedInventoryObjectId != null)
                         _inventoryHelper.RemoveItem(inventoryId, selectedInventoryObjectId??default(int));
-                        DoActions(responces, id);
+                        DoActions(responces, id,sceneId);
                     }
                 }
                 return Ok(new { interactionType = 2, id, responces });
@@ -162,17 +165,25 @@ namespace TextQuest.Controllers
             int id = Int32.Parse(data);
             return Ok(_sceneObject.GetSceneObject(id).Description);
         }
-        public IActionResult HandleInventoryDescriptionShowing()
+        public IActionResult HandleInventoryInfoShowing()
         {
             StreamReader sr = new StreamReader(Request.Body);
             string data = sr.ReadToEnd();
 
             int id = Int32.Parse(data);
-            return Ok(_inventoryObject.GetDescription(id));
-        }
+            return Ok(new { name = _inventoryObject.GetName(id), description = _inventoryObject.GetDescription(id) });
 
+        }
+        public IActionResult HandleShowInfo()
+        {
+            StreamReader sr = new StreamReader(Request.Body);
+            string data = sr.ReadToEnd();
+
+            int id = Int32.Parse(data);
+            return Ok(new { name = _sceneObject.GetName(id),description = _sceneObject.GetDescription(id)});
+        }
         //Do action or sequence of actions
-        public void DoActions(List<Responce> responces,int id)
+        public void DoActions(List<Responce> responces,int id,int sceneId)
         {
             
             var sceneObject = _sceneObject.GetSceneObject(id);
@@ -183,36 +194,47 @@ namespace TextQuest.Controllers
      
             if(interacton.InteractingObjectId != id)
             {
-                var responce = new Responce()
+                if (interacton.InteractingObjectId.HasValue)
                 {
-                    oldId = sceneObject.Id,
-                    newId = associatedSceneObject.Id,
-                    Name =associatedSceneObject.Name,
-                    Description = associatedSceneObject.Description,
-                    x = associatedSceneObject.x,
-                    y = associatedSceneObject.y,
-                    ImageUrl = associatedSceneObject.ImageUrl,
+                    var responce = new Responce()
+                    {
+                        oldId = sceneObject.Id,
+                        newId = associatedSceneObject.Id,
+                        Name = associatedSceneObject.Name,
+                        Description = associatedSceneObject.Description,
+                        x = associatedSceneObject.x,
+                        y = associatedSceneObject.y,
+                        ImageUrl = associatedSceneObject.ImageUrl,
+                        Action = 1,
+                        isValid = true
+                    };
+                    responces.Add(responce);
+                    UserSingleton.GetScene(sceneId).SpawnedSceneObjects.Add(UserSingleton.GetScene(sceneId).SceneObjects.FirstOrDefault(so => so.Id == id));
+                    UserSingleton.GetScene(sceneId).SceneObjects.Remove(UserSingleton.GetScene(sceneId).SceneObjects.FirstOrDefault(so => so.Id == id));
+                    UserSingleton.GetScene(sceneId).SceneObjects.Add(UserSingleton.GetScene(sceneId).SpawnedSceneObjects.FirstOrDefault(so => so.Id == associatedSceneObject.Id));
+                }
+                else
+                {
+                    var responce = new Responce()
+                    {
+                        Action = 0,
+                    };
+                    responces.Add(responce);
+                    UserSingleton.GetScene(sceneId).SceneObjects.Remove(UserSingleton.GetScene(sceneId).SceneObjects.FirstOrDefault(so => so.Id == id));
+                }
 
-                };
-                responces.Add(responce);
-                
             }
             if (interacton.NextInteractionId.HasValue)
             {
                 interacton = _interaction.GetInteraction(interacton.NextInteractionId);
                 int newId = interacton.TargetObjectId ?? default(int);
-                DoActions(responces, newId);
+                DoActions(responces, newId,sceneId);
             }
 
         }
-
         
-        public void SaveChanges()
-        {
-
-        }
-
     }
+
     public class Responce
     {
         public int oldId { get; set; }
@@ -223,23 +245,55 @@ namespace TextQuest.Controllers
         public int y { get; set; }
         public string ImageUrl { get; set; }
         public bool isValid { get; set; }
+        // 0 - remove, 1 -replace
+        public int Action { get; set; }
     }
     
-    class InventorySingleton
+    class UserSingleton
     {
-        private static Inventory instance;
-
-        private InventorySingleton()
-        { }
-
-        public static Inventory getInstance()
+        private static UserSingleton instance;
+        private static Inventory Inventory;
+        private static List<SceneModel> Scenes;
+        private UserSingleton() { }
+        public static UserSingleton getInstance()
         {
             if (instance == null)
             {
-                instance = new Inventory();
-
+                instance = new UserSingleton();
+                Inventory = new Inventory();
+                Scenes = new List<SceneModel>();
             }
             return instance;
         }
+        public static IEnumerable<SceneModel> GetScenes()
+        {
+           return Scenes;
+        }
+        public static SceneModel GetScene(int id)
+        {
+            if (Scenes.Count > 0)
+            {
+                if (Scenes.Any(s => s.Id == id))
+                {
+                    return Scenes.FirstOrDefault(s => s.Id == id);
+                }
+            }
+            return null;
+        }
+        public static void AddScene(SceneModel scene)
+        {
+            Scenes.Add(scene);
+        }
+        public static Inventory getInventory()
+        {
+            if (Inventory == null)
+            {
+                Inventory = new Inventory();
+
+            }
+            return Inventory;
+        }
     }
+
 }
+

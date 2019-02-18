@@ -6,16 +6,16 @@
         string x = obj.x + "px";
         string y = obj.y + "px";
         string id = obj.Id.ToString();
-        <div id=@id class="sceneObject" title=@obj.Name style="position:absolute;left:@x;top:@y;" onmouseover="ShowAction(@obj.Id)" onmouseout="RemoveText()">
-            <a ><img src="@obj.ImageUrl" onclick="scObjHandler(@obj.Id,@Model.CurrentScene.Id,@Model.Inventory.Id)"  /></a>
+        <div id=@id class="sceneObject" title=@obj.Name style="position:absolute;left:@x;top:@y;" onmouseover="ShowAction(@obj.Id)">
+            <a ><img src="@obj.ImageUrl" onclick="scObjHandler(@obj.Id,@Model.CurrentScene.Id,@Model.Inventory.Id)" oncontextmenu="ShowInfo(@obj.Id);return false;"  /></a>
         </div>
     }
 </div>
-<h3>Инвентарь @ViewBag.SelectedInventoryObject</h3>
+<h3>Инвентарь</h3>
 <div class="inventory" style="display:flex;align-content:flex-start">
     @foreach (var item in Model.InventoryItems)
     {
-        <div id=@item.Id class="inventoryObject" onclick="invObjHandler(@item.Id)" onmouseover="ShowInventoryDescription(@item.Id)" title=@item.Name>
+        <div id=@item.Id class="inventoryObject" onclick="invObjHandler(@item.Id)" oncontextmenu="ShowInventoryInfo(@item.Id); return false;" title=@item.Name>
             <a><img src="@item.ImageUrl"/></a>
         </div>
     }
@@ -27,15 +27,12 @@
 
 <script>
     function scObjHandler(data_id, scene_id, inventory_id) {
-        ShowDescription(data_id);
-        console.log(data_id);
-        console.log(scene_id);
-        console.log(inventory_id);
+       
         let selectedinventoryId;
         if ($(".inventoryObject").hasClass("selectedInventoryObject")) {
             selectedinventoryId = $(".selectedInventoryObject").attr("id");
         }
-        console.log(selectedinventoryId);
+        
 
 
         $.ajax({
@@ -47,12 +44,12 @@
                     inventory: String(inventory_id),
                     selectedinventoryId:String(selectedinventoryId)
                 },
-                success: function (data) {
-                    console.log(data);
+            success: function (data) {
+                console.log(data);
                     if (data.interactionType == 0) {
                         // Add item to inventory
                          $(".inventory")
-                             .append($("<div>").attr("id", String(data.responce.newId)).addClass("inventoryObject").attr("onmouseover", String("ShowInventoryDescription(" + data.responce.newId + ")")).attr("onclick", String("invObjHandler(" + data.responce.newId + ")")).attr("onmouseout", "RemoveText()").attr("title",String(data.responce.name))
+                             .append($("<div>").attr("id", String(data.responce.newId)).addClass("inventoryObject").attr("oncontextmenu", String("ShowInventoryInfo(" + data.responce.newId + ");return false;")).attr("onclick", String("invObjHandler(" + data.responce.newId + ")")).attr("title",String(data.responce.name))
                                     .append($("<a>")
                                         .append($("<img>").attr("src", data.responce.imageUrl))));
                         $("#" + data.responce.oldId).remove();
@@ -63,18 +60,24 @@
                     }
                     else if (data.interactionType == 2) {
                         if (data.responces.length > 0) {
-                            if (data.responces[0].isValid) {
+                            /*if (!data.responces[0].isValid) {
                                 console.log("No");
                                 return;
-                            }
+                            }*/
                             // Do set of animations
                             for (i = 0; i < data.responces.length; i++) {
+                                if (data.responces[i].oldId == 0 && !data.responces[i].isValid) {
+                                    console.log("Hello")
+                                    $("#" + data_id).remove();
+                                    continue;
+                                }
                                 $("#" + data.responces[i].oldId)
-                                    .replaceWith($("<div>").attr("id", String(data.responces[i].newId)).addClass("sceneObject").css("position", "absolute").css("left", data.responces[i].x).css("top", data.responces[i].y).attr("onmouseout" ,"RemoveText()")
+                                    .replaceWith($("<div>").attr("id", String(data.responces[i].newId)).addClass("sceneObject").css("position", "absolute").css("left", data.responces[i].x).css("top", data.responces[i].y).attr("onmouseover" ,String("RemoveText("+ShowAction(data.responces[i].newId)+")"))
                                         .append($("<a>").attr("title", data.responces[i].Name) //todo: не ставится hover text
-                                            .append($("<img>").attr("src", data.responces[i].imageUrl).attr("onclick", String("scObjHandler(" + data.responces[i].newId + ",@Model.CurrentScene.Id,@Model.Inventory.Id)")))));
+                                            .append($("<img>").attr("src", data.responces[i].imageUrl).attr("onclick", String("scObjHandler(" + data.responces[i].newId + ",@Model.CurrentScene.Id,@Model.Inventory.Id)")).attr("oncontextmenu", String("ShowInfo(" + data.responces[i].newId + ");return false;")))));
                             }
                             $("div.selectedInventoryObject").remove()
+                            RemoveText();
                         }
                         
                     }
@@ -92,28 +95,15 @@
     function invObjHandler(id) {
         $("#" + id + ".inventoryObject").addClass("selectedInventoryObject");
     }
-    function ShowDescription(id) {
-
+    
+    function ShowInventoryInfo(id) {
+        RemoveText();
         $.ajax({
-            url: "/GamePage/HandleDescriptionShowing",
+            url: "/GamePage/HandleInventoryInfoShowing",
             type: "post",
             data: String(id),
             success: function (data) {
-                $(".textfield").append(document.createTextNode(data));
-            },
-            error: function () {
-                alert("error");
-            }
-            });
-
-    }
-    function ShowInventoryDescription(id) {
-        $.ajax({
-            url: "/GamePage/HandleInventoryDescriptionShowing",
-            type: "post",
-            data: String(id),
-            success: function (data) {
-                $(".textfield").append(document.createTextNode(data));
+                $(".textfield").append(document.createTextNode(data.name)).append(" ").append(document.createTextNode(data.description));
             },
             error: function () {
                 alert("error");
@@ -121,15 +111,32 @@
         });
 
     }
+ 
+    function ShowInfo(id) {
+        RemoveText();
+        $(".inventoryObject").removeClass("selectedInventoryObject");
+        $.ajax({
+            url: "/GamePage/HandleShowInfo",
+            type: "post",
+            data: String(id),
+            success: function (data) {
+                $(".textfield").append(document.createTextNode(data.name)).append(" ").append(document.createTextNode(data.description));
+            },
+            error: function () {
+                alert("error");
+            }
+        });
+    }
+
     function ShowAction(id) {
+
         let inventoryObj = $(".selectedInventoryObject").attr("title");
         let sceneObj = $("#" + id + ".sceneObject").attr("title");
         let action = "Использовать " + inventoryObj + " c " + sceneObj;
-        if (inventoryObj)
+        if (inventoryObj) {
+            RemoveText();
             $(".textfield").append(document.createTextNode(action));
-        else 
-            $(".textfield").append(document.createTextNode(sceneObj));
-        
+        }
     }
     function RemoveText() {
         $(".textfield").empty();
