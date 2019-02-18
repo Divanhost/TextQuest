@@ -153,7 +153,8 @@ namespace TextQuest.Controllers
             }
             else
             {
-                return Ok();
+                var responces = new List<Responce>();
+                return Ok(new { interactionType = 2, id, responces});
             }
         }
 

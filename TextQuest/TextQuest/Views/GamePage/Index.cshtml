@@ -1,21 +1,70 @@
 ﻿
 @model TextQuest.Models.SceneListModel
-@{
-    ViewBag.Title = "Hello World";
-}
+
 
 
 <body>
+    <div class="back-container">
+        <img src="~/images/arrow_l.png" alt="Alternate Text" onclick="toTheLeftScene()"/>
+        <img src="~/images/arrow_u.png" alt="Alternate Text" onclick="toTheUpperScene()"/>
+        <img src="~/images/arrow_d.png" alt="Alternate Text" onclick="toTheDownScene()"/>
+        <img src="~/images/arrow_r.png" alt="Alternate Text" onclick="toTheRightScene()"/>
 
-    <div class="background" >
-        <img src="@Model.CurrentScene.BackgroundImageUrl" />
+        <div class="background">
+            <img src="@Model.CurrentScene.BackgroundImageUrl" />
+            @Html.Partial("_GetSceneObjects", Model)
 
-        @Html.Partial("_GetSceneObjects", Model)
-
+        </div>
     </div>
+  
 
     
 
 </body>
 
+<script>
+    function toTheLeftScene() {
+        console.log("wassup");
+        try {
+            let a = @Model.CurrentScene.LeftSceneId;
+            if(a!=0)
+            window.location.replace("@Url.RouteUrl(new { controller = "GamePage", action = "Index", id = Model.CurrentScene.LeftSceneId })");
+        }
+        catch{
 
+        }
+    }
+    function toTheRightScene() {
+        console.log("wassup");
+        try {
+            let a = @Model.CurrentScene.RightSceneId;
+            if (a != 0)
+            window.location.replace("@Url.RouteUrl(new { controller = "GamePage", action = "Index", id = Model.CurrentScene.RightSceneId })");
+        }
+        catch{
+
+        }
+    }
+    function toTheUpperScene() {
+        console.log("wassup");
+        try {
+            let a = @Model.CurrentScene.UpperSceneId;
+            if (a != 0)
+            window.location.replace("@Url.RouteUrl(new { controller = "GamePage", action = "Index", id = Model.CurrentScene.UpperSceneId })");
+        }
+        catch{
+
+        }
+    }
+    function toTheDownScene() {
+        console.log("wassup");
+        try {
+            let a = @Model.CurrentScene.DownSceneId;
+            if (a != 0)
+            window.location.replace("@Url.RouteUrl(new { controller = "GamePage", action = "Index", id = Model.CurrentScene.DownSceneId })");
+        }
+        catch{
+
+        }
+    }
+    </script>>
