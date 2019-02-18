@@ -60,13 +60,14 @@
                     }
                     else if (data.interactionType == 2) {
                         if (data.responces.length > 0) {
-                            /*if (!data.responces[0].isValid) {
+                            if (!data.responces[0].isValid) {
                                 console.log("No");
+                                $(".textfield").append(document.createTextNode("Вы не можете это использовать"));
                                 return;
-                            }*/
+                            }
                             // Do set of animations
                             for (i = 0; i < data.responces.length; i++) {
-                                if (data.responces[i].oldId == 0 && !data.responces[i].isValid) {
+                                if (data.responces[i].action == 0) {
                                     console.log("Hello")
                                     $("#" + data_id).remove();
                                     continue;

@@ -218,6 +218,7 @@ namespace TextQuest.Controllers
                     var responce = new Responce()
                     {
                         Action = 0,
+                        isValid = true
                     };
                     responces.Add(responce);
                     UserSingleton.GetScene(sceneId).SceneObjects.Remove(UserSingleton.GetScene(sceneId).SceneObjects.FirstOrDefault(so => so.Id == id));
@@ -245,8 +246,8 @@ namespace TextQuest.Controllers
         public int y { get; set; }
         public string ImageUrl { get; set; }
         public bool isValid { get; set; }
-        // 0 - remove, 1 -replace
-        public int Action { get; set; }
+        // 0 - remove, 1 -replace -1 -default
+        public int Action = -1;
     }
     
     class UserSingleton

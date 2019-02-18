@@ -62,7 +62,7 @@ using TextQuest.Models;
             WriteLiteral("\r\n\r\n");
             EndContext();
             BeginContext(89, 186, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "80b3b32adfc74fbe9f63805e449b9a02", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d28b2a19cd97475d9bc5f976251a634e", async() => {
                 BeginContext(95, 47, true);
                 WriteLiteral("\r\n\r\n    <div class=\"background\" >\r\n        <img");
                 EndContext();
