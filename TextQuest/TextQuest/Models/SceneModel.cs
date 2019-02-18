@@ -18,6 +18,5 @@ namespace TextQuest.Models
         public int DownSceneId;
         public int LeftSceneId;
         public int RightSceneId;
-        public int InnerSceneId;
     }
 }

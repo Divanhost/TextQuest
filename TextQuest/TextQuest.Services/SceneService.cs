@@ -63,11 +63,6 @@ namespace TextQuest.Services
             return GetScene(id).UpperSceneId;
         }
 
-        public int GetInnerScene(int id)
-        {
-            return GetScene(id).InnerSceneId;
-        }
-
         public IEnumerable<Scene> GetAll()
         {
             return _context.Scenes.Include(s => s.SceneObjects);

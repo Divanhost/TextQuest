@@ -16,6 +16,5 @@ namespace TextQuest.Data
         public int DownSceneId { get; set; }
         public int LeftSceneId { get; set; }
         public int RightSceneId { get; set; }
-        public int InnerSceneId { get; set; }
     }
 }

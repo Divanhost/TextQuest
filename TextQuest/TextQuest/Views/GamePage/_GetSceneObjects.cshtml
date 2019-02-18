@@ -54,7 +54,9 @@
                         $(".inventoryObject").removeClass("selectedInventoryObject");
                     }
                     else if (data.interactionType == 1) {
-                        window.location.replace("@Url.RouteUrl(new { controller = "GamePage", action = "Index", id = Model.CurrentScene.InnerSceneId })");
+                        console.log(data);
+                        window.location.replace(data.nextSceneId);
+                       // window.location.replace("@*Url.RouteUrl(new { controller = "GamePage", action = "Index", id = Model.CurrentScene.InnerScenesId })");*@
                     }
                     else if (data.interactionType == 2) {
                         if (data.responces.length > 0) {

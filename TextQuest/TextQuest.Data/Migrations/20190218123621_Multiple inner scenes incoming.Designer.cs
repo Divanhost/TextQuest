@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TextQuest.Data;
 
 namespace TextQuest.Data.Migrations
 {
     [DbContext(typeof(TextQuestDbContext))]
-    partial class TextQuestDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190218123621_Multiple inner scenes incoming")]
+    partial class Multipleinnerscenesincoming
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -107,9 +109,13 @@ namespace TextQuest.Data.Migrations
 
                     b.Property<int>("RightSceneId");
 
+                    b.Property<int?>("SceneId");
+
                     b.Property<int>("UpperSceneId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("SceneId");
 
                     b.ToTable("Scenes");
                 });
@@ -159,6 +165,13 @@ namespace TextQuest.Data.Migrations
                     b.HasIndex("SceneId");
 
                     b.ToTable("SceneObjects");
+                });
+
+            modelBuilder.Entity("TextQuest.Data.Scene", b =>
+                {
+                    b.HasOne("TextQuest.Data.Scene")
+                        .WithMany("InnerScenes")
+                        .HasForeignKey("SceneId");
                 });
 
             modelBuilder.Entity("TextQuest.Data.SceneObject", b =>

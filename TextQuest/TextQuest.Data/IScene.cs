@@ -14,8 +14,6 @@ namespace TextQuest.Data
         int GetRightScene(int id);
         int GetUpperScene(int id);
         int GetDownScene(int id);
-        int GetInnerScene(int id);
-
         IEnumerable<SceneObject> GetSceneObjects(int id);
         IEnumerable<SceneObject> GetSpawnedSceneObjects(int id);
     }

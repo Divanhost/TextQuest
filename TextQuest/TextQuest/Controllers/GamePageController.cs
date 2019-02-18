@@ -57,8 +57,7 @@ namespace TextQuest.Controllers
                     DownSceneId = sc.DownSceneId,
                     LeftSceneId = sc.LeftSceneId,
                     RightSceneId = sc.RightSceneId,
-                    InnerSceneId = sc.InnerSceneId
-                };
+            };
                 UserSingleton.AddScene(currentScene);
             }
             var model = new SceneListModel()
@@ -128,8 +127,8 @@ namespace TextQuest.Controllers
             // It is the pass into a new Scene
             else if (isInnerPass)
             {
-                var nextSceneId = UserSingleton.GetScene(sceneId).InnerSceneId;//_scene.GetScene(sceneId).InnerSceneId;
-                return Ok(new { interactionType = 1, nextRoomId = id});
+                int nextSceneId = UserSingleton.GetScene(sceneId).SceneObjects.FirstOrDefault(s=>s.Id ==id).InnerPassSceneID;//_scene.GetScene(sceneId).InnerSceneId;
+                return Ok(new { interactionType = 1, nextSceneId });
             }
             //It has action 
             else if (hasAction)

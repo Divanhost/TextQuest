@@ -17,6 +17,7 @@ namespace TextQuest.Data
         public bool IsSpawned { get; set; }
         public bool IsInnerPass { get; set; }
         public bool HasAction { get; set; }
+        public int InnerPassSceneID { get; set; }
         public InventoryObject AssociatedInventoryObject { get; set; }
         public SceneObject AssociatedSceneObject { get; set; }
         public string ImageUrl { get; set; }
