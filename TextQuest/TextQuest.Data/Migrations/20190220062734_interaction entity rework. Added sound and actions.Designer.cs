@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TextQuest.Data;
 
 namespace TextQuest.Data.Migrations
 {
     [DbContext(typeof(TextQuestDbContext))]
-    partial class TextQuestDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190220062734_interaction entity rework. Added sound and actions")]
+    partial class interactionentityreworkAddedsoundandactions
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -30,8 +32,6 @@ namespace TextQuest.Data.Migrations
                     b.Property<int?>("InteractingObjectId");
 
                     b.Property<bool>("IsAllowed");
-
-                    b.Property<bool>("IsSpawn");
 
                     b.Property<int?>("NextInteractionId");
 
@@ -106,6 +106,14 @@ namespace TextQuest.Data.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired();
+
+                    b.Property<int>("DownSceneId");
+
+                    b.Property<int>("LeftSceneId");
+
+                    b.Property<int>("RightSceneId");
+
+                    b.Property<int>("UpperSceneId");
 
                     b.HasKey("Id");
 

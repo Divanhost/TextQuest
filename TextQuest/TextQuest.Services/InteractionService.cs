@@ -15,8 +15,6 @@ namespace TextQuest.Services
             _context = context;
         }
 
-     
-
         public Interaction GetInteraction(int? id)
         {
             return _context.Interactions.FirstOrDefault(i => i.Id == id);
@@ -48,6 +46,7 @@ namespace TextQuest.Services
             return GetInteraction(id).TargetObjectId;
 
         }
+
         public int? GetInteractingInventoryObjectId(int id)
         {
             return GetInteraction(id).InteractingInventoryObjectId;

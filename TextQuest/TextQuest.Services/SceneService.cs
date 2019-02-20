@@ -26,6 +26,7 @@ namespace TextQuest.Services
         {
             return GetScene(id).SceneObjects;
         }
+
         public IEnumerable<SceneObject> GetSpawnedSceneObjects(int id)
         {
             return GetSceneObjects(id).Where(so=>so.IsSpawned);
@@ -40,29 +41,7 @@ namespace TextQuest.Services
         {
             return GetScene(id).BackgroundImageUrl;
         }
-
        
-
-        public int GetDownScene(int id)
-        {
-            return GetScene(id).DownSceneId;
-        }
-
-        public int GetLeftScene(int id)
-        {
-            return GetScene(id).LeftSceneId;
-        }
-
-        public int GetRightScene(int id)
-        {
-            return GetScene(id).RightSceneId;
-        }
-
-        public int GetUpperScene(int id)
-        {
-            return GetScene(id).UpperSceneId;
-        }
-
         public IEnumerable<Scene> GetAll()
         {
             return _context.Scenes.Include(s => s.SceneObjects);

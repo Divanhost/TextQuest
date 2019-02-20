@@ -10,11 +10,8 @@ namespace TextQuest.Data
         public string BackgroundImageUrl { get; set; }
         [Required]
         public string Description { get; set; }
-
+        // Set of objects, that belongs to the scene
         public IEnumerable<SceneObject> SceneObjects { get; set; }
-        public int UpperSceneId { get; set; }
-        public int DownSceneId { get; set; }
-        public int LeftSceneId { get; set; }
-        public int RightSceneId { get; set; }
+ 
     }
 }

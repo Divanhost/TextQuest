@@ -14,9 +14,6 @@ namespace TextQuest.Models
         public string Description;
         public List<SceneObject> SceneObjects;
         public List<SceneObject> SpawnedSceneObjects;
-        public int UpperSceneId;
-        public int DownSceneId;
-        public int LeftSceneId;
-        public int RightSceneId;
+   
     }
 }

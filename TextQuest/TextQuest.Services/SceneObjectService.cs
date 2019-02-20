@@ -9,7 +9,6 @@ namespace TextQuest.Services
 {
     public class SceneObjectService : ISceneObject
     {
-
         private TextQuestDbContext _context;
 
         public SceneObjectService(TextQuestDbContext context)
@@ -20,8 +19,6 @@ namespace TextQuest.Services
         public SceneObject GetSceneObject(int id)
         {
             return _context.SceneObjects
-                .Include(so=>so.AssociatedInventoryObject)
-                .Include(so=>so.AssociatedSceneObject)
                 .FirstOrDefault(so => so.Id == id);
         }
 
@@ -35,13 +32,6 @@ namespace TextQuest.Services
             SceneObject so = GetSceneObject(id);
             return new Location(so.x, so.y, so.z);
         }
-
-        public InventoryObject GetAssociatedInventoryObject(int id)
-        {
-            return GetSceneObject(id).AssociatedInventoryObject;
-
-        }
-
 
         public bool CheckAction(int id)
         {

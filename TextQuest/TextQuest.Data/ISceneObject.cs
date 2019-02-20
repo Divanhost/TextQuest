@@ -13,7 +13,6 @@ namespace TextQuest.Data
         void SetLocation(int id,Location location);
         bool CheckPickable(int id);
         bool CheckAction(int id);
-        InventoryObject GetAssociatedInventoryObject(int id);
     }
     public class Location
     {

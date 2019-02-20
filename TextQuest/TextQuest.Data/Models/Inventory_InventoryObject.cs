@@ -4,6 +4,7 @@ using System.Text;
 
 namespace TextQuest.Data.Models
 {
+    //Placeholder for savegeme mechanics
     public class Inventory_InventoryObject
     {
         public int Id { get; set; }
