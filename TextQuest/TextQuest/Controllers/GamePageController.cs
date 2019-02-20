@@ -62,7 +62,7 @@ namespace TextQuest.Controllers
                 Scenes = UserSingleton.GetScenes(),
                 CurrentScene = currentScene,
                 Inventory = inventory,
-                InventoryItems = UserSingleton.GetInventoryObjects()//_inventoryHelper.GetItems(inventory.Id)
+                InventoryItems = UserSingleton.GetInventoryObjects()
             };
 
             return View(model);
@@ -94,7 +94,6 @@ namespace TextQuest.Controllers
 
             //Scene object related Variables;
             var sceneObject = UserSingleton.GetScene(sceneId).SceneObjects.FirstOrDefault(so => so.Id == id);
-            //var sceneObject = _sceneObject.GetSceneObject(id);
             bool isPickable = sceneObject.IsPickable;
             bool hasAction = sceneObject.HasAction;
             bool isInnerPass = sceneObject.IsInnerPass;
@@ -193,11 +192,13 @@ namespace TextQuest.Controllers
         //Do action or sequence of actions
         public void DoActions(List<Responce> responces,int id,int sceneId)
         {
-            var sceneObject = UserSingleton.GetScene(sceneId).SceneObjects.FirstOrDefault(so => so.Id == id);// _sceneObject.GetSceneObject(id);
+            var sceneObject = UserSingleton.GetScene(sceneId).SceneObjects.FirstOrDefault(so => so.Id == id);
             var interacton = _interaction.GetInteractionBySceneObject(id);
-            var associatedSceneObject = UserSingleton.GetScene(sceneId).SpawnedSceneObjects.FirstOrDefault(sso => sso.Id == _interaction.GetInteractingSceneObjectId(interacton.Id)); //_interaction.GetInteractingSceneObjectId//_sceneObject.GetSceneObject(interacton.InteractingObjectId ?? default(int));
-            if(interacton.InteractingObjectId != id)
+            var associatedSceneObject = UserSingleton.GetScene(sceneId).SpawnedSceneObjects.FirstOrDefault(sso => sso.Id == _interaction.GetInteractingSceneObjectId(interacton.Id));
+            //if interaction change object
+            if (interacton.InteractingObjectId != id)
             {
+                //and interactingobjects exists
                 if (interacton.InteractingObjectId.HasValue)
                 {
                     var responce = new Responce()
@@ -211,7 +212,8 @@ namespace TextQuest.Controllers
                         ImageUrl = associatedSceneObject.ImageUrl,
                         Action = 1,
                         isValid = true,
-                        isSpawn = interacton.IsSpawn
+                        isSpawn = interacton.IsSpawn,
+                        SpecialEvent = interacton.SpecialEvent
                     };
                     responces.Add(responce);
                     UserSingleton.GetScene(sceneId).SpawnedSceneObjects.Add(UserSingleton.GetScene(sceneId).SceneObjects.FirstOrDefault(so => so.Id == id));
@@ -229,7 +231,19 @@ namespace TextQuest.Controllers
                     responces.Add(responce);
                     UserSingleton.GetScene(sceneId).SceneObjects.Remove(UserSingleton.GetScene(sceneId).SceneObjects.FirstOrDefault(so => so.Id == id));
                 }
-
+            }
+            else
+            //if interaction does not change object, but does some events
+            if(interacton.SpecialEvent != null)
+            {
+                var responce = new Responce()
+                {
+                    Action = 1,
+                    isValid = true,
+                    isSpawn = interacton.IsSpawn,
+                    SpecialEvent = interacton.SpecialEvent
+                };
+                responces.Add(responce);
             }
             if (interacton.NextInteractionId.HasValue)
             {
@@ -261,6 +275,7 @@ namespace TextQuest.Controllers
         // 0 - remove, 1 -replace -1 -default
         public int Action = -1;
         public bool isSpawn;
+        public string SpecialEvent;
     }
     
     class UserSingleton

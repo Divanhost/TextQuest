@@ -21,8 +21,4 @@
     <ProjectReference Include="..\TextQuest.Services\TextQuest.Services.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="wwwroot\images\SceneCombinationLock\" />
-  </ItemGroup>
-
 </Project>

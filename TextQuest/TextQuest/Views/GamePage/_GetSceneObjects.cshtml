@@ -58,7 +58,6 @@
                     else if (data.interactionType == 1) {
                         console.log(data);
                         window.location.replace(data.nextSceneId);
-                       // window.location.replace("@*Url.RouteUrl(new { controller = "GamePage", action = "Index", id = Model.CurrentScene.InnerScenesId })");*@
                     }
                     else if (data.interactionType == 2) {
                         if (data.responces.length > 0) {
@@ -74,16 +73,19 @@
                                     $("#" + data_id).remove();
                                     continue;
                                 }
+                                if (data.responces[i].specialEvent) {
+                                    window.eval(String(data.responces[i].specialEvent +"("+data_id+")"));
+                                }
                                 if (!data.responces[i].isSpawn) {
                                     $("#" + data.responces[i].oldId)
-                                        .replaceWith($("<div>").attr("id", String(data.responces[i].newId)).addClass("sceneObject").css("position", "absolute").css("left", data.responces[i].x).css("top", data.responces[i].y).attr("onmouseover", String("RemoveText(" + ShowAction(data.responces[i].newId) + ")"))
-                                            .append($("<a>").attr("title", data.responces[i].Name) //todo: не ставится hover text
+                                        .replaceWith($("<div>").attr("id", String(data.responces[i].newId)).addClass("sceneObject").css("position", "absolute").css("left", data.responces[i].x).css("top", data.responces[i].y).attr("onmouseover", String("RemoveText(" + ShowAction(data.responces[i].newId) + ")")).attr("title", data.responces[i].name) //todo: не ставится hover text
+                                            .append($("<a>")
                                                 .append($("<img>").attr("src", data.responces[i].imageUrl).attr("onclick", String("scObjHandler(" + data.responces[i].newId + ",@Model.CurrentScene.Id,@Model.Inventory.Id)")).attr("oncontextmenu", String("ShowInfo(" + data.responces[i].newId + ");return false;")))));
 
                                 }
                                 else {
-                                    $('#scContainer').append($("<div>").attr("id", String(data.responces[i].newId)).addClass("sceneObject").css("position", "absolute").css("left", data.responces[i].x).css("top", data.responces[i].y).attr("onmouseover", String("RemoveText(" + ShowAction(data.responces[i].newId) + ")"))
-                                            .append($("<a>").attr("title", data.responces[i].Name) //todo: не ставится hover text
+                                    $('#scContainer').append($("<div>").attr("id", String(data.responces[i].newId)).addClass("sceneObject").css("position", "absolute").css("left", data.responces[i].x).css("top", data.responces[i].y).attr("onmouseover", String("RemoveText(" + ShowAction(data.responces[i].newId) + ")")).attr("title", data.responces[i].name) //todo: не ставится hover text
+                                            .append($("<a>")
                                                 .append($("<img>").attr("src", data.responces[i].imageUrl).attr("onclick", String("scObjHandler(" + data.responces[i].newId + ",@Model.CurrentScene.Id,@Model.Inventory.Id)")).attr("oncontextmenu", String("ShowInfo(" + data.responces[i].newId + ");return false;")))));
 
                                 }
@@ -102,7 +104,6 @@
             }
         });
         RemoveText();
-        //$(".inventoryObject").removeClass("selectedInventoryObject");
     }
 </script>
 
@@ -159,7 +160,23 @@
 </script>
 
 
+<script>
+    function findCombination(id) {
 
+        $("#38.sceneObject").append($("<div>" + $("#" + id + ".sceneObject").attr("title") + "</div>").attr("position", "absolute"));
+        var elements = document.getElementsByClassName(".found");
+        comboarr = [1, 2, 3];
+        if (comboarr[elements.length] == $("#" + id + ".sceneObject").attr("title")) {
+            $("#" + id + ".sceneObject").addClass(".found");
+        }
+        else {
+            $(".sceneObject").removeClass(".found");
+        }
+        if (document.getElementsByClassName(".found").length == 3) {
+            alert("sucsses");
+        }
+    }
+</script>
 
 
 
