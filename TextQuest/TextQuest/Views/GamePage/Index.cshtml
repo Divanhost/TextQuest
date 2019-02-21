@@ -5,8 +5,7 @@
 
 <body>
     <div class="back-container">
-        
-
+        <p>Remaining time: <span id="remain"></span></p>
         <div class="background">
             <img src="@Model.CurrentScene.BackgroundImageUrl" />
             @Html.Partial("_GetSceneObjects", Model)
@@ -14,7 +13,53 @@
         </div>
     </div>
   
-
+    <script>
+        // Function to forward
+        function weiter() {
+            // Display message (optional)
+            alert("Time's up.");
+            // Forward participant onto the next page
+        }
+        // Display countdown
+        var date0 = new Date();
+        var timeout = date0.getTime() + @Model.RemainingTime*1000; //+remainingtime *1000
+        function updateCountdown() {
+            // Calculate time
+            var date = new Date();
+            var time = Math.ceil((timeout - date.getTime() - 50) / 1000);  // remaining time in seconds
+            // Display time
+            var out = document.getElementById("remain");
+            if (!out) {
+                return;
+            }
+            while (out.lastChild) {
+                out.removeChild(out.lastChild);
+            }
+            var minutes = String(Math.floor(time / 60));
+            var seconds = String(time - 60 * minutes);
+            if (seconds.length < 2) seconds = "0" + seconds;
+            var display = minutes + ":" + seconds;
+            var displayNode = document.createTextNode(display);
+            out.appendChild(displayNode);
+            out.setAttribute("data-remaining", time);
+        }
+        // Initialize forwarding
+        //SoSciTools.attachEvent(window, "load", function (evt) {
+           
+            // Additional timer to update the countdown
+            window.onload = function () {
+                window.setInterval(updateCountdown, 1000);
+                updateCountdown();
+                // Start timer to forward automatically
+                window.setTimeout(next,  @Model.RemainingTime*1000);
+            }
+      //  });
+        function next() {
+            // Display message (optional)
+            alert("Time's up.");
+            // TODO:bad Ending cutscene
+        }
+    </script>>
     
 
 </body>

@@ -13,12 +13,16 @@
 </div>
 <h3>Инвентарь</h3>
 <div class="inventory" style="display:flex;align-content:flex-start">
-    @foreach (var item in Model.InventoryItems)
-    {
-        <div id=@item.Id class="inventoryObject" onclick="invObjHandler(@item.Id)" oncontextmenu="ShowInventoryInfo(@item.Id); return false;" title=@item.Name>
-            <a><img src="@item.ImageUrl"/></a>
-        </div>
-    }
+    <div><a href="#"><img src="~/images/arrow_l.png" /></a></div>
+    <div id="loop" class="itemsContainer">
+        @foreach (var item in Model.InventoryItems)
+        {
+            <div id=@item.Id class="inventoryObject" onclick="invObjHandler(@item.Id)" oncontextmenu="ShowInventoryInfo(@item.Id); return false;" title=@item.Name>
+                <a><img src="@item.ImageUrl" /></a>
+            </div>
+        }
+    </div>
+    <div><a href="#"><img src="~/images/arrow_r.png"/></a></div>
 </div>
 <div>
     <h3>Текстовое поле</h3>
@@ -46,7 +50,7 @@
                 console.log(data);
                     if (data.interactionType == 0) {
                         // Add item to inventory
-                         $(".inventory")
+                        $(".itemsContainer")
                              .append($("<div>").attr("id", String(data.responce.newId)).addClass("inventoryObject").attr("oncontextmenu", String("ShowInventoryInfo(" + data.responce.newId + ");return false;")).attr("onclick", String("invObjHandler(" + data.responce.newId + ")")).attr("title",String(data.responce.name))
                                     .append($("<a>")
                                     .append($("<img>").attr("src", data.responce.imageUrl))));
@@ -57,7 +61,26 @@
                     }
                     else if (data.interactionType == 1) {
                         console.log(data);
-                        window.location.replace(data.nextSceneId);
+                        let i = document.getElementById("remain").getAttribute("data-remaining");
+                        //TODO: change sign
+                        if (i <= 0) {
+                            //TODO: Bad ending cutscene
+                        }
+                        else {
+                            //?????
+                            $.ajax({
+                                url: "/GamePage/HandleRemainingTime",
+                                type: "post",
+                                data: String(i),
+                                success: function () {
+                                    window.location.replace(data.nextSceneId);
+                                },
+                                error: function () {
+                                    alert("error");
+                                }
+                            });
+                        }
+                        
                     }
                     else if (data.interactionType == 2) {
                         if (data.responces.length > 0) {
@@ -178,6 +201,13 @@
     }
 </script>
 
-
+<script>
+    //ToDo inventory pagination
+   /* window.onload = function () {
+        console.log($("#loop .inventoryObject").length);
+        let numOfItems = $("#loop .inventoryObject").length;
+        let limitPerPage = 5;
+    }*/
+</script>
 
 

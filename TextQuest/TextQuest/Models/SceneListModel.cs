@@ -14,6 +14,6 @@ namespace TextQuest.Models
         public SceneModel CurrentScene;
         public Inventory Inventory;
         public IEnumerable<InventoryObject> InventoryItems;
-        
+        public int RemainingTime;
     }
 }

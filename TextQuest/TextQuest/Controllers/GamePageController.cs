@@ -62,7 +62,8 @@ namespace TextQuest.Controllers
                 Scenes = UserSingleton.GetScenes(),
                 CurrentScene = currentScene,
                 Inventory = inventory,
-                InventoryItems = UserSingleton.GetInventoryObjects()
+                InventoryItems = UserSingleton.GetInventoryObjects(),
+                RemainingTime = UserSingleton.remainingTime
             };
 
             return View(model);
@@ -189,6 +190,15 @@ namespace TextQuest.Controllers
             int id = Int32.Parse(data);
             return Ok(new { name = _sceneObject.GetName(id),description = _sceneObject.GetDescription(id)});
         }
+        public IActionResult HandleRemainingTime()
+        {
+            StreamReader sr = new StreamReader(Request.Body);
+            string data = sr.ReadToEnd();
+
+            int rt = Int32.Parse(data);
+            UserSingleton.remainingTime = rt;
+            return Ok();
+        }
         //Do action or sequence of actions
         public void DoActions(List<Responce> responces,int id,int sceneId)
         {
@@ -284,6 +294,7 @@ namespace TextQuest.Controllers
         private static Inventory Inventory;
         private static List<InventoryObject> InventoryObjects; 
         private static List<SceneModel> Scenes;
+        public static int remainingTime;
         private UserSingleton() { }
         public static UserSingleton getInstance()
         {
@@ -293,6 +304,7 @@ namespace TextQuest.Controllers
                 Inventory = new Inventory();
                 Scenes = new List<SceneModel>();
                 InventoryObjects = new List<InventoryObject>();
+                remainingTime = 900;
             }
             return instance;
         }
