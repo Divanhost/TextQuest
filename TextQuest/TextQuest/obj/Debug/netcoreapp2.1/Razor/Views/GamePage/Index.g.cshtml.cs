@@ -56,7 +56,7 @@ using TextQuest.Models;
             WriteLiteral("\r\n\r\n\r\n");
             EndContext();
             BeginContext(48, 2179, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2255b9c311e44a5eb7c9216625862531", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "663cae469c054c2b8d5936964bd8294b", async() => {
                 BeginContext(54, 144, true);
                 WriteLiteral("\r\n    <div class=\"back-container\">\r\n        <p>Remaining time: <span id=\"remain\"></span></p>\r\n        <div class=\"background\">\r\n            <img");
                 EndContext();
