@@ -37,12 +37,19 @@ body {
 }
 
 .sceneObject{
-    display:block;
+    display:inline-flex;
     position:center;
     
 }
 .background{
     position:absolute;
     vertical-align:central;
-    background-color:dodgerblue;
+    background-color:white;
 }
+.innerText {
+    font-size: 20px;
+    position: absolute;
+    left: 0;
+    width: 100%;
+}
+

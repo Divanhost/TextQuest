@@ -7,13 +7,13 @@
         string y = obj.y + "px";
         string id = obj.Id.ToString();
         <div id=@id class="sceneObject" title=@obj.Name style="position:absolute;left:@x;top:@y;" onmouseover="ShowAction(@obj.Id)">
-            <a ><img src="@obj.ImageUrl" onclick="scObjHandler(@obj.Id,@Model.CurrentScene.Id,@Model.Inventory.Id)" oncontextmenu="ShowInfo(@obj.Id);return false;"  /></a>
+            <a><img src="@obj.ImageUrl" onclick="scObjHandler(@obj.Id,@Model.CurrentScene.Id,@Model.Inventory.Id)" oncontextmenu="ShowInfo(@obj.Id);return false;" /></a>
         </div>
     }
 </div>
+
 <h3>Инвентарь</h3>
 <div class="inventory" style="display:flex;align-content:flex-start">
-    <div><a href="#"><img src="~/images/arrow_l.png" /></a></div>
     <div id="loop" class="itemsContainer">
         @foreach (var item in Model.InventoryItems)
         {
@@ -22,7 +22,6 @@
             </div>
         }
     </div>
-    <div><a href="#"><img src="~/images/arrow_r.png"/></a></div>
 </div>
 <div>
     <h3>Текстовое поле</h3>
@@ -31,7 +30,7 @@
 
 <script>
     function scObjHandler(data_id, scene_id, inventory_id) {
-       
+
         let selectedinventoryId;
         if ($(".inventoryObject").hasClass("selectedInventoryObject")) {
             selectedinventoryId = $(".selectedInventoryObject").attr("id");
@@ -80,7 +79,7 @@
                                 }
                             });
                         }
-                        
+
                     }
                     else if (data.interactionType == 2) {
                         if (data.responces.length > 0) {
@@ -134,7 +133,7 @@
     function invObjHandler(id) {
         $("#" + id + ".inventoryObject").addClass("selectedInventoryObject");
     }
-    
+
     function ShowInventoryInfo(id) {
         RemoveText();
         $.ajax({
@@ -150,7 +149,7 @@
         });
 
     }
- 
+
     function ShowInfo(id) {
         RemoveText();
         $(".inventoryObject").removeClass("selectedInventoryObject");
@@ -185,29 +184,38 @@
 
 <script>
     function findCombination(id) {
-
-        $("#38.sceneObject").append($("<div>" + $("#" + id + ".sceneObject").attr("title") + "</div>").attr("position", "absolute"));
-        var elements = document.getElementsByClassName(".found");
-        comboarr = [1, 2, 3];
-        if (comboarr[elements.length] == $("#" + id + ".sceneObject").attr("title")) {
-            $("#" + id + ".sceneObject").addClass(".found");
+        console.log(document.getElementsByClassName(".innerText"));
+        if (document.getElementsByClassName("innerText").length == 0) {
+            $("#1052.sceneObject").append($("<div></div>").addClass("innerText"));
         }
         else {
-            $(".sceneObject").removeClass(".found");
+            //alert("hello");
         }
-        if (document.getElementsByClassName(".found").length == 3) {
-            alert("sucsses");
+
+        //$(".innerText").text() += "1";
+       
+        $(".innerText").append(document.createTextNode($("#" + id + ".sceneObject").attr("title")));
+        if ($(".innerText").text().length >= 5) {
+            $(".innerText").empty();
+        }
+    }
+    function checkPassword() {
+        if ($(".innerText").text() == "3862") {
+            window.location.replace(1008);
+        }
+        else {
+            $(".innerText").empty();
         }
     }
 </script>
 
 <script>
-    //ToDo inventory pagination
-   /* window.onload = function () {
-        console.log($("#loop .inventoryObject").length);
-        let numOfItems = $("#loop .inventoryObject").length;
-        let limitPerPage = 5;
-    }*/
+        //ToDo inventory pagination
+       /* window.onload = function () {
+            console.log($("#loop .inventoryObject").length);
+            let numOfItems = $("#loop .inventoryObject").length;
+            let limitPerPage = 5;
+        }*/
 </script>
 
 
