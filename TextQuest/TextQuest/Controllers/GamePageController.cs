@@ -103,7 +103,7 @@ namespace TextQuest.Controllers
             // We can pick item in inventory
             if (isPickable)
             {
-                var interacton = _interaction.GetInteractionBySceneObject(id);
+                var interacton = _interaction.GetInteractionsBySceneObject(id).First(); ///////////////
                 int inventoryItemId = interacton.InteractingInventoryObjectId.Value;
                 if (UserSingleton.GetInventoryObject(inventoryItemId) == null)
                 {
@@ -141,19 +141,22 @@ namespace TextQuest.Controllers
             else if (hasAction)
             {
                 var responces = new List<Responce>();
-                var interacton = _interaction.GetInteractionBySceneObject(id);
-                if (interacton.IsAllowed)
+                var interactions = _interaction.GetInteractionsBySceneObject(id);
+                foreach (var interaction in interactions)
                 {
-                    if(interacton.InteractingInventoryObjectId != selectedInventoryObjectId)
+                    if (interaction.IsAllowed)
                     {
-                        responces.Add(new Responce { isValid = false });
-                    }
-                    else
-                    {
-                        if (selectedInventoryObjectId != null)
-                            UserSingleton.RemoveInventoryObject(selectedInventoryObjectId ?? default(int));
-                       
-                        DoActions(responces, id,sceneId);
+                        if (interaction.InteractingInventoryObjectId != selectedInventoryObjectId)
+                        {
+                            responces.Add(new Responce { isValid = false });
+                        }
+                        else
+                        {
+                            if (selectedInventoryObjectId != null)
+                                UserSingleton.RemoveInventoryObject(selectedInventoryObjectId ?? default(int));
+
+                            DoActions(responces, id, sceneId,interaction.Id);
+                        }
                     }
                 }
                 return Ok(new { interactionType = 2, id, responces });
@@ -200,10 +203,10 @@ namespace TextQuest.Controllers
             return Ok();
         }
         //Do action or sequence of actions
-        public void DoActions(List<Responce> responces,int id,int sceneId)
+        public void DoActions(List<Responce> responces,int id,int sceneId,int interactionId)
         {
             var sceneObject = UserSingleton.GetScene(sceneId).SceneObjects.FirstOrDefault(so => so.Id == id);
-            var interacton = _interaction.GetInteractionBySceneObject(id);
+            var interacton = _interaction.GetInteraction(interactionId); /////////
             var associatedSceneObject = UserSingleton.GetScene(sceneId).SpawnedSceneObjects.FirstOrDefault(sso => sso.Id == _interaction.GetInteractingSceneObjectId(interacton.Id));
             //if interaction change object
             if (interacton.InteractingObjectId != id)
@@ -259,7 +262,7 @@ namespace TextQuest.Controllers
             {
                 interacton = _interaction.GetInteraction(interacton.NextInteractionId);
                 int newId = interacton.TargetObjectId ?? default(int);
-                DoActions(responces, newId,sceneId);
+                DoActions(responces, newId,sceneId,interacton.Id);
             }
 
         }

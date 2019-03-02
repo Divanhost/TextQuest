@@ -25,9 +25,9 @@ namespace TextQuest.Services
             return _context.Interactions.FirstOrDefault(i => i.TargetInventoryObjectId == id);
         }
 
-        public Interaction GetInteractionBySceneObject(int id)
+        public IEnumerable<Interaction> GetInteractionsBySceneObject(int id)
         {
-            return _context.Interactions.FirstOrDefault(i => i.TargetObjectId == id);
+            return _context.Interactions.Where(i => i.TargetObjectId == id);
 
         }
 

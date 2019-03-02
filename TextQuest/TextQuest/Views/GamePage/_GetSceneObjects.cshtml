@@ -83,13 +83,18 @@
                     }
                     else if (data.interactionType == 2) {
                         if (data.responces.length > 0) {
-                            if (!data.responces[0].isValid) {
+                           /* if (!data.responces[0].isValid) {
                                 console.log("No");
                                 $(".textfield").append(document.createTextNode("Вы не можете это использовать"));
                                 return;
-                            }
+                            }*/
                             // Do set of animations
                             for (i = 0; i < data.responces.length; i++) {
+                                if (!data.responces[i].isValid) {
+                                    console.log("No");
+                                    $(".textfield").append(document.createTextNode("Вы не можете это использовать"));
+                                    continue;
+                                }
                                 if (data.responces[i].action == 0) {
                                     console.log("Hello")
                                     $("#" + data_id).remove();
@@ -206,6 +211,9 @@
         else {
             $(".innerText").empty();
         }
+    }
+    function Tresh() {
+
     }
 </script>
 

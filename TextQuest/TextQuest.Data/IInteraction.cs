@@ -7,7 +7,7 @@ namespace TextQuest.Data
     public interface IInteraction
     {
         Interaction GetInteraction(int? id);
-        Interaction GetInteractionBySceneObject(int id);
+        IEnumerable<Interaction> GetInteractionsBySceneObject(int id);
         Interaction GetInteractionByInventoryObject(int id);
         Interaction GetNextInteraction(int id);
         int? GetTargetSceneObjectId(int id);
