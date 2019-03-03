@@ -20,3 +20,14 @@ D:\Projects\C#\TextQuest\TextQuest\TextQuest.Data\obj\Debug\netcoreapp2.1\TextQu
 D:\Projects\C#\TextQuest\TextQuest\TextQuest.Data\obj\Debug\netcoreapp2.1\TextQuest.Data.csproj.CoreCompileInputs.cache
 D:\Projects\C#\TextQuest\TextQuest\TextQuest.Data\obj\Debug\netcoreapp2.1\TextQuest.Data.AssemblyInfoInputs.cache
 D:\Projects\C#\TextQuest\TextQuest\TextQuest.Data\obj\Debug\netcoreapp2.1\TextQuest.Data.AssemblyInfo.cs
+C:\Users\Danil\Desktop\TQ main fucking thing\TX GIT\TextQuest\TextQuest\TextQuest.Data\bin\Debug\netcoreapp2.1\TextQuest.Data.deps.json
+C:\Users\Danil\Desktop\TQ main fucking thing\TX GIT\TextQuest\TextQuest\TextQuest.Data\bin\Debug\netcoreapp2.1\TextQuest.Data.runtimeconfig.json
+C:\Users\Danil\Desktop\TQ main fucking thing\TX GIT\TextQuest\TextQuest\TextQuest.Data\bin\Debug\netcoreapp2.1\TextQuest.Data.runtimeconfig.dev.json
+C:\Users\Danil\Desktop\TQ main fucking thing\TX GIT\TextQuest\TextQuest\TextQuest.Data\bin\Debug\netcoreapp2.1\TextQuest.Data.dll
+C:\Users\Danil\Desktop\TQ main fucking thing\TX GIT\TextQuest\TextQuest\TextQuest.Data\bin\Debug\netcoreapp2.1\TextQuest.Data.pdb
+C:\Users\Danil\Desktop\TQ main fucking thing\TX GIT\TextQuest\TextQuest\TextQuest.Data\obj\Debug\netcoreapp2.1\TextQuest.Data.csprojAssemblyReference.cache
+C:\Users\Danil\Desktop\TQ main fucking thing\TX GIT\TextQuest\TextQuest\TextQuest.Data\obj\Debug\netcoreapp2.1\TextQuest.Data.csproj.CoreCompileInputs.cache
+C:\Users\Danil\Desktop\TQ main fucking thing\TX GIT\TextQuest\TextQuest\TextQuest.Data\obj\Debug\netcoreapp2.1\TextQuest.Data.AssemblyInfoInputs.cache
+C:\Users\Danil\Desktop\TQ main fucking thing\TX GIT\TextQuest\TextQuest\TextQuest.Data\obj\Debug\netcoreapp2.1\TextQuest.Data.AssemblyInfo.cs
+C:\Users\Danil\Desktop\TQ main fucking thing\TX GIT\TextQuest\TextQuest\TextQuest.Data\obj\Debug\netcoreapp2.1\TextQuest.Data.dll
+C:\Users\Danil\Desktop\TQ main fucking thing\TX GIT\TextQuest\TextQuest\TextQuest.Data\obj\Debug\netcoreapp2.1\TextQuest.Data.pdb

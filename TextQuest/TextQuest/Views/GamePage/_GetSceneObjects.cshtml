@@ -1,31 +1,39 @@
 ﻿@model TextQuest.Models.SceneListModel
 
-<div class="sceneObjectsContainer" id="scContainer">
-    @foreach (var obj in Model.CurrentScene.SceneObjects)
-    {
-        string x = obj.x + "px";
-        string y = obj.y + "px";
-        string id = obj.Id.ToString();
-        <div id=@id class="sceneObject" title="@obj.Name" style="position:absolute;left:@x;top:@y;" onmouseover="ShowAction(@obj.Id)">
-            <a><img src="@obj.ImageUrl" onclick="scObjHandler(@obj.Id,@Model.CurrentScene.Id,@Model.Inventory.Id)" oncontextmenu="ShowInfo(@obj.Id);return false;" /></a>
-        </div>
-    }
-</div>
 
-<h3>Инвентарь</h3>
-<div class="inventory" style="display:flex;align-content:flex-start">
-    <div id="loop" class="itemsContainer">
-        @foreach (var item in Model.InventoryItems)
+<div class="background">
+    <div id="bg" style="float:left">
+        <img src="@Model.CurrentScene.BackgroundImageUrl" />
+    </div>
+    <div id="info" style="float:left">
+        <div class="inventory">
+            <h3>Инвентарь</h3>
+            <br>
+            <div id="loop" class="itemsContainer">
+                @foreach (var item in Model.InventoryItems)
+                {
+                    <div id=@item.Id class="inventoryObject" onclick="invObjHandler(@item.Id)" oncontextmenu="ShowInventoryInfo(@item.Id); return false;" title="@item.Name">
+                        <a><img src="@item.ImageUrl" /></a>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="textbox">
+            <h3>Текстовое поле</h3>
+            <div class="textfield"></div>
+        </div>
+    </div>
+    <div class="sceneObjectsContainer" id="scContainer">
+        @foreach (var obj in Model.CurrentScene.SceneObjects)
         {
-            <div id=@item.Id class="inventoryObject" onclick="invObjHandler(@item.Id)" oncontextmenu="ShowInventoryInfo(@item.Id); return false;" title="@item.Name">
-                <a><img src="@item.ImageUrl" /></a>
+            string x = obj.x + "px";
+            string y = obj.y + "px";
+            string id = obj.Id.ToString();
+            <div id=@id class="sceneObject" title="@obj.Name" style="position:absolute;left:@x;top:@y;" onmouseover="ShowAction(@obj.Id)">
+                <a><img src="@obj.ImageUrl" onclick="scObjHandler(@obj.Id,@Model.CurrentScene.Id,@Model.Inventory.Id)" oncontextmenu="ShowInfo(@obj.Id);return false;" /></a>
             </div>
         }
     </div>
-</div>
-<div>
-    <h3>Текстовое поле</h3>
-    <div class="textfield"></div>
 </div>
 
 <script>
@@ -59,7 +67,7 @@
                         $(".inventoryObject").removeClass("selectedInventoryObject");
                     }
                     else if (data.interactionType == 1) {
-                        
+
                         console.log(data);
                         let i = document.getElementById("remain").getAttribute("data-remaining");
                         //TODO: change sign
@@ -134,7 +142,6 @@
         RemoveText();
     }
 </script>
-
 <script>
     function invObjHandler(id) {
         $("#" + id + ".inventoryObject").addClass("selectedInventoryObject");
@@ -187,7 +194,6 @@
     }
 </script>
 
-
 <script>
     function findCombination(id) {
         console.log(document.getElementsByClassName(".innerText"));
@@ -199,7 +205,7 @@
         }
 
         //$(".innerText").text() += "1";
-       
+
         $(".innerText").append(document.createTextNode($("#" + id + ".sceneObject").attr("title")));
         if ($(".innerText").text().length >= 5) {
             $(".innerText").empty();
@@ -217,14 +223,12 @@
 
     }
 </script>
-
 <script>
-        //ToDo inventory pagination
-       /* window.onload = function () {
-            console.log($("#loop .inventoryObject").length);
-            let numOfItems = $("#loop .inventoryObject").length;
-            let limitPerPage = 5;
-        }*/
+                                //ToDo inventory pagination
+                               /* window.onload = function () {
+                                    console.log($("#loop .inventoryObject").length);
+                                    let numOfItems = $("#loop .inventoryObject").length;
+                                    let limitPerPage = 5;
+                                }*/
 </script>
-
 

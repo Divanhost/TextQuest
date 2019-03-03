@@ -1,18 +1,15 @@
 ﻿
 @model TextQuest.Models.SceneListModel
 
-
-
+<head>
+    <link rel="stylesheet" type="text/css" href="~/css/site.css">
+</head>
 <body>
     <div class="back-container">
         <p>Remaining time: <span id="remain"></span></p>
-        <div class="background">
-            <img src="@Model.CurrentScene.BackgroundImageUrl" />
-            @Html.Partial("_GetSceneObjects", Model)
-
-        </div>
+        @Html.Partial("_GetSceneObjects", Model)
     </div>
-  
+
     <script>
         // Function to forward
         function weiter() {
@@ -44,7 +41,7 @@
             out.setAttribute("data-remaining", time);
         }
         // Initialize forwarding
-           
+
             // Additional timer to update the countdown
             window.onload = function () {
                 window.setInterval(updateCountdown, 1000);
@@ -59,8 +56,7 @@
             // TODO:bad Ending cutscene
         }
     </script>>
-    
+
 
 </body>
-
 

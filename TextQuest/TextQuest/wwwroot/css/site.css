@@ -36,20 +36,48 @@ body {
     }
 }
 
-.sceneObject{
-    display:inline-flex;
-    position:center;
-    
+.sceneObject {
+    display: inline-flex;
+    position: center;
 }
-.background{
-    position:absolute;
-    vertical-align:central;
-    background-color:white;
+
+.background {
+    position: absolute;
+    vertical-align: central;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: red;
 }
+
 .innerText {
-    font-size: 20px;
+    font-size: 40px;
     position: absolute;
     left: 0;
     width: 100%;
 }
 
+.textbox {
+    width: 300px;
+    max-width: 300px;
+    display: inline-block;
+    border: 1px solid green;
+}
+
+.itemsContainer {
+    display: -webkit-flex;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.inventory {
+    text-align: center;
+    width: 300px;
+}
+
+.inventoryObject {
+    background-image: url('../images/itemslot.png');
+}
+
+.selectedInventoryObject {
+    background-image: url('../images/itemslot_chosen.png');
+}

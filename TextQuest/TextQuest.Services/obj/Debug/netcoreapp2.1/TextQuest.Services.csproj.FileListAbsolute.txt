@@ -22,3 +22,15 @@ D:\Projects\C#\TextQuest\TextQuest\TextQuest.Services\obj\Debug\netcoreapp2.1\Te
 D:\Projects\C#\TextQuest\TextQuest\TextQuest.Services\bin\Debug\netcoreapp2.1\TextQuest.Services.deps.json
 D:\Projects\C#\TextQuest\TextQuest\TextQuest.Services\bin\Debug\netcoreapp2.1\TextQuest.Services.dll
 D:\Projects\C#\TextQuest\TextQuest\TextQuest.Services\bin\Debug\netcoreapp2.1\TextQuest.Services.pdb
+C:\Users\Danil\Desktop\TQ main fucking thing\TX GIT\TextQuest\TextQuest\TextQuest.Services\bin\Debug\netcoreapp2.1\TextQuest.Services.deps.json
+C:\Users\Danil\Desktop\TQ main fucking thing\TX GIT\TextQuest\TextQuest\TextQuest.Services\bin\Debug\netcoreapp2.1\TextQuest.Services.dll
+C:\Users\Danil\Desktop\TQ main fucking thing\TX GIT\TextQuest\TextQuest\TextQuest.Services\bin\Debug\netcoreapp2.1\TextQuest.Services.pdb
+C:\Users\Danil\Desktop\TQ main fucking thing\TX GIT\TextQuest\TextQuest\TextQuest.Services\bin\Debug\netcoreapp2.1\TextQuest.Data.dll
+C:\Users\Danil\Desktop\TQ main fucking thing\TX GIT\TextQuest\TextQuest\TextQuest.Services\bin\Debug\netcoreapp2.1\TextQuest.Data.pdb
+C:\Users\Danil\Desktop\TQ main fucking thing\TX GIT\TextQuest\TextQuest\TextQuest.Services\obj\Debug\netcoreapp2.1\TextQuest.Services.csprojAssemblyReference.cache
+C:\Users\Danil\Desktop\TQ main fucking thing\TX GIT\TextQuest\TextQuest\TextQuest.Services\obj\Debug\netcoreapp2.1\TextQuest.Services.csproj.CoreCompileInputs.cache
+C:\Users\Danil\Desktop\TQ main fucking thing\TX GIT\TextQuest\TextQuest\TextQuest.Services\obj\Debug\netcoreapp2.1\TextQuest.Services.AssemblyInfoInputs.cache
+C:\Users\Danil\Desktop\TQ main fucking thing\TX GIT\TextQuest\TextQuest\TextQuest.Services\obj\Debug\netcoreapp2.1\TextQuest.Services.AssemblyInfo.cs
+C:\Users\Danil\Desktop\TQ main fucking thing\TX GIT\TextQuest\TextQuest\TextQuest.Services\obj\Debug\netcoreapp2.1\TextQuest.Services.csproj.CopyComplete
+C:\Users\Danil\Desktop\TQ main fucking thing\TX GIT\TextQuest\TextQuest\TextQuest.Services\obj\Debug\netcoreapp2.1\TextQuest.Services.dll
+C:\Users\Danil\Desktop\TQ main fucking thing\TX GIT\TextQuest\TextQuest\TextQuest.Services\obj\Debug\netcoreapp2.1\TextQuest.Services.pdb
