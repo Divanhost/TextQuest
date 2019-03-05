@@ -7,7 +7,7 @@
     </div>
     <div id="info" style="float:left">
         <div class="inventory">
-            <h3>Инвентарь</h3>
+            <h3>ИНВЕНТАРЬ</h3>
             <br>
             <div id="loop" class="itemsContainer">
                 @foreach (var item in Model.InventoryItems)
@@ -19,8 +19,9 @@
             </div>
         </div>
         <div class="textbox">
-            <h3>Текстовое поле</h3>
-            <div class="textfield"></div>
+            <div class="textholder">
+                <div class="textfield"></div>
+            </div>
         </div>
     </div>
     <div class="sceneObjectsContainer" id="scContainer">
@@ -34,8 +35,17 @@
             </div>
         }
     </div>
-</div>
+    <div class="controlsholder">
+        <div class="controls">
+            <b style="font-family: 'Oswald', sans-serif; font-size: 18px">УПРАВЛЕНИЕ:<br></b>
+            <b>ЛКМ</b> - взаимодействовать с объектом. 
+            <b>ПКМ</b> - осмотреть объект.<br>
+            <b>ЛКМ по предмету инвентаря</b> - выбрать предмет.
+            <b>ЛКМ с выбранным предметом</b> - применить предмет на объекте.
+        </div>
+    </div>
 
+</div>
 <script>
     function scObjHandler(data_id, scene_id, inventory_id) {
 
@@ -132,7 +142,7 @@
                             RemoveText();
                         }
                         else {
-                            $(".textfield").append(document.createTextNode("Вы не можете это использовать"));
+                            $(".textfield").append(document.createTextNode("Вы не можете это использовать."));
                         }
                         $(".inventoryObject").removeClass("selectedInventoryObject");
                     }
@@ -157,7 +167,10 @@
             type: "post",
             data: String(id),
             success: function (data) {
-                $(".textfield").append(document.createTextNode(data.name)).append(" ").append(document.createTextNode(data.description));
+                var element = document.createElement("div");
+                element.innerHTML = "<div class = \"centerthis\">" + data.name + "</div><div style=\"line-height: 50%;\"><br></div >" + data.description + ".";
+                $(".textfield").append(element);
+                //$(".textfield").append(document.createTextNode(data.name)).append(" ").append(document.createTextNode(data.description));
             },
             error: function () {
                 alert("error");
@@ -174,7 +187,10 @@
             type: "post",
             data: String(id),
             success: function (data) {
-                $(".textfield").append(document.createTextNode(data.name)).append(" ").append(document.createTextNode(data.description));
+                var element = document.createElement("div");
+                element.innerHTML = "<div class = \"centerthis\">" + data.name + "</div><div style=\"line-height: 50%;\"><br></div >" + data.description + ".";
+                $(".textfield").append(element);
+                //$(".textfield").append(document.createTextNode(data.name)).append(" ").append(document.createTextNode(data.description));
             },
             error: function () {
                 alert("error");
@@ -186,10 +202,14 @@
 
         let inventoryObj = $(".selectedInventoryObject").attr("title");
         let sceneObj = $("#" + id + ".sceneObject").attr("title");
-        let action = "Использовать " + inventoryObj + " c " + sceneObj;
+        let action = "Использовать <b>" + inventoryObj + "</b> c <b>" + sceneObj + "</b>.";
+        var element = document.createElement("div");
+        element.innerHTML = action;
         if (inventoryObj) {
             RemoveText();
-            $(".textfield").append(document.createTextNode(action));
+            //$(".textfield").append(document.createTextNode(action));
+            $(".textfield").append(element);
+            //$(".textfield").innerHTML = action;
         }
     }
     function RemoveText() {
@@ -227,11 +247,11 @@
     }
 </script>
 <script>
-                                //ToDo inventory pagination
-                               /* window.onload = function () {
-                                    console.log($("#loop .inventoryObject").length);
-                                    let numOfItems = $("#loop .inventoryObject").length;
-                                    let limitPerPage = 5;
-                                }*/
+                                    //ToDo inventory pagination
+                                   /* window.onload = function () {
+                                        console.log($("#loop .inventoryObject").length);
+                                        let numOfItems = $("#loop .inventoryObject").length;
+                                        let limitPerPage = 5;
+                                    }*/
 </script>
 
