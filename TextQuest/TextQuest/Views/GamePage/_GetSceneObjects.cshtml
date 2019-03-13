@@ -64,7 +64,6 @@
                     selectedinventoryId:String(selectedinventoryId)
                 },
             success: function (data) {
-                console.log(data);
                     if (data.interactionType == 0) {
                         // Add item to inventory
                         $(".itemsContainer")
@@ -78,11 +77,10 @@
                     }
                     else if (data.interactionType == 1) {
 
-                        console.log(data);
                         let i = document.getElementById("remain").getAttribute("data-remaining");
                         //TODO: change sign
                         if (i <= 0) {
-                            //TODO: Bad ending cutscene
+                            
                         }
                         else {
                             //?????
@@ -110,12 +108,10 @@
                             // Do set of animations
                             for (i = 0; i < data.responces.length; i++) {
                                 if (!data.responces[i].isValid) {
-                                    console.log("No");
                                     $(".textfield").append(document.createTextNode("Вы не можете это использовать"));
                                     continue;
                                 }
                                 if (data.responces[i].action == 0) {
-                                    console.log("Hello")
                                     $("#" + data_id).remove();
                                     continue;
                                 }
@@ -148,7 +144,7 @@
                     }
                 },
                 error: function () {
-                    alert("error");
+                    
             }
         });
         RemoveText();
@@ -173,7 +169,7 @@
                 //$(".textfield").append(document.createTextNode(data.name)).append(" ").append(document.createTextNode(data.description));
             },
             error: function () {
-                alert("error");
+            
             }
         });
 
@@ -193,7 +189,7 @@
                 //$(".textfield").append(document.createTextNode(data.name)).append(" ").append(document.createTextNode(data.description));
             },
             error: function () {
-                alert("error");
+                
             }
         });
     }
@@ -219,7 +215,7 @@
 
 <script>
     function findCombination(id) {
-        console.log(document.getElementsByClassName(".innerText"));
+        //console.log(document.getElementsByClassName(".innerText"));
         if (document.getElementsByClassName("innerText").length == 0) {
             $("#1052.sceneObject").append($("<div></div>").addClass("innerText"));
         }
@@ -245,13 +241,32 @@
     function Tresh() {
 
     }
+    function victoryCheck() {
+       // console.log($(".itemsContainer").children().length);
+        let a = $(".itemsContainer").children().length;
+        window.clearTimeout();
+        window.clearInterval();
+        if (a < 5) {
+            window.location.replace(1023);
+        }
+        else if (a == 5) {
+            window.location.replace(1024);
+        }
+        else {
+            window.location.replace(1025);
+        }
+    }
+    function restart() {
+        $.ajax({
+            url: "/GamePage/Reset",
+            type: "post",
+            success: function () {
+                window.location.replace(4);
+            },
+            error: function () {
+            }
+        });
+    }
 </script>
-<script>
-                                    //ToDo inventory pagination
-                                   /* window.onload = function () {
-                                        console.log($("#loop .inventoryObject").length);
-                                        let numOfItems = $("#loop .inventoryObject").length;
-                                        let limitPerPage = 5;
-                                    }*/
-</script>
+
 

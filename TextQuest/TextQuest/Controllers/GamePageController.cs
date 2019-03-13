@@ -269,8 +269,7 @@ namespace TextQuest.Controllers
         public IActionResult Reset()
         {
             UserSingleton.Reset();
-            Index();
-            return View("Index");
+            return Ok();
         }
         
     }
@@ -371,6 +370,7 @@ namespace TextQuest.Controllers
             Scenes.Clear();
             instance = null;
             Inventory = null;
+            remainingTime = 900;
         }
     }
 

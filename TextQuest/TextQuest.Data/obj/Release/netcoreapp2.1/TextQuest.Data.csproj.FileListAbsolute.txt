@@ -1,0 +1,11 @@
+D:\Projects\C#\TextQuest\TextQuest\TextQuest.Data\bin\Release\netcoreapp2.1\TextQuest.Data.deps.json
+D:\Projects\C#\TextQuest\TextQuest\TextQuest.Data\bin\Release\netcoreapp2.1\TextQuest.Data.runtimeconfig.json
+D:\Projects\C#\TextQuest\TextQuest\TextQuest.Data\bin\Release\netcoreapp2.1\TextQuest.Data.runtimeconfig.dev.json
+D:\Projects\C#\TextQuest\TextQuest\TextQuest.Data\bin\Release\netcoreapp2.1\TextQuest.Data.dll
+D:\Projects\C#\TextQuest\TextQuest\TextQuest.Data\bin\Release\netcoreapp2.1\TextQuest.Data.pdb
+D:\Projects\C#\TextQuest\TextQuest\TextQuest.Data\obj\Release\netcoreapp2.1\TextQuest.Data.csprojAssemblyReference.cache
+D:\Projects\C#\TextQuest\TextQuest\TextQuest.Data\obj\Release\netcoreapp2.1\TextQuest.Data.csproj.CoreCompileInputs.cache
+D:\Projects\C#\TextQuest\TextQuest\TextQuest.Data\obj\Release\netcoreapp2.1\TextQuest.Data.AssemblyInfoInputs.cache
+D:\Projects\C#\TextQuest\TextQuest\TextQuest.Data\obj\Release\netcoreapp2.1\TextQuest.Data.AssemblyInfo.cs
+D:\Projects\C#\TextQuest\TextQuest\TextQuest.Data\obj\Release\netcoreapp2.1\TextQuest.Data.dll
+D:\Projects\C#\TextQuest\TextQuest\TextQuest.Data\obj\Release\netcoreapp2.1\TextQuest.Data.pdb
