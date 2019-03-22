@@ -15,7 +15,7 @@ namespace TextQuest.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.4-rtm-31024")
+                .HasAnnotation("ProductVersion", "2.1.8-servicing-32085")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -34,6 +34,8 @@ namespace TextQuest.Data.Migrations
                     b.Property<bool>("IsSpawn");
 
                     b.Property<int?>("NextInteractionId");
+
+                    b.Property<string>("SceneId");
 
                     b.Property<string>("Sound");
 
@@ -72,6 +74,8 @@ namespace TextQuest.Data.Migrations
 
                     b.Property<bool>("IsInfinite");
 
+                    b.Property<int>("LevelId");
+
                     b.Property<string>("Name")
                         .IsRequired();
 
@@ -107,6 +111,8 @@ namespace TextQuest.Data.Migrations
                     b.Property<string>("Description")
                         .IsRequired();
 
+                    b.Property<int>("LevelId");
+
                     b.HasKey("Id");
 
                     b.ToTable("Scenes");
@@ -117,10 +123,6 @@ namespace TextQuest.Data.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("AssociatedInventoryObjectId");
-
-                    b.Property<int?>("AssociatedSceneObjectId");
 
                     b.Property<string>("Description")
                         .IsRequired();
@@ -150,10 +152,6 @@ namespace TextQuest.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AssociatedInventoryObjectId");
-
-                    b.HasIndex("AssociatedSceneObjectId");
-
                     b.HasIndex("SceneId");
 
                     b.ToTable("SceneObjects");
@@ -161,14 +159,6 @@ namespace TextQuest.Data.Migrations
 
             modelBuilder.Entity("TextQuest.Data.SceneObject", b =>
                 {
-                    b.HasOne("TextQuest.Data.InventoryObject", "AssociatedInventoryObject")
-                        .WithMany()
-                        .HasForeignKey("AssociatedInventoryObjectId");
-
-                    b.HasOne("TextQuest.Data.SceneObject", "AssociatedSceneObject")
-                        .WithMany()
-                        .HasForeignKey("AssociatedSceneObjectId");
-
                     b.HasOne("TextQuest.Data.Scene")
                         .WithMany("SceneObjects")
                         .HasForeignKey("SceneId");

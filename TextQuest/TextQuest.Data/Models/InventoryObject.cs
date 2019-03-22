@@ -16,5 +16,6 @@ namespace TextQuest.Data
         [Required]
         public bool IsInfinite { get; set; }
         public string ImageUrl { get; set; }
+        public int LevelId { get; set; }
     }
 }

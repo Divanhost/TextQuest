@@ -12,6 +12,6 @@ namespace TextQuest.Data
         public string Description { get; set; }
         // Set of objects, that belongs to the scene
         public IEnumerable<SceneObject> SceneObjects { get; set; }
- 
+        public int LevelId { get; set; }
     }
 }
