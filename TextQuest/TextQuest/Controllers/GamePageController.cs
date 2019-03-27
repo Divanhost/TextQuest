@@ -17,7 +17,14 @@ namespace TextQuest.Controllers
         public IInventory _inventory;
         public IInventory_InventoryObject _inventoryHelper;
         public IInventoryObject _inventoryObject;
-        public GamePageController(IScene scene,ISceneObject sceneObject,IInteraction interaction, IInventory inventory,IInventory_InventoryObject inventoryHelper, IInventoryObject inventoryObject)
+        public ILevel _level;
+        public GamePageController(IScene scene,
+                                    ISceneObject sceneObject,
+                                    IInteraction interaction,
+                                    IInventory inventory,
+                                    IInventory_InventoryObject inventoryHelper,
+                                    IInventoryObject inventoryObject,
+                                    ILevel level)
         {
             _scene = scene;
             _sceneObject = sceneObject;
@@ -25,10 +32,11 @@ namespace TextQuest.Controllers
             _inventory = inventory;
             _inventoryHelper = inventoryHelper;
             _inventoryObject = inventoryObject;
+            _level = level;
         }
 
       
-        public IActionResult Index(int? id =4)
+        public IActionResult Index(int? lvlid =1,int? id =4)
         {
             UserSingleton user = UserSingleton.getInstance();
             Inventory inventory = UserSingleton.getInventory();
@@ -42,6 +50,21 @@ namespace TextQuest.Controllers
 
             }
             // Model assembly
+            /* UserSingleton.LoadScenes(lvlid);
+             UserSingleton.LoadItems(lvlid);
+             UserSingleton.LoadInteractions(lvlid);*/
+             //if(UserSingleton.)
+            var scenes = _level
+                .GetScenes(lvlid ?? default(int));
+            var listingScene = scenes.Select(sc => new SceneModel
+                {
+                    Id = sc.Id,
+                    Description = sc.Description,
+                    BackgroundImageUrl = sc.BackgroundImageUrl,
+                    SceneObjects = sc.SceneObjects.Where(so => !so.IsSpawned).OrderByDescending(s => s.z).ToList(),
+                    SpawnedSceneObjects = sc.SceneObjects.Where(so => so.IsSpawned).OrderByDescending(s => s.z).ToList()
+                }).ToList();
+            UserSingleton.LoadScenes(listingScene);
             var currentScene = UserSingleton.GetScene(id ?? default(int));
             if (currentScene == null)
             {
@@ -294,7 +317,8 @@ namespace TextQuest.Controllers
     {
         private static UserSingleton instance;
         private static Inventory Inventory;
-        private static List<InventoryObject> InventoryObjects; 
+        private static List<InventoryObject> InventoryObjects;
+        private static List<LevelModel> Levels;
         private static List<SceneModel> Scenes;
         public static int remainingTime;
         private UserSingleton() { }
@@ -304,12 +328,15 @@ namespace TextQuest.Controllers
             {
                 instance = new UserSingleton();
                 Inventory = new Inventory();
+                Levels = new List<LevelModel>();
                 Scenes = new List<SceneModel>();
                 InventoryObjects = new List<InventoryObject>();
                 remainingTime = 900;
             }
             return instance;
         }
+
+
         public static IEnumerable<SceneModel> GetScenes()
         {
            return Scenes;
@@ -328,6 +355,10 @@ namespace TextQuest.Controllers
         public static void AddScene(SceneModel scene)
         {
             Scenes.Add(scene);
+        }
+        public static void LoadScenes(List<SceneModel> scenes)
+        {
+            Scenes = scenes;
         }
         public static void AddInventoryObject(InventoryObject io)
         {

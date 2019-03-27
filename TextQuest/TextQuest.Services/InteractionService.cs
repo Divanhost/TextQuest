@@ -56,5 +56,19 @@ namespace TextQuest.Services
         {
             return GetInteraction(id).InteractingObjectId;
         }
+
+     
+
+        public void DeleteInteraction(int id)
+        {
+            _context.Remove(GetInteraction(id));
+            _context.SaveChanges();
+        }
+
+        public void AddInteraction(Interaction interaction)
+        {
+            _context.Interactions.Add(interaction);
+            _context.SaveChanges();
+        }
     }
 }

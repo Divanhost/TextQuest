@@ -120,14 +120,14 @@
                                 }
                                 if (!data.responces[i].isSpawn) {
                                     $("#" + data.responces[i].oldId)
-                                        .replaceWith($("<div>").attr("id", String(data.responces[i].newId)).addClass("sceneObject").css("position", "absolute").css("left", data.responces[i].x).css("top", data.responces[i].y).attr("onmouseover", String("RemoveText(" + ShowAction(data.responces[i].newId) + ")")).attr("title", data.responces[i].name) //todo: не ставится hover text
+                                        .replaceWith($("<div>").attr("id", String(data.responces[i].newId)).addClass("sceneObject").css("position", "absolute").css("left", data.responces[i].x).css("top", data.responces[i].y).attr("onmouseover", String("ShowAction(" + ShowAction(data.responces[i].newId) + ")")).attr("title", data.responces[i].name) //todo: не ставится hover text
                                             .append($("<a>")
                                                 .append($("<img>").attr("src", data.responces[i].imageUrl).attr("onclick", String("scObjHandler(" + data.responces[i].newId + ",@Model.CurrentScene.Id,@Model.Inventory.Id)")).attr("oncontextmenu", String("ShowInfo(" + data.responces[i].newId + ");return false;")))));
                                     $("div.selectedInventoryObject").remove()
 
                                 }
                                 else {
-                                    $('#scContainer').append($("<div>").attr("id", String(data.responces[i].newId)).addClass("sceneObject").css("position", "absolute").css("left", data.responces[i].x).css("top", data.responces[i].y).attr("onmouseover", String("RemoveText(" + ShowAction(data.responces[i].newId) + ")")).attr("title", data.responces[i].name) //todo: не ставится hover text
+                                    $('#scContainer').append($("<div>").attr("id", String(data.responces[i].newId)).addClass("sceneObject").css("position", "absolute").css("left", data.responces[i].x).css("top", data.responces[i].y).attr("onmouseover", String("ShowAction(" + ShowAction(data.responces[i].newId) + ")")).attr("title", data.responces[i].name) //todo: не ставится hover text
                                             .append($("<a>")
                                                 .append($("<img>").attr("src", data.responces[i].imageUrl).attr("onclick", String("scObjHandler(" + data.responces[i].newId + ",@Model.CurrentScene.Id,@Model.Inventory.Id)")).attr("oncontextmenu", String("ShowInfo(" + data.responces[i].newId + ");return false;")))));
                                     $("div.selectedInventoryObject").remove()

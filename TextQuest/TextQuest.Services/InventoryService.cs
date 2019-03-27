@@ -31,6 +31,7 @@ namespace TextQuest.Services
         public void Delete(int id)
         {
             _context.Remove(GetInventory(id));
+            _context.SaveChanges();
         }
 
         

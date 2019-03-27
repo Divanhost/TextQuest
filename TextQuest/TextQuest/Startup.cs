@@ -44,6 +44,7 @@ namespace TextQuest
             services.AddScoped<IInventory, InventoryService>();
             services.AddScoped<IInventory_InventoryObject, Inventory_InventoryObjectService>();
             services.AddScoped<IInventoryObject, InventoryObjectService>();
+            services.AddScoped<ILevel, LevelService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -8,7 +8,7 @@ namespace TextQuest.Data
     {
         void AddItem(int id,int itemId);
         void RemoveItem(int id,int itemId);
-        IEnumerable<InventoryObject> GetItems(int id);
+        IEnumerable<InventoryObject> GetItems(int id, int mode); //Сделай
         void ClearInventory(int id);
     }
 }

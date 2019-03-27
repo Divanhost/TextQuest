@@ -33,9 +33,9 @@ namespace TextQuest.Data.Migrations
 
                     b.Property<bool>("IsSpawn");
 
-                    b.Property<int?>("NextInteractionId");
+                    b.Property<int>("LevelId");
 
-                    b.Property<string>("SceneId");
+                    b.Property<int?>("NextInteractionId");
 
                     b.Property<string>("Sound");
 
@@ -46,6 +46,8 @@ namespace TextQuest.Data.Migrations
                     b.Property<int?>("TargetObjectId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("LevelId");
 
                     b.ToTable("Interactions");
                 });
@@ -79,9 +81,32 @@ namespace TextQuest.Data.Migrations
                     b.Property<string>("Name")
                         .IsRequired();
 
+                    b.Property<int?>("Type");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("LevelId");
+
                     b.ToTable("InventoryObjects");
+                });
+
+            modelBuilder.Entity("TextQuest.Data.Models.Authentication", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AccessLevel");
+
+                    b.Property<int>("AssociatedInventory");
+
+                    b.Property<string>("Login");
+
+                    b.Property<string>("Password");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Authentications");
                 });
 
             modelBuilder.Entity("TextQuest.Data.Models.Inventory_InventoryObject", b =>
@@ -99,6 +124,29 @@ namespace TextQuest.Data.Migrations
                     b.ToTable("Inventory_InventoryObjects");
                 });
 
+            modelBuilder.Entity("TextQuest.Data.Models.Level", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Creator");
+
+                    b.Property<int>("Dislikes");
+
+                    b.Property<string>("ImageUrl");
+
+                    b.Property<int>("Likes");
+
+                    b.Property<string>("Name");
+
+                    b.Property<int>("Views");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Levels");
+                });
+
             modelBuilder.Entity("TextQuest.Data.Scene", b =>
                 {
                     b.Property<int>("Id")
@@ -114,6 +162,8 @@ namespace TextQuest.Data.Migrations
                     b.Property<int>("LevelId");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("LevelId");
 
                     b.ToTable("Scenes");
                 });
@@ -155,6 +205,30 @@ namespace TextQuest.Data.Migrations
                     b.HasIndex("SceneId");
 
                     b.ToTable("SceneObjects");
+                });
+
+            modelBuilder.Entity("TextQuest.Data.Interaction", b =>
+                {
+                    b.HasOne("TextQuest.Data.Models.Level")
+                        .WithMany("Interactions")
+                        .HasForeignKey("LevelId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("TextQuest.Data.InventoryObject", b =>
+                {
+                    b.HasOne("TextQuest.Data.Models.Level")
+                        .WithMany("InventoryObjects")
+                        .HasForeignKey("LevelId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("TextQuest.Data.Scene", b =>
+                {
+                    b.HasOne("TextQuest.Data.Models.Level")
+                        .WithMany("Scenes")
+                        .HasForeignKey("LevelId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("TextQuest.Data.SceneObject", b =>

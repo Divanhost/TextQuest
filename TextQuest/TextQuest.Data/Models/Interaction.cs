@@ -23,7 +23,7 @@ namespace TextQuest.Data
         public string SpecialEvent { get; set; }
         //Special sound
         public string Sound { get; set; }
-        public string SceneId { get; set; }
+        public int LevelId { get; set; }
 
     }
 }

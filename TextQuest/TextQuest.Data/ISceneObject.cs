@@ -7,13 +7,17 @@ namespace TextQuest.Data
     public interface ISceneObject
     {
         SceneObject GetSceneObject(int id);
+        void AddSceneObject(SceneObject sceneObject);
+        void DeleteSceneObject(int id);
         string GetName(int id);
         string GetDescription(int id);
         Location GetLocation(int id);
         void SetLocation(int id,Location location);
         bool CheckPickable(int id);
         bool CheckAction(int id);
+        void AttachToScene(int id, int sceneId);
     }
+
     public class Location
     {
         public Location(int x, int y, int z)

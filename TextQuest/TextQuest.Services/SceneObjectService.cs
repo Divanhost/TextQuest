@@ -56,5 +56,23 @@ namespace TextQuest.Services
         {
             return GetSceneObject(id).Description;
         }
+
+        public void AddSceneObject(SceneObject sceneObject)
+        {
+            _context.Add(sceneObject);
+            _context.SaveChanges();
+        }
+
+        public void DeleteSceneObject(int id)
+        {
+            _context.SceneObjects.Remove(GetSceneObject(id));
+            _context.SaveChanges();
+        }
+
+        public void AttachToScene(int id, int sceneId)
+        {
+            GetSceneObject(id).SceneId = sceneId;
+            _context.SaveChanges();
+        }
     }
 }

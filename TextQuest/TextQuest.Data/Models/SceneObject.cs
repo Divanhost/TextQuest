@@ -24,5 +24,6 @@ namespace TextQuest.Data
         // Next scene id
         public int InnerPassSceneID { get; set; }
         public string ImageUrl { get; set; }
+        public int? SceneId { get; set; }
     }
 }

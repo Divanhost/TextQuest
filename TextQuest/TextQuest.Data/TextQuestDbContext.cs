@@ -13,5 +13,8 @@ namespace TextQuest.Data
         public DbSet<Inventory> Inventories { get; set; }
         public DbSet<InventoryObject> InventoryObjects { get; set; }
         public DbSet<Inventory_InventoryObject> Inventory_InventoryObjects { get; set; }
+        public DbSet<Level> Levels { get; set; }
+        public DbSet<Authentication> Authentications { get; set; }
+
     }
 }

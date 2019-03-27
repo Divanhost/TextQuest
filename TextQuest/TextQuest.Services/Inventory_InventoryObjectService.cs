@@ -34,10 +34,17 @@ namespace TextQuest.Services
             _context.SaveChanges();
 
         }
-
+        // remove when you add different inventories
         public IEnumerable<InventoryObject> GetItems(int id)
         {
             //TODO refactor
+            var help = _context.Inventory_InventoryObjects.Where(io => io.InventoryId == id);
+            var Inven = _context.InventoryObjects.Where(io => help.Any(hpl => hpl.InventoryObjectId == io.Id));
+            return Inven;
+        }
+
+        public IEnumerable<InventoryObject> GetItems(int id, int mode)
+        {
             var help = _context.Inventory_InventoryObjects.Where(io => io.InventoryId == id);
             var Inven = _context.InventoryObjects.Where(io => help.Any(hpl => hpl.InventoryObjectId == io.Id));
             return Inven;

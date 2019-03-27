@@ -40,12 +40,15 @@ namespace TextQuest.Services
             return GetInventoryObject(id).IsInfinite;
         }
 
+        public void DeleteInventoryObject(int id)
+        {
+            _context.Remove(GetInventoryObject(id));
+        }
 
-
-
-
-
-
-
+        public void AddInventoryObject(InventoryObject inventoryObject)
+        {
+            _context.Add(inventoryObject);
+            _context.SaveChanges();
+        }
     }
 }
