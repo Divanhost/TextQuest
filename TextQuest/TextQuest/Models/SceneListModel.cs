@@ -10,10 +10,10 @@ namespace TextQuest.Models
 {
     public class SceneListModel:PageModel
     {
-        public IEnumerable<SceneModel> Scenes;
+        public List<SceneModel> Scenes;
         public SceneModel CurrentScene;
         public Inventory Inventory;
-        public IEnumerable<InventoryObject> InventoryItems;
+        public List<InventoryObjectModel> InventoryItems;
         public int RemainingTime;
     }
 }

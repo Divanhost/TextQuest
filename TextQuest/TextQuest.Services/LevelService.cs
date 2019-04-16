@@ -56,7 +56,11 @@ namespace TextQuest.Services
 
         public Level GetLevel(int id)
         {
-            return _context.Levels.FirstOrDefault(lvl => lvl.Id == id);
+            return _context.Levels
+                .Include(lvl=>lvl.Scenes)
+                .Include(lvl=>lvl.Interactions)
+                .Include(lvl=>lvl.InventoryObjects)
+                .FirstOrDefault(lvl => lvl.Id == id);
         }
 
         public IEnumerable<Level> GetLevels(string creator)

@@ -10,12 +10,7 @@ namespace TextQuest.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string ImageUrl { get; set; }
         public string Creator { get; set; }
-        public int Views { get; set; }
-        public int Likes { get; set; }
-        public int Dislikes { get; set; }
-        public bool Completed = false;
         public List<Scene> Scenes { get; set; }
         public List<InventoryObject> InventoryObjects { get; set; }
         public List<Interaction> Interactions { get; set; }
