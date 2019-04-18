@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using TextQuest.Data;
+using TextQuest.Data.Models;
 using TextQuest.Models;
 
 namespace TextQuest.Controllers
@@ -18,13 +20,15 @@ namespace TextQuest.Controllers
         public IInventory_InventoryObject _inventoryHelper;
         public IInventoryObject _inventoryObject;
         public ILevel _level;
+        public IMemoryCache _memoryCache;
         public GamePageController(IScene scene,
                                     ISceneObject sceneObject,
                                     IInteraction interaction,
                                     IInventory inventory,
                                     IInventory_InventoryObject inventoryHelper,
                                     IInventoryObject inventoryObject,
-                                    ILevel level)
+                                    ILevel level,
+                                    IMemoryCache memoryCache)
         {
             _scene = scene;
             _sceneObject = sceneObject;
@@ -33,45 +37,32 @@ namespace TextQuest.Controllers
             _inventoryHelper = inventoryHelper;
             _inventoryObject = inventoryObject;
             _level = level;
+            _memoryCache = memoryCache;
         }
-
+        public LevelModel level;
       
         public IActionResult Index(int? lvlid =1,int? id =4)
         {
-            UserSingleton user = UserSingleton.getInstance();
-            Inventory inventory = UserSingleton.getInventory();
-            
-            if (UserSingleton.GetScenes() == null)
+            level = null;
+            // Кэширование загружаемого уровня и пребразование в LevelModel
+            if (!_memoryCache.TryGetValue(CacheKeys.Level,out level))
             {
-                var tmp = _level.GetLevel(lvlid ?? default(int));
-                foreach(var scene in tmp.Scenes)
-                {
-                    scene.SceneObjects = _scene.GetSceneObjects(scene.Id);
-                }
-                var lsttmp = new LevelModel
-                {
-                    Id = tmp.Id,
-                    Name = tmp.Name,
-                    Creator = tmp.Creator,
-                    Scenes = tmp.Scenes.ToList(),
-                    InventoryObjects = tmp.InventoryObjects.ToList(),
-                    Interactions = tmp.Interactions.ToList()
-                };
-                UserSingleton.AddLevel(lsttmp);
-                UserSingleton.LoadScenes(lvlid ?? default(int));
-                UserSingleton.LoadItems(lvlid ?? default(int));
-                UserSingleton.LoadIteractions(lvlid ?? default(int));
+                LoadLevel(lvlid, id);
             }
 
-            var currentScene = UserSingleton.GetScene(id ?? default(int));
+            UserSingleton user = UserSingleton.getInstance();
+            Inventory inventory = UserSingleton.getInventory();
+
+            
+            var currentScene = level.Scenes.FirstOrDefault(sc => sc.Id == id);
            
             var model = new SceneListModel()
             {
-                Scenes = UserSingleton.GetScenes(),
+                Scenes = level.Scenes,
                 CurrentScene = currentScene,
                 Inventory = inventory,
-                InventoryItems = UserSingleton.GetInventoryItems(),
-                RemainingTime = UserSingleton.remainingTime
+                InventoryItems = level.InventoryObjects,
+                RemainingTime = 900
             };
 
             return View(model);
@@ -102,9 +93,10 @@ namespace TextQuest.Controllers
             }
 
             var responces = new List<Responce>();
-            
+            _memoryCache.TryGetValue(CacheKeys.Level, out level);
             //Scene object related Variables;
-            var sceneObject = UserSingleton.GetScene(sceneId).SceneObjects.FirstOrDefault(so => so.Id == id);
+            var sceneObject = level.Scenes.FirstOrDefault(sc=>sc.Id == sceneId).SceneObjects.FirstOrDefault(so=>so.Id == id);
+            // var sceneObject = UserSingleton.GetScene(sceneId).SceneObjects.FirstOrDefault(so => so.Id == id);
             if (sceneObject == null)
             {
                 return Ok();
@@ -112,10 +104,6 @@ namespace TextQuest.Controllers
             bool isPickable = sceneObject.IsPickable;
             bool hasAction = sceneObject.HasAction;
             bool isInnerPass = sceneObject.IsInnerPass;
-            if (isPickable)
-            {
-               // PickItem(sceneObject.Id,sceneId,responces);
-            }
             if (isInnerPass)
             {
                 int _nextSceneId = sceneObject.InnerPassSceneID;
@@ -123,7 +111,7 @@ namespace TextQuest.Controllers
             }
             if (hasAction || isPickable)
             {
-                var interactions = UserSingleton.GetInteractionsBySceneObject(id);
+                var interactions = level.Interactions.Where(i => i.TargetObjectId == id);
                 foreach (var interaction in interactions)
                 {
                     if (interaction.IsAllowed)
@@ -135,7 +123,7 @@ namespace TextQuest.Controllers
                         else
                         {
                             if (selectedInventoryObjectId != null)
-                                UserSingleton.RemoveInventoryItem(selectedInventoryObjectId ?? default(int));
+                              //  UserSingleton.RemoveInventoryItem(selectedInventoryObjectId ?? default(int));
                             if (isPickable)
                             {
                                 PickItem(sceneObject.Id, sceneId, responces);
@@ -151,84 +139,13 @@ namespace TextQuest.Controllers
                         responces.Add(new Responce { interactionType = -1 });
                     }
                 }
-               // return Ok(new { interactionType = 2, id, responces });
             }
             if(!hasAction&&!isInnerPass&&!isPickable) //
             {
-                
                 return Ok(new { interactionType = -1, id, responces });
             }
             return Ok(responces);
-            //Choose the way
-            // We can pick item in inventory
-            /*
-            if (isPickable)
-            {
-                var interacton = _interaction.GetInteractionsBySceneObject(id).First(); ///////////////
-                int inventoryItemId = interacton.InteractingInventoryObjectId.Value;
-                if (UserSingleton.GetInventoryObject(inventoryItemId) == null)
-                {
-                    UserSingleton.AddInventoryObject(_inventoryObject.GetInventoryObject(inventoryItemId));
-                }
-                else
-                {
-                    var responces = new List<Responce>();
-                    return Ok(new { interactionType = 2, id, responces });
-                }
-                var responce = new Responce()
-                {
-                    oldId = id,
-                    newId = inventoryItemId,
-                    ImageUrl = UserSingleton.GetInventoryObject(inventoryItemId).ImageUrl,
-                    Name = UserSingleton.GetInventoryObject(inventoryItemId).Name
-                };
-                if (!UserSingleton.GetInventoryObject(inventoryItemId).IsInfinite)
-                {
-                    UserSingleton.GetScene(sceneId).SceneObjects.Remove(UserSingleton.GetScene(sceneId).SceneObjects.FirstOrDefault(so => so.Id == id));
-                    return Ok(new { interactionType = 0, id,remove=true, responce });
-                }
-                else
-                {
-                    return Ok(new { interactionType = 0, id,remove = false, responce });
-                }
-            }
             
-            // It is the pass into a new Scene
-            else if (isInnerPass)
-            {
-                int nextSceneId = UserSingleton.GetScene(sceneId).SceneObjects.FirstOrDefault(s=>s.Id ==id).InnerPassSceneID;
-                return Ok(new { interactionType = 1, nextSceneId });
-            }
-            
-            //It has action 
-            else if (hasAction)
-            {
-                var responces = new List<Responce>();
-                var interactions = _interaction.GetInteractionsBySceneObject(id);
-                foreach (var interaction in interactions)
-                {
-                    if (interaction.IsAllowed)
-                    {
-                        if (interaction.InteractingInventoryObjectId != selectedInventoryObjectId)
-                        {
-                            responces.Add(new Responce { isValid = false });
-                        }
-                        else
-                        {
-                            if (selectedInventoryObjectId != null)
-                                UserSingleton.RemoveInventoryObject(selectedInventoryObjectId ?? default(int));
-
-                            DoActions(responces, id, sceneId,interaction.Id);
-                        }
-                    }
-                }
-                return Ok(new { interactionType = 2, id, responces });
-            }*/
-          /*  else
-            {
-                var responces = new List<Responce>();
-                return Ok(new { interactionType = 2, id, responces});
-            }*/
         }
 
         public IActionResult HandleDescriptionShowing()
@@ -265,10 +182,57 @@ namespace TextQuest.Controllers
             UserSingleton.remainingTime = rt;
             return Ok();
         }
+        public void LoadLevel(int? lvlid,int? id)
+        {
+            var tmp = _level.GetLevel(lvlid ?? default(int));
+            foreach (var scene in tmp.Scenes)
+            {
+                scene.SceneObjects = _scene.GetSceneObjects(scene.Id);
+            }
+            // Преобразование сцен в модель
+            var listingScene = tmp.Scenes.Select(sc => new SceneModel
+            {
+                Id = sc.Id,
+                Description = sc.Description,
+                BackgroundImageUrl = sc.BackgroundImageUrl,
+                SceneObjects = sc.SceneObjects.Where(so => !so.IsSpawned).OrderByDescending(s => s.z).ToList(),
+                SpawnedSceneObjects = sc.SceneObjects.Where(so => so.IsSpawned).OrderByDescending(s => s.z).ToList()
+            }).ToList();
+            // Преобразование предметов инвенторя в модель
+            var listinginventoryObjects = tmp.InventoryObjects.Select(sc => new InventoryObjectModel
+            {
+                Id = sc.Id,
+                Name = sc.Name,
+                Decription = sc.Decription,
+                IsInfinite = sc.IsInfinite,
+                ImageUrl = sc.ImageUrl
+            }).ToList();
+            // Заполнение модели уровня
+            level = new LevelModel
+            {
+                Id = tmp.Id,
+                Name = tmp.Name,
+                Creator = tmp.Creator,
+                Scenes = listingScene.ToList(),
+                InventoryObjects = listinginventoryObjects.ToList(),
+                Interactions = tmp.Interactions.ToList()
+            };
+            // Загрузка в кэш
+            _memoryCache.Set(CacheKeys.Level, level,
+                new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(15)));
+        }
         public void PickItem(int id,int sceneId, List<Responce> responces)
         {
-            var interacton = UserSingleton.GetInteractionsBySceneObject(id).First();
+            var interacton = level.Interactions.FirstOrDefault(i => i.TargetObjectId == id);
+           // var interacton = UserSingleton.GetInteractionsBySceneObject(id).First();
             int inventoryItemId = interacton.TargetInventoryObjectId.Value;
+            var inventoryObj = level.InventoryObjects.FirstOrDefault(io => io.Id == inventoryItemId);
+            var sceneObject = level.Scenes.FirstOrDefault(sc => sc.Id == sceneId).SceneObjects.FirstOrDefault(so => so.Id == id);
+
+
+            /*--
+                переделать инвентарь, сделать его единым на сессию, вынести из gamepageController 
+            --*/
             if (UserSingleton.GetInventoryItem(inventoryItemId) == null)
             {
                 UserSingleton.AddInventoryItem(UserSingleton.GetInventoryObject(inventoryItemId));
@@ -282,12 +246,15 @@ namespace TextQuest.Controllers
                 interactionType = 0,
                 oldId = id,
                 newId = inventoryItemId,
-                ImageUrl = UserSingleton.GetInventoryObject(inventoryItemId).ImageUrl,
-                Name = UserSingleton.GetInventoryObject(inventoryItemId).Name
+                // Name = UserSingleton.GetInventoryObject(inventoryItemId).Name
+                // ImageUrl = UserSingleton.GetInventoryObject(inventoryItemId).ImageUrl,
+                Name = inventoryObj.Name,
+                ImageUrl = inventoryObj.ImageUrl
             };
-            if (!UserSingleton.GetInventoryObject(inventoryItemId).IsInfinite)
+            if (!level.InventoryObjects.FirstOrDefault(io => io.Id == inventoryItemId).IsInfinite)
             {
-                UserSingleton.GetScene(sceneId).SceneObjects.Remove(UserSingleton.GetScene(sceneId).SceneObjects.FirstOrDefault(so => so.Id == id));
+                level.Scenes.FirstOrDefault(sc => sc.Id == sceneId).SceneObjects.Remove(sceneObject);
+               // UserSingleton.GetScene(sceneId).SceneObjects.Remove(UserSingleton.GetScene(sceneId).SceneObjects.FirstOrDefault(so => so.Id == id));
                 //return Ok(new { interactionType = 0, id, remove = true, responce });
                 responce.Action = 0;
             }
@@ -301,10 +268,9 @@ namespace TextQuest.Controllers
         //Do action or sequence of actions
         public void DoActions(List<Responce> responces,int id,int sceneId,int interactionId)
         {
-            var sceneObject = UserSingleton.GetScene(sceneId).SceneObjects.FirstOrDefault(so => so.Id == id);
-            var interacton = UserSingleton.GetInteraction(interactionId); /////////
-            var associatedSceneObject = UserSingleton.GetScene(sceneId).SpawnedSceneObjects.FirstOrDefault(sso => sso.Id == _interaction.GetInteractingSceneObjectId(interacton.Id));
-            //if interaction change object
+            var interacton = level.Interactions.FirstOrDefault(i => i.TargetObjectId == id);
+            var sceneObject = level.Scenes.FirstOrDefault(sc => sc.Id == sceneId).SceneObjects.FirstOrDefault(so => so.Id == id);
+            var associatedSceneObject = level.Scenes.FirstOrDefault(sc => sc.Id == sceneId).SpawnedSceneObjects.FirstOrDefault(sso => sso.Id == interacton.InteractingObjectId);
             if (interacton.InteractingObjectId != id)
             {
                 //and interactingobjects exists
@@ -327,10 +293,13 @@ namespace TextQuest.Controllers
                         SpecialEvent = interacton.SpecialEvent
                     };
                     responces.Add(responce);
-                    UserSingleton.GetScene(sceneId).SpawnedSceneObjects.Add(UserSingleton.GetScene(sceneId).SceneObjects.FirstOrDefault(so => so.Id == id));
-                    UserSingleton.GetScene(sceneId).SceneObjects.Add(UserSingleton.GetScene(sceneId).SpawnedSceneObjects.FirstOrDefault(so => so.Id == associatedSceneObject.Id));
+                    level.Scenes.FirstOrDefault(sc => sc.Id == sceneId).SpawnedSceneObjects.Add(sceneObject);
+                    level.Scenes.FirstOrDefault(sc => sc.Id == sceneId).SceneObjects.Add(associatedSceneObject);
+                    //UserSingleton.GetScene(sceneId).SpawnedSceneObjects.Add(UserSingleton.GetScene(sceneId).SceneObjects.FirstOrDefault(so => so.Id == id));
+                    //UserSingleton.GetScene(sceneId).SceneObjects.Add(UserSingleton.GetScene(sceneId).SpawnedSceneObjects.FirstOrDefault(so => so.Id == associatedSceneObject.Id));
                     if (!interacton.IsSpawn)
-                        UserSingleton.GetScene(sceneId).SceneObjects.Remove(UserSingleton.GetScene(sceneId).SceneObjects.FirstOrDefault(so => so.Id == id));
+                        level.Scenes.FirstOrDefault(sc => sc.Id == sceneId).SceneObjects.Remove(sceneObject);
+                        //UserSingleton.GetScene(sceneId).SceneObjects.Remove(UserSingleton.GetScene(sceneId).SceneObjects.FirstOrDefault(so => so.Id == id));
                 }
                 else
                 {
@@ -341,7 +310,8 @@ namespace TextQuest.Controllers
                         isValid = true
                     };
                     responces.Add(responce);
-                    UserSingleton.GetScene(sceneId).SceneObjects.Remove(UserSingleton.GetScene(sceneId).SceneObjects.FirstOrDefault(so => so.Id == id));
+                    //UserSingleton.GetScene(sceneId).SceneObjects.Remove(UserSingleton.GetScene(sceneId).SceneObjects.FirstOrDefault(so => so.Id == id));
+                    level.Scenes.FirstOrDefault(sc => sc.Id == sceneId).SceneObjects.Remove(sceneObject);
                 }
             }
             else
@@ -392,7 +362,17 @@ namespace TextQuest.Controllers
         public bool isSpawn; //лишнее
         public string SpecialEvent;
     }
-    
+    public static class CacheKeys
+    {
+        public static string Level { get { return "_level"; } }
+        public static string Scene { get { return "_scene"; } }
+        public static string SceneObject { get { return "_sceneObject"; } }
+        public static string Interaction { get { return "_interaction"; } }
+        public static string Inventory { get { return "_inventory"; } }
+        public static string InventoryHelper { get { return "_inventoryHelper"; } }
+        public static string InventoryObject { get { return "_inventoryObject"; } }
+    }
+
     public class UserSingleton
     {
         private static UserSingleton instance;
@@ -419,6 +399,10 @@ namespace TextQuest.Controllers
                 remainingTime = 900;
             }
             return instance;
+        }
+        public void RemoveInstance()
+        {
+            instance = null;
         }
 
         public static void AddLevel(LevelModel level)

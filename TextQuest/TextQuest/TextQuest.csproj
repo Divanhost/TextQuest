@@ -5,6 +5,784 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\arrow_d.png" />
+    <None Remove="Images\arrow_l.png" />
+    <None Remove="Images\arrow_r.png" />
+    <None Remove="Images\arrow_u.png" />
+    <None Remove="Images\background.png" />
+    <None Remove="Images\background2.png" />
+    <None Remove="Images\banner1.svg" />
+    <None Remove="Images\banner2.svg" />
+    <None Remove="Images\banner3.svg" />
+    <None Remove="Images\door2_openonly.png" />
+    <None Remove="Images\door_closed.png" />
+    <None Remove="Images\door_open.png" />
+    <None Remove="Images\Hub\bg_choosing.png" />
+    <None Remove="Images\Hub\bg_crossroads.png" />
+    <None Remove="Images\Hub\ob_door_garden.png" />
+    <None Remove="Images\Hub\ob_door_lab.png" />
+    <None Remove="Images\Hub\ob_door_medbay.png" />
+    <None Remove="Images\Hub\ob_door_office.png" />
+    <None Remove="Images\Hub\ob_monitor1_on.png" />
+    <None Remove="Images\itemslot.png" />
+    <None Remove="Images\itemslot_chosen.png" />
+    <None Remove="Images\key.png" />
+    <None Remove="Images\lever_off.png" />
+    <None Remove="Images\lever_on.png" />
+    <None Remove="Images\lock.png" />
+    <None Remove="Images\Scene1\bg_entrance.png" />
+    <None Remove="Images\Scene1\ob_bunkerdoor_closed.png" />
+    <None Remove="Images\Scene1\ob_bunkerdoor_open.png" />
+    <None Remove="Images\Scene1\ob_doorbutton_pressed.png" />
+    <None Remove="Images\Scene1\ob_doorbutton_unpressed.png" />
+    <None Remove="Images\Scene1\ob_panel_closed.png" />
+    <None Remove="Images\Scene1\ob_panel_open.png" />
+    <None Remove="Images\Scene2Light\bg_lobby.png" />
+    <None Remove="Images\Scene2Light\ob_deadguy.png" />
+    <None Remove="Images\Scene2Light\ob_heavydoor.png" />
+    <None Remove="Images\Scene2Light\ob_secretarrow.png" />
+    <None Remove="Images\Scene2Light\ob_securitydoor.png" />
+    <None Remove="Images\Scene2\bg_lobby_dark.png" />
+    <None Remove="Images\Scene2\ob_deadguy_dark.png" />
+    <None Remove="Images\Scene2\ob_heavydoor_dark.png" />
+    <None Remove="Images\Scene2\ob_secretarrow.png" />
+    <None Remove="Images\Scene2\ob_securitydoor_dark.png" />
+    <None Remove="Images\Scene3Dark\bg_security_dark.png" />
+    <None Remove="Images\Scene3Dark\ob_desk_dark.png" />
+    <None Remove="Images\Scene3Dark\ob_device_dark.png" />
+    <None Remove="Images\Scene3Dark\ob_doortolobby_dark.png" />
+    <None Remove="Images\Scene3Dark\ob_monitor1_off.png" />
+    <None Remove="Images\Scene3Dark\ob_monitor2_off.png" />
+    <None Remove="Images\Scene3Dark\ob_monitor3_off.png" />
+    <None Remove="Images\Scene3Dark\ob_monitor4_off.png" />
+    <None Remove="Images\Scene3Dark\ob_officechair_dark.png" />
+    <None Remove="Images\Scene3Dark\ob_redbutton_unpressed.png" />
+    <None Remove="Images\Scene3Dark\ob_siren_dark - Копировать.png" />
+    <None Remove="Images\Scene3Dark\ob_siren_dark.png" />
+    <None Remove="Images\Scene3Dark\reference.png" />
+    <None Remove="Images\Scene3Light\bg_security.png" />
+    <None Remove="Images\Scene3Light\ob_desk.png" />
+    <None Remove="Images\Scene3Light\ob_device.png" />
+    <None Remove="Images\Scene3Light\ob_doortolobby.png" />
+    <None Remove="Images\Scene3Light\ob_monitor1_on.png" />
+    <None Remove="Images\Scene3Light\ob_monitor2_on.png" />
+    <None Remove="Images\Scene3Light\ob_monitor3_on.png" />
+    <None Remove="Images\Scene3Light\ob_monitor4_on.png" />
+    <None Remove="Images\Scene3Light\ob_officechair.png" />
+    <None Remove="Images\Scene3Light\ob_redbutton_pressed.png" />
+    <None Remove="Images\Scene3Light\ob_siren.png" />
+    <None Remove="Images\Scene3Light\reference.png" />
+    <None Remove="Images\Scene4\bg_office.png" />
+    <None Remove="Images\Scene4\ob_arrow.png" />
+    <None Remove="Images\Scene4\ob_computertable.png" />
+    <None Remove="Images\Scene4\ob_computertext.png" />
+    <None Remove="Images\Scene4\ob_crawlingguy.png" />
+    <None Remove="Images\Scene4\ob_pottedplant.png" />
+    <None Remove="Images\Scene4\ob_safe.png" />
+    <None Remove="Images\Scene5\bg_garden.png" />
+    <None Remove="Images\Scene5\garden.png" />
+    <None Remove="Images\Scene5\it_briefcase.png" />
+    <None Remove="Images\Scene5\ob_briefcase.png" />
+    <None Remove="Images\Scene5\ob_briefcaseground.png" />
+    <None Remove="Images\Scene5\ob_cupboard.png" />
+    <None Remove="Images\Scene5\ob_glove.png" />
+    <None Remove="Images\Scene5\ob_hangingbriefcase.png" />
+    <None Remove="Images\Scene5\ob_plant1.png" />
+    <None Remove="Images\Scene5\ob_plant1_alt.png" />
+    <None Remove="Images\Scene5\ob_plant2.png" />
+    <None Remove="Images\Scene5\ob_plant2_alt.png" />
+    <None Remove="Images\Scene5\ob_plant3.png" />
+    <None Remove="Images\Scene5\ob_plant3_alt.png" />
+    <None Remove="Images\Scene5\ob_plant4.png" />
+    <None Remove="Images\Scene5\ob_plant4_alt.png" />
+    <None Remove="Images\Scene5\ob_plant5.png" />
+    <None Remove="Images\Scene5\ob_plant5_alt.png" />
+    <None Remove="Images\Scene5\ob_plant6.png" />
+    <None Remove="Images\Scene5\ob_plant6_alt.png" />
+    <None Remove="Images\Scene5\ob_plant7.png" />
+    <None Remove="Images\Scene5\ob_plant7_alt.png" />
+    <None Remove="Images\Scene5\ob_topvine.png" />
+    <None Remove="Images\Scene6\bg_medbay.png" />
+    <None Remove="Images\Scene6\it_bonesaw.png" />
+    <None Remove="Images\Scene6\it_keycard.png" />
+    <None Remove="Images\Scene6\it_meds.png" />
+    <None Remove="Images\Scene6\it_organbag.png" />
+    <None Remove="Images\Scene6\it_scalpel.png" />
+    <None Remove="Images\Scene6\ob_bonesaw.png" />
+    <None Remove="Images\Scene6\ob_cryodoor.png" />
+    <None Remove="Images\Scene6\ob_fridge.png" />
+    <None Remove="Images\Scene6\ob_fridge_open.png" />
+    <None Remove="Images\Scene6\ob_medbox_closed.png" />
+    <None Remove="Images\Scene6\ob_medbox_open.png" />
+    <None Remove="Images\Scene6\ob_meds.png" />
+    <None Remove="Images\Scene6\ob_poster.png" />
+    <None Remove="Images\Scene6\ob_rat.png" />
+    <None Remove="Images\Scene6\ob_rat_dead.png" />
+    <None Remove="Images\Scene6\ob_scalpel.png" />
+    <None Remove="Images\Scene6\ob_sideposter.png" />
+    <None Remove="Images\Scene6\ob_sink.png" />
+    <None Remove="Images\Scene6\ob_smalltable.png" />
+    <None Remove="Images\Scene6\ob_table.png" />
+    <None Remove="Images\Scene6\ref.png" />
+    <None Remove="Images\Scene7\bg_lab.png" />
+    <None Remove="Images\Scene7\it_item0.png" />
+    <None Remove="Images\Scene7\it_item1.png" />
+    <None Remove="Images\Scene7\it_item2.png" />
+    <None Remove="Images\Scene7\it_item3.png" />
+    <None Remove="Images\Scene7\it_item4.png" />
+    <None Remove="Images\Scene7\it_item5.png" />
+    <None Remove="Images\Scene7\it_trash.png" />
+    <None Remove="Images\Scene7\ob_dispenser.png" />
+    <None Remove="Images\Scene7\ob_item1.png" />
+    <None Remove="Images\Scene7\ob_item2.png" />
+    <None Remove="Images\Scene7\ob_item3.png" />
+    <None Remove="Images\Scene7\ob_item4.png" />
+    <None Remove="Images\Scene7\ob_item5.png" />
+    <None Remove="Images\Scene7\ob_labdoor.png" />
+    <None Remove="Images\Scene7\ob_machine1.png" />
+    <None Remove="Images\Scene7\ob_machine2.png" />
+    <None Remove="Images\Scene7\ob_machine3.png" />
+    <None Remove="Images\Scene7\ob_machine4.png" />
+    <None Remove="Images\Scene7\ob_machine5.png" />
+    <None Remove="Images\Scene7\ob_trash.png" />
+    <None Remove="Images\Scene7\ob_trashchute.png" />
+    <None Remove="Images\Scene7\ref.png" />
+    <None Remove="Images\SceneBoardRoom\bg_boardroom.png" />
+    <None Remove="Images\SceneBoardRoom\ob_board.png" />
+    <None Remove="Images\SceneBoardRoom\ob_boardroomout.png" />
+    <None Remove="Images\SceneBoardRoom\ob_lamp.png" />
+    <None Remove="Images\SceneBoardRoom\ob_note1.png" />
+    <None Remove="Images\SceneBoardRoom\ob_note2.png" />
+    <None Remove="Images\SceneBoardRoom\ob_note3.png" />
+    <None Remove="Images\SceneBoardRoom\ob_note4.png" />
+    <None Remove="Images\SceneBoardRoom\ob_notepile.png" />
+    <None Remove="Images\SceneBoardRoom\ref.png" />
+    <None Remove="Images\SceneCombinationLock\bg_safe.png" />
+    <None Remove="Images\SceneCombinationLock\ob_button_0.png" />
+    <None Remove="Images\SceneCombinationLock\ob_button_1.png" />
+    <None Remove="Images\SceneCombinationLock\ob_button_2.png" />
+    <None Remove="Images\SceneCombinationLock\ob_button_3.png" />
+    <None Remove="Images\SceneCombinationLock\ob_button_4.png" />
+    <None Remove="Images\SceneCombinationLock\ob_button_5.png" />
+    <None Remove="Images\SceneCombinationLock\ob_button_6.png" />
+    <None Remove="Images\SceneCombinationLock\ob_button_7.png" />
+    <None Remove="Images\SceneCombinationLock\ob_button_8.png" />
+    <None Remove="Images\SceneCombinationLock\ob_button_9.png" />
+    <None Remove="Images\SceneCombinationLock\ob_handle.png" />
+    <None Remove="Images\SceneCombinationLock\safe_display.png" />
+    <None Remove="Images\SceneComputer\bg_computer.png" />
+    <None Remove="Images\SceneComputer\ob_closebutton.png" />
+    <None Remove="Images\SceneComputer\ob_johnletter.png" />
+    <None Remove="Images\SceneComputer\ob_readbutton.png" />
+    <None Remove="Images\SceneComputer\ob_safeletter.png" />
+    <None Remove="Images\SceneCreochamber\bg_cryo.png" />
+    <None Remove="Images\SceneCreochamber\it_hand.png" />
+    <None Remove="Images\SceneCreochamber\ob_cryochamber.png" />
+    <None Remove="Images\SceneCreochamber\ob_cryochamber_open.png" />
+    <None Remove="Images\SceneCreochamber\ob_doorout.png" />
+    <None Remove="Images\SceneCreochamber\ob_mummy.png" />
+    <None Remove="Images\SceneCreochamber\ob_mummy_nohand.png" />
+    <None Remove="Images\SceneCreochamber\ob_terminal.png" />
+    <None Remove="Images\SceneCreochamber\ref.png" />
+    <None Remove="Images\SceneCupboard\bg_cupboard.png" />
+    <None Remove="Images\SceneCupboard\it_phial.png" />
+    <None Remove="Images\SceneCupboard\ob_chembox.png" />
+    <None Remove="Images\SceneSafeInside\bg_safeinside.png" />
+    <None Remove="Images\SceneSafeInside\it_bag.png" />
+    <None Remove="Images\SceneSafeInside\it_xray.png" />
+    <None Remove="Images\SceneSafeInside\ob_bag.png" />
+    <None Remove="Images\SceneSafeInside\ob_xray.png" />
+    <None Remove="Images\table.png" />
+    <None Remove="Images\VictoryScreens\restart_button.png" />
+    <None Remove="Images\VictoryScreens\screen_lose.png" />
+    <None Remove="Images\VictoryScreens\screen_win_bad.png" />
+    <None Remove="Images\VictoryScreens\screen_win_good.png" />
+    <None Remove="Images\VictoryScreens\screen_win_okay.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Images\arrow_d.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\arrow_l.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\arrow_r.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\arrow_u.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\background.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\background2.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\banner1.svg">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\banner2.svg">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\banner3.svg">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\door2_openonly.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\door_closed.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\door_open.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Hub\bg_choosing.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Hub\bg_crossroads.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Hub\ob_door_garden.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Hub\ob_door_lab.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Hub\ob_door_medbay.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Hub\ob_door_office.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Hub\ob_monitor1_on.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\itemslot.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\itemslot_chosen.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\key.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\lever_off.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\lever_on.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\lock.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene1\bg_entrance.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene1\ob_bunkerdoor_closed.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene1\ob_bunkerdoor_open.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene1\ob_doorbutton_pressed.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene1\ob_doorbutton_unpressed.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene1\ob_panel_closed.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene1\ob_panel_open.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene2Light\bg_lobby.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene2Light\ob_deadguy.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene2Light\ob_heavydoor.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene2Light\ob_secretarrow.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene2Light\ob_securitydoor.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene2\bg_lobby_dark.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene2\ob_deadguy_dark.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene2\ob_heavydoor_dark.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene2\ob_secretarrow.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene2\ob_securitydoor_dark.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene3Dark\bg_security_dark.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene3Dark\ob_desk_dark.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene3Dark\ob_device_dark.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene3Dark\ob_doortolobby_dark.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene3Dark\ob_monitor1_off.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene3Dark\ob_monitor2_off.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene3Dark\ob_monitor3_off.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene3Dark\ob_monitor4_off.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene3Dark\ob_officechair_dark.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene3Dark\ob_redbutton_unpressed.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene3Dark\ob_siren_dark - Копировать.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene3Dark\ob_siren_dark.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene3Dark\reference.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene3Light\bg_security.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene3Light\ob_desk.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene3Light\ob_device.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene3Light\ob_doortolobby.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene3Light\ob_monitor1_on.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene3Light\ob_monitor2_on.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene3Light\ob_monitor3_on.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene3Light\ob_monitor4_on.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene3Light\ob_officechair.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene3Light\ob_redbutton_pressed.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene3Light\ob_siren.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene3Light\reference.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene4\bg_office.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene4\ob_arrow.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene4\ob_computertable.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene4\ob_computertext.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene4\ob_crawlingguy.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene4\ob_pottedplant.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene4\ob_safe.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene5\bg_garden.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene5\garden.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene5\it_briefcase.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene5\ob_briefcase.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene5\ob_briefcaseground.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene5\ob_cupboard.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene5\ob_glove.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene5\ob_hangingbriefcase.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene5\ob_plant1.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene5\ob_plant1_alt.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene5\ob_plant2.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene5\ob_plant2_alt.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene5\ob_plant3.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene5\ob_plant3_alt.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene5\ob_plant4.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene5\ob_plant4_alt.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene5\ob_plant5.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene5\ob_plant5_alt.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene5\ob_plant6.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene5\ob_plant6_alt.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene5\ob_plant7.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene5\ob_plant7_alt.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene5\ob_topvine.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene6\bg_medbay.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene6\it_bonesaw.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene6\it_keycard.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene6\it_meds.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene6\it_organbag.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene6\it_scalpel.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene6\ob_bonesaw.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene6\ob_cryodoor.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene6\ob_fridge.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene6\ob_fridge_open.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene6\ob_medbox_closed.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene6\ob_medbox_open.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene6\ob_meds.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene6\ob_poster.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene6\ob_rat.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene6\ob_rat_dead.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene6\ob_scalpel.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene6\ob_sideposter.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene6\ob_sink.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene6\ob_smalltable.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene6\ob_table.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene6\ref.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene7\bg_lab.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene7\it_item0.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene7\it_item1.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene7\it_item2.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene7\it_item3.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene7\it_item4.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene7\it_item5.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene7\it_trash.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene7\ob_dispenser.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene7\ob_item1.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene7\ob_item2.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene7\ob_item3.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene7\ob_item4.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene7\ob_item5.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene7\ob_labdoor.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene7\ob_machine1.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene7\ob_machine2.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene7\ob_machine3.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene7\ob_machine4.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene7\ob_machine5.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene7\ob_trash.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene7\ob_trashchute.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\Scene7\ref.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\SceneBoardRoom\bg_boardroom.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\SceneBoardRoom\ob_board.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\SceneBoardRoom\ob_boardroomout.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\SceneBoardRoom\ob_lamp.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\SceneBoardRoom\ob_note1.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\SceneBoardRoom\ob_note2.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\SceneBoardRoom\ob_note3.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\SceneBoardRoom\ob_note4.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\SceneBoardRoom\ob_notepile.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\SceneBoardRoom\ref.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\SceneCombinationLock\bg_safe.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\SceneCombinationLock\ob_button_0.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\SceneCombinationLock\ob_button_1.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\SceneCombinationLock\ob_button_2.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\SceneCombinationLock\ob_button_3.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\SceneCombinationLock\ob_button_4.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\SceneCombinationLock\ob_button_5.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\SceneCombinationLock\ob_button_6.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\SceneCombinationLock\ob_button_7.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\SceneCombinationLock\ob_button_8.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\SceneCombinationLock\ob_button_9.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\SceneCombinationLock\ob_handle.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\SceneCombinationLock\safe_display.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\SceneComputer\bg_computer.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\SceneComputer\ob_closebutton.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\SceneComputer\ob_johnletter.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\SceneComputer\ob_readbutton.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\SceneComputer\ob_safeletter.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\SceneCreochamber\bg_cryo.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\SceneCreochamber\it_hand.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\SceneCreochamber\ob_cryochamber.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\SceneCreochamber\ob_cryochamber_open.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\SceneCreochamber\ob_doorout.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\SceneCreochamber\ob_mummy.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\SceneCreochamber\ob_mummy_nohand.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\SceneCreochamber\ob_terminal.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\SceneCreochamber\ref.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\SceneCupboard\bg_cupboard.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\SceneCupboard\it_phial.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\SceneCupboard\ob_chembox.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\SceneSafeInside\bg_safeinside.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\SceneSafeInside\it_bag.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\SceneSafeInside\it_xray.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\SceneSafeInside\ob_bag.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\SceneSafeInside\ob_xray.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\table.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\VictoryScreens\restart_button.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\VictoryScreens\screen_lose.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\VictoryScreens\screen_win_bad.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\VictoryScreens\screen_win_good.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Images\VictoryScreens\screen_win_okay.png">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.1.2" PrivateAssets="All" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.1.4" />
@@ -13,12 +791,17 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="2.1.2" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.4" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\TextQuest.Data\TextQuest.Data.csproj" />
     <ProjectReference Include="..\TextQuest.Services\TextQuest.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Scripts\" />
   </ItemGroup>
 
 </Project>

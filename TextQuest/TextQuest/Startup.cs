@@ -34,9 +34,20 @@ namespace TextQuest
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.AddDistributedMemoryCache();
+
+            services.AddSession(options =>
+            {
+                // Set a short timeout for easy testing.
+                options.IdleTimeout = TimeSpan.FromMinutes(20);
+                options.Cookie.HttpOnly = true;
+                // Make the session cookie essential
+                options.Cookie.IsEssential = true;
+            });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddDbContext<TextQuestDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TextQuestConnectionString")));
+            services.AddMemoryCache();
             services.AddSingleton(Configuration);
             services.AddScoped<IScene, SceneService>();
             services.AddScoped<IInteraction, InteractionService>();
@@ -63,7 +74,7 @@ namespace TextQuest
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
+            app.UseSession();
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
