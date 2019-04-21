@@ -1,0 +1,144 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification\ 
+for details on configuring this project to bundle and minify static web assets. */
+body {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #f1f1f1;
+}
+
+/* Wrapping element */
+/* Set some basic padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Carousel */
+.carousel-caption p {
+    font-size: 20px;
+    line-height: 1.4;
+}
+
+/* Make .svg files in the carousel display properly in older browsers */
+.carousel-inner .item img[src$=".svg"] {
+    width: 100%;
+}
+
+/* QR code generator */
+#qrCode {
+    margin: 15px;
+}
+
+/* Hide/rearrange for smaller screens */
+@media screen and (max-width: 767px) {
+    /* Hide captions */
+    .carousel-caption {
+        display: none;
+    }
+}
+
+.back-container {
+}
+
+.levelContainer {
+    min-height: 600px;
+    height: 600px;
+    overflow-y: auto;
+    margin: auto;
+    background-color: darkgray;
+    outline: 2px solid black;
+    width: 800px;
+    display: flex;
+    flex-direction: column;
+}
+
+.level {
+    background-color: lightgrey;
+    border: 2px solid black;
+    margin: 10px;
+    display: flex;
+    flex-direction: row;
+    min-height: 180px;
+    height: 180px;
+}
+
+.info {
+    background-color: white;
+    outline: 2px solid black;
+    display: inline-block;
+    flex-basis: 75%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    align-content: stretch;
+}
+
+.stats {
+    outline: 2px solid black;
+    font-size: 28px;
+    background-color: lightgrey;
+    display: flex;
+    flex-direction: row;
+}
+
+.views {
+    margin-left: 2%;
+}
+
+.likes {
+    margin-left: 5%;
+    color: green;
+}
+
+.dislikes {
+    margin-left: 5%;
+    color: darkred;
+}
+
+.deletebutton {
+    margin-left: 15%;
+}
+
+.title {
+    margin-left: 2%;
+    margin-top: 1%;
+    font-family: 'Oswald', sans-serif;
+    font-size: 56px;
+    flex-grow: 0;
+}
+
+.creator {
+    font-family: 'Oswald', sans-serif;
+    font-size: 24px;
+    margin-left: 3%;
+    flex-grow: 1;
+}
+
+.playbutton {
+    margin: auto;
+}
+
+
+.button {
+    margin: auto;
+    background-color: dimgray;
+    border: 2px solid black;
+    color: white;
+    padding: 4px 34px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 90px;
+    cursor: pointer;
+    transition-duration: 0.1s;
+}
+
+    .button:hover {
+        background-color: white;
+        color: dimgray;
+    }
+
+    .button:active {
+        background-color: lightgrey;
+        color: black;
+    }

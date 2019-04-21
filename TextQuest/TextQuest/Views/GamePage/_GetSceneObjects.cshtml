@@ -1,0 +1,341 @@
+﻿@model TextQuest.Models.SceneListModel
+
+
+<div class="background">
+    <div id="bg" style="float:left">
+        <img src="@Model.CurrentScene.BackgroundImageUrl" />
+    </div>
+    <div id="info" style="float:left">
+        <div class="inventory">
+            <h3>ИНВЕНТАРЬ</h3>
+            <br>
+            <div id="loop" class="itemsContainer">
+                @foreach (var item in Model.InventoryItems)
+                {
+                    <div id=@item.Id class="inventoryObject" onclick="invObjHandler(@item.Id)" oncontextmenu="ShowInventoryInfo(@item.Id); return false;" title="@item.Name">
+                        <a><img src="@item.ImageUrl" /></a>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="textbox">
+            <div class="textholder">
+                <div class="textfield"></div>
+            </div>
+        </div>
+    </div>
+    <div class="sceneObjectsContainer" id="scContainer">
+        @foreach (var obj in Model.CurrentScene.SceneObjects)
+        {
+            string x = obj.x + "px";
+            string y = obj.y + "px";
+            string id = obj.Id.ToString();
+            <div id=@id class="sceneObject" title="@obj.Name" style="position:absolute;left:@x;top:@y;" onmouseover="ShowAction(@obj.Id)">
+                <a><img src="@obj.ImageUrl" onclick="scObjHandler(@obj.Id,@Model.CurrentScene.Id,@Model.Inventory.Id)" oncontextmenu="ShowInfo(@obj.Id);return false;" /></a>
+            </div>
+        }
+    </div>
+    <div class="controlsholder">
+        <div class="controls">
+            <b style="font-family: 'Oswald', sans-serif; font-size: 18px">УПРАВЛЕНИЕ:<br></b>
+            <b>ЛКМ</b> - взаимодействовать с объектом. 
+            <b>ПКМ</b> - осмотреть объект.<br>
+            <b>ЛКМ по предмету инвентаря</b> - выбрать предмет.
+            <b>ЛКМ с выбранным предметом</b> - применить предмет на объекте.
+        </div>
+    </div>
+
+</div>
+<script>
+    function scObjHandler(data_id, scene_id, inventory_id) {
+
+        let selectedinventoryId;
+        if ($(".inventoryObject").hasClass("selectedInventoryObject")) {
+            selectedinventoryId = $(".selectedInventoryObject").attr("id");
+        }
+
+        $.ajax({
+                url: "/GamePage/HandleSceneObjectClick",
+                type: "post",
+                data: {
+                    item: String(data_id),
+                    scene: String(scene_id),
+                    inventory: String(inventory_id),
+                    selectedinventoryId:String(selectedinventoryId)
+                },
+            success: function (data) {
+                data.forEach(function (item, i, data) {
+                    console.log(item);
+                    if (item.interactionType == 0) {
+                        $(".itemsContainer")
+                            .append($("<div>").attr("id", String(item.newId)).addClass("inventoryObject").attr("oncontextmenu", String("ShowInventoryInfo(" + item.newId + ");return false;")).attr("onclick", String("invObjHandler(" + item.newId + ")")).attr("title", String(item.name))
+                                .append($("<a>")
+                                    .append($("<img>").attr("src", item.imageUrl))));
+
+                        if (item.action == 0) {
+                            $("#" + item.oldId).remove();
+                        }
+                        $(".inventoryObject").removeClass("selectedInventoryObject");
+                    }
+                    if (item.interactionType == 1) {
+                        let i = document.getElementById("remain").getAttribute("data-remaining");
+                        //TODO: change sign
+                        if (i <= 0) {
+
+                        }
+                        else {
+                            //?????
+                            $.ajax({
+                                url: "/GamePage/HandleRemainingTime",
+                                type: "post",
+                                data: String(i),
+                                success: function () {
+                                    window.location.replace(item.nextSceneId);
+                                },
+                                error: function () {
+                                    alert("error");
+                                }
+                            });
+                        }
+                    }
+                    if (item.interactionType == 2) {
+                        if (item.action == 0) {
+                            $("#" + data_id).remove();
+                            
+                        }
+                        if (item.specialEvent) {
+                            window.eval(String(item.specialEvent + "(" + data_id + ")"));
+                        }
+                        if (!item.isSpawn) {
+                            $("#" + item.oldId)
+                                .replaceWith($("<div>").attr("id", String(item.newId)).addClass("sceneObject").css("position", "absolute").css("left", item.x).css("top", item.y).attr("onmouseover", String("ShowAction(" + ShowAction(item.newId) + ")")).attr("title", item.name) //todo: не ставится hover text
+                                    .append($("<a>")
+                                        .append($("<img>").attr("src", item.imageUrl).attr("onclick", String("scObjHandler(" + item.newId + ",@Model.CurrentScene.Id,@Model.Inventory.Id)")).attr("oncontextmenu", String("ShowInfo(" + item.newId + ");return false;")))));
+                            $("div.selectedInventoryObject").remove()
+
+                        }
+                        else {
+                            $('#scContainer').append($("<div>").attr("id", String(item.newId)).addClass("sceneObject").css("position", "absolute").css("left", item.x).css("top", item.y).attr("onmouseover", String("ShowAction(" + ShowAction(item.newId) + ")")).attr("title", item.name) //todo: не ставится hover text
+                                .append($("<a>")
+                                    .append($("<img>").attr("src", item.imageUrl).attr("onclick", String("scObjHandler(" + item.newId + ",@Model.CurrentScene.Id,@Model.Inventory.Id)")).attr("oncontextmenu", String("ShowInfo(" + item.newId + ");return false;")))));
+                            $("div.selectedInventoryObject").remove()
+
+                        }
+                    }
+                    if (item.interactionType == -1) {
+                        $(".textfield").append(document.createTextNode("Вы не можете это использовать."));
+                    }
+                });
+            },
+                    @*//
+                    // remove
+                    if (data.interactionType == 0) {
+                        // Add item to inventory
+                        $(".itemsContainer")
+                            .append($("<div>").attr("id", String(data.responce.newId)).addClass("inventoryObject").attr("oncontextmenu", String("ShowInventoryInfo(" + data.responce.newId + ");return false;")).attr("onclick", String("invObjHandler(" + data.responce.newId + ")")).attr("title", String(data.responce.name))
+                                .append($("<a>")
+                                    .append($("<img>").attr("src", data.responce.imageUrl))));
+                        //todo
+                        if (data.remove) {
+                            $("#" + data.responce.oldId).remove();
+                        }
+                        $(".inventoryObject").removeClass("selectedInventoryObject");
+                    }
+                    // remove
+                    else if (data.interactionType == 1) {
+
+                        let i = document.getElementById("remain").getAttribute("data-remaining");
+                        //TODO: change sign
+                        if (i <= 0) {
+
+                        }
+                        else {
+                            //?????
+                            $.ajax({
+                                url: "/GamePage/HandleRemainingTime",
+                                type: "post",
+                                data: String(i),
+                                success: function () {
+                                    window.location.replace(data.nextSceneId);
+                                },
+                                error: function () {
+                                    alert("error");
+                                }
+                            });
+                        }
+
+                    }
+                    else if (data.interactionType == 2) {
+                        if (data.responces.length > 0) {
+                            /* if (!data.responces[0].isValid) {
+                                 console.log("No");
+                                 $(".textfield").append(document.createTextNode("Вы не можете это использовать"));
+                                 return;
+                             }*/
+                            // Do set of animations
+                            for (i = 0; i < data.responces.length; i++) {
+                                if (!data.responces[i].isValid) {
+                                    $(".textfield").append(document.createTextNode("Вы не можете это использовать"));
+                                    continue;
+                                }
+                                if (data.responces[i].action == 0) {
+                                    $("#" + data_id).remove();
+                                    continue;
+                                }
+                                if (data.responces[i].specialEvent) {
+                                    window.eval(String(data.responces[i].specialEvent + "(" + data_id + ")"));
+                                }
+                                if (!data.responces[i].isSpawn) {
+                                    $("#" + data.responces[i].oldId)
+                                        .replaceWith($("<div>").attr("id", String(data.responces[i].newId)).addClass("sceneObject").css("position", "absolute").css("left", data.responces[i].x).css("top", data.responces[i].y).attr("onmouseover", String("ShowAction(" + ShowAction(data.responces[i].newId) + ")")).attr("title", data.responces[i].name) //todo: не ставится hover text
+                                            .append($("<a>")
+                                                .append($("<img>").attr("src", data.responces[i].imageUrl).attr("onclick", String("scObjHandler(" + data.responces[i].newId + ",@Model.CurrentScene.Id,@Model.Inventory.Id)")).attr("oncontextmenu", String("ShowInfo(" + data.responces[i].newId + ");return false;")))));
+                                    $("div.selectedInventoryObject").remove()
+
+                                }
+                                else {
+                                    $('#scContainer').append($("<div>").attr("id", String(data.responces[i].newId)).addClass("sceneObject").css("position", "absolute").css("left", data.responces[i].x).css("top", data.responces[i].y).attr("onmouseover", String("ShowAction(" + ShowAction(data.responces[i].newId) + ")")).attr("title", data.responces[i].name) //todo: не ставится hover text
+                                        .append($("<a>")
+                                            .append($("<img>").attr("src", data.responces[i].imageUrl).attr("onclick", String("scObjHandler(" + data.responces[i].newId + ",@Model.CurrentScene.Id,@Model.Inventory.Id)")).attr("oncontextmenu", String("ShowInfo(" + data.responces[i].newId + ");return false;")))));
+                                    $("div.selectedInventoryObject").remove()
+
+                                }
+                            }
+                            //$("div.selectedInventoryObject").remove()
+                            RemoveText();
+                        }
+                        else {
+                            $(".textfield").append(document.createTextNode("Вы не можете это использовать."));
+                        }
+                        $(".inventoryObject").removeClass("selectedInventoryObject");
+                    }
+                }*@
+               // }
+               // },
+                error: function () {
+                    
+            }
+        });
+        RemoveText();
+    }
+</script>
+<script>
+    function invObjHandler(id) {
+        $(".inventoryObject").removeClass("selectedInventoryObject");
+        $("#" + id + ".inventoryObject").addClass("selectedInventoryObject");
+    }
+
+    function ShowInventoryInfo(id) {
+        RemoveText();
+        $.ajax({
+            url: "/GamePage/HandleInventoryInfoShowing",
+            type: "post",
+            data: String(id),
+            success: function (data) {
+                var element = document.createElement("div");
+                element.innerHTML = "<div class = \"centerthis\">" + data.name + "</div><div style=\"line-height: 50%;\"><br></div >" + data.description + ".";
+                $(".textfield").append(element);
+                //$(".textfield").append(document.createTextNode(data.name)).append(" ").append(document.createTextNode(data.description));
+            },
+            error: function () {
+            
+            }
+        });
+
+    }
+
+    function ShowInfo(id) {
+        RemoveText();
+        $(".inventoryObject").removeClass("selectedInventoryObject");
+        $.ajax({
+            url: "/GamePage/HandleShowInfo",
+            type: "post",
+            data: String(id),
+            success: function (data) {
+                var element = document.createElement("div");
+                element.innerHTML = "<div class = \"centerthis\">" + data.name + "</div><div style=\"line-height: 50%;\"><br></div >" + data.description + ".";
+                $(".textfield").append(element);
+                //$(".textfield").append(document.createTextNode(data.name)).append(" ").append(document.createTextNode(data.description));
+            },
+            error: function () {
+                
+            }
+        });
+    }
+
+    function ShowAction(id) {
+
+        let inventoryObj = $(".selectedInventoryObject").attr("title");
+        let sceneObj = $("#" + id + ".sceneObject").attr("title");
+        let action = "Использовать <b>" + inventoryObj + "</b> c <b>" + sceneObj + "</b>.";
+        var element = document.createElement("div");
+        element.innerHTML = action;
+        if (inventoryObj) {
+            RemoveText();
+            //$(".textfield").append(document.createTextNode(action));
+            $(".textfield").append(element);
+            //$(".textfield").innerHTML = action;
+        }
+    }
+    function RemoveText() {
+        $(".textfield").empty();
+    }
+</script>
+
+<script>
+    function findCombination(id) {
+        //console.log(document.getElementsByClassName(".innerText"));
+        if (document.getElementsByClassName("innerText").length == 0) {
+            $("#1052.sceneObject").append($("<div></div>").addClass("innerText"));
+        }
+        else {
+            //alert("hello");
+        }
+
+        //$(".innerText").text() += "1";
+
+        $(".innerText").append(document.createTextNode($("#" + id + ".sceneObject").attr("title")));
+        if ($(".innerText").text().length >= 5) {
+            $(".innerText").empty();
+        }
+    }
+    function checkPassword() {
+        if ($(".innerText").text() == "3862") {
+            window.location.replace(1008);
+        }
+        else {
+            $(".innerText").empty();
+        }
+    }
+    function Tresh() {
+
+    }
+    function victoryCheck() {
+       // console.log($(".itemsContainer").children().length);
+        let a = $(".itemsContainer").children().length;
+        window.clearTimeout();
+        window.clearInterval();
+        if (a < 5) {
+            window.location.replace(1023);
+        }
+        else if (a == 5) {
+            window.location.replace(1024);
+        }
+        else {
+            window.location.replace(1025);
+        }
+    }
+    function restart() {
+        $.ajax({
+            url: "/GamePage/Reset",
+            type: "post",
+            success: function () {
+                window.location.replace(4);
+            },
+            error: function () {
+            }
+        });
+    }
+</script>
+
+

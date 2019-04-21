@@ -1,0 +1,49 @@
+﻿@model TextQuest.Models.LevelListModel
+
+<div class="background">
+
+    <div class="levelContainer">
+        @foreach (var lvl in Model.Levels)
+        {
+            string name = lvl.Name;
+            string creator = lvl.Creator;
+            int views = lvl.Views;
+            int likes = lvl.Likes;
+            int dislikes = lvl.Dislikes;
+            int id = lvl.Id;
+            //int sceneid = lvl.FirstSceneID;
+            <div class="level">
+                <div class="info">
+                    <div class="title">@name</div>
+                    <div class="creator"><b>Автор:</b> @creator</div>
+                    <div class="stats">
+                        <div class="views">👁️ @views</div>
+                        <div class="likes">👍 @likes</div>
+                        <div class="dislikes">👎 @dislikes</div>
+                        <div class="deletebutton"><button>УДАЛИТЬ 🗑️</button></div>
+                    </div>
+                </div>
+                <div class="playbutton">
+                    <button class="button" onclick="func(@id, 4)">
+                        ▶
+                    </button>
+                </div>
+
+            </div>
+        }
+
+
+
+
+    </div>
+
+</div>
+
+<script>
+    function func(_lvlid, _id) {
+        var route = "@Url.RouteUrl(new { controller = "GamePage", action = "Index", lvlid = "neededLVLid", id = "neededID" })";
+        route = route.replace("neededLVLid", _lvlid);
+        route = route.replace("neededID", _id);
+        window.location.replace(route);
+    }
+</script>

@@ -1,0 +1,200 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification\ 
+for details on configuring this project to bundle and minify static web assets. */
+body {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #f1f1f1;
+}
+
+/* Wrapping element */
+/* Set some basic padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Carousel */
+.carousel-caption p {
+    font-size: 20px;
+    line-height: 1.4;
+}
+
+/* Make .svg files in the carousel display properly in older browsers */
+.carousel-inner .item img[src$=".svg"] {
+    width: 100%;
+}
+
+/* QR code generator */
+#qrCode {
+    margin: 15px;
+}
+
+/* Hide/rearrange for smaller screens */
+@media screen and (max-width: 767px) {
+    /* Hide captions */
+    .carousel-caption {
+        display: none;
+    }
+}
+
+.sceneObject {
+    display: inline-flex;
+    position: center;
+}
+
+.background {
+    position: absolute;
+    /*vertical-align: central;
+    margin: 0 auto;
+    margin-right: auto;
+    margin-left: auto;*/
+    margin-left: -600px;
+    left: 50%;
+}
+
+#bg {
+    background-color: black;
+    outline: 2px solid black;
+}
+
+#info {
+    background-color: dimgray;
+    /* border: 1px solid black;
+    border-top-width: 0px;
+    border-right-width: 0px;
+    border-left-width: 2px;
+    border-bottom-width: 0px;*/
+    outline: 2px solid black;
+    height: 600px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+}
+
+.innerText {
+    font-family: 'Share Tech Mono', monospace;
+    margin-top: -12px;
+    text-align: left;
+    font-size: 84px;
+    position: absolute;
+    color: white;
+    left: 52px;
+    width: 100%;
+}
+
+.textbox {
+    background-color: darkgrey;
+    /*margin-top: 20px;*/
+    width: 400px;
+    max-width: 400px;
+    flex: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.textholder {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    background-color: dimgray;
+    text-align: left;
+    width: 90%;
+    height: 70%;
+    vertical-align: middle;
+    /*background: g;*/
+    padding: 3%;
+    border: 2px solid black;
+}
+
+.centerthis {
+    font-family: 'Oswald', sans-serif;
+    font-size: 26px;
+    text-align: center;
+}
+
+.textfield {
+
+}
+
+.itemsContainer {
+    display: -webkit-flex;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    width: 400px;
+    min-height: 200px;
+    max-height: 400px;
+    background-image: url('../images/itemslot.png');
+    background-repeat: repeat;
+    /*border: 1px solid black;
+    border-left-width: 0px;
+    border-right-width: 0px;
+    border-bottom-width: 1px;
+    border-top-width: 0px;*/
+}
+
+.inventory {
+    text-align: center;
+    width: 400px;
+    max-width: 400px;
+}
+    .inventory h3 {
+        font-family: 'Oswald', sans-serif;
+        font-size: 40px;
+        margin-top: 10px;
+        margin-bottom: 0px;
+    }
+
+
+.inventoryObject {
+    background-image: url('../images/itemslot.png');
+    height: 100px;
+    width: 100px;
+    max-height: 100px;
+    max-width: 100px;
+}
+
+.selectedInventoryObject {
+    background-image: url('../images/itemslot_chosen.png');
+}
+
+#countholder {
+    text-align: center;
+}
+
+#countdown {
+    font-family: 'Share Tech Mono', monospace;
+    background-color: black;
+    color: orangered;
+    display: inline-block;
+    width: 170px;
+    height:70px;
+    font-size: 56px;
+    line-height: 0.7;
+    padding-top: 11px;
+    padding-right: 4px;
+    border: 6px solid darkgrey;
+    outline: 2px solid black;
+    text-align: right;
+}
+
+.controlsholder {
+    text-align: center;
+}
+
+.controls {
+    margin-top: 2px;
+    display: inline-block;
+    text-align: center;
+    width: 900px;
+    background-color: dimgrey;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    color: white;
+    padding-top: 4px;
+    padding-right: 1%;
+    padding-bottom: 1%;
+    padding-left: 1%;
+    border: 6px solid darkgrey;
+    outline: 2px solid black;
+}

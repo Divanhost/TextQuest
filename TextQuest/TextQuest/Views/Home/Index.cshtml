@@ -1,0 +1,9 @@
+﻿<body onload="func()">
+</body>
+<script>
+    function func(e) {
+        window.location.replace("@Url.RouteUrl(new { controller = "LevelSelect", action = "Index" })");
+    }
+</script>
+
+<!-- window.location.replace("Url.RouteUrl(new { controller = "GamePage", action = "Index", lvlid = 1, id = 4 })");  { controller = "LevelSelect", action = "Index"}-->
