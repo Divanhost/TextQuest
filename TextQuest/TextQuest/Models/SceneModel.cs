@@ -14,6 +14,6 @@ namespace TextQuest.Models
         public string Description;
         public List<SceneObject> SceneObjects;
         public List<SceneObject> SpawnedSceneObjects;
-   
+        public int LevelId;
     }
 }

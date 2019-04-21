@@ -41,45 +41,32 @@ namespace TextQuest.Controllers
         }
         public LevelModel level;
         public List<InventoryObjectModel> userInventory;
-
         public IActionResult Index(int? lvlid =1,int? id =4)
         {
             level = null;
             userInventory = null;
-
-            // Кэширование загружаемого уровня и пребразование в LevelModel
-            if (!_memoryCache.TryGetValue(CacheKeys.Level,out level))
-            {
-                LoadLevel(lvlid, id);
-            }
-            if (!_memoryCache.TryGetValue(CacheKeys.Inventory, out userInventory))
-            {
-                userInventory = new List<InventoryObjectModel>();
-                _memoryCache.Set(CacheKeys.Inventory, userInventory,
-               new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(15)));
-            }
-            UserSingleton user = UserSingleton.getInstance();
-            Inventory inventory = UserSingleton.getInventory();
-
-            
+            CacheLoad(lvlid?? default(int));
+            Inventory inv = new Inventory();
+            // Текущая сцена
             var currentScene = level.Scenes.FirstOrDefault(sc => sc.Id == id);
            
             var model = new SceneListModel()
             {
                 Scenes = level.Scenes,
                 CurrentScene = currentScene,
-                Inventory = inventory,
                 InventoryItems = userInventory,
-                RemainingTime = 900
+                Inventory = inv,
+                RemainingTime = 900,
+                LevelId = lvlid
             };
-
             return View(model);
-
         }
         public IActionResult GetSceneObjects()
         {
             return PartialView("_GetSceneObjects");
         }
+
+        // Click handler
         [HttpPost]
         public IActionResult HandleSceneObjectClick()
         {
@@ -92,21 +79,20 @@ namespace TextQuest.Controllers
             int id = Int32.Parse(items[0].Split('=')[1]);
             int sceneId = Int32.Parse(items[1].Split('=')[1]);
             int inventoryId = Int32.Parse(items[2].Split('=')[1]);
+            int levelId = Int32.Parse(items[3].Split('=')[1]);
             int? selectedInventoryObjectId = null;
-
-            string temp = items[3].Split('=')[1];
+            string temp = items[4].Split('=')[1];
             if(temp != "undefined")
             {
                 selectedInventoryObjectId = Int32.Parse(temp);
             }
-
-            var responces = new List<Responce>();
-            _memoryCache.TryGetValue(CacheKeys.Level, out level);
-            _memoryCache.TryGetValue(CacheKeys.Inventory, out userInventory);
-
-            //Scene object related Variables;
-            var sceneObject = level.Scenes.FirstOrDefault(sc=>sc.Id == sceneId).SceneObjects.FirstOrDefault(so=>so.Id == id);
-            // var sceneObject = UserSingleton.GetScene(sceneId).SceneObjects.FirstOrDefault(so => so.Id == id);
+            //
+            //
+            CacheLoad(levelId);
+            //
+            //Scene related Variables;
+            var scene = level.Scenes.FirstOrDefault(sc => sc.Id == sceneId);
+            var sceneObject = scene.SceneObjects.FirstOrDefault(so => so.Id == id);
             if (sceneObject == null)
             {
                 return Ok();
@@ -114,6 +100,11 @@ namespace TextQuest.Controllers
             bool isPickable = sceneObject.IsPickable;
             bool hasAction = sceneObject.HasAction;
             bool isInnerPass = sceneObject.IsInnerPass;
+            //
+            // Responce to client
+            var responces = new List<Responce>();
+            //
+            // Main Logic
             if (isInnerPass)
             {
                 int _nextSceneId = sceneObject.InnerPassSceneID;
@@ -133,11 +124,10 @@ namespace TextQuest.Controllers
                         else
                         {
                             if (selectedInventoryObjectId != null)
-                                //  UserSingleton.RemoveInventoryItem(selectedInventoryObjectId ?? default(int));
                                 userInventory.Remove(level.InventoryObjects.FirstOrDefault(io=>io.Id == selectedInventoryObjectId));
                             if (isPickable)
                             {
-                                PickItem(sceneObject.Id, sceneId, responces);
+                                PickItem(sceneObject, scene,interaction, responces);
                             }
                             if (hasAction)
                             {
@@ -151,7 +141,7 @@ namespace TextQuest.Controllers
                     }
                 }
             }
-            if(!hasAction&&!isInnerPass&&!isPickable) //
+            if(!hasAction&&!isInnerPass&&!isPickable) 
             {
                 return Ok(new { interactionType = -1, id, responces });
             }
@@ -159,6 +149,7 @@ namespace TextQuest.Controllers
             
         }
 
+        // Side actions handlers
         public IActionResult HandleDescriptionShowing()
         {
             StreamReader sr = new StreamReader(Request.Body);
@@ -190,10 +181,12 @@ namespace TextQuest.Controllers
             string data = sr.ReadToEnd();
 
             int rt = Int32.Parse(data);
-            UserSingleton.remainingTime = rt;
+           // UserSingleton.remainingTime = rt;
             return Ok();
         }
-        public void LoadLevel(int? lvlid,int? id)
+
+        // Load level from db
+        public void LoadLevel(int? lvlid)
         {
             var tmp = _level.GetLevel(lvlid ?? default(int));
             foreach (var scene in tmp.Scenes)
@@ -207,7 +200,8 @@ namespace TextQuest.Controllers
                 Description = sc.Description,
                 BackgroundImageUrl = sc.BackgroundImageUrl,
                 SceneObjects = sc.SceneObjects.Where(so => !so.IsSpawned).OrderByDescending(s => s.z).ToList(),
-                SpawnedSceneObjects = sc.SceneObjects.Where(so => so.IsSpawned).OrderByDescending(s => s.z).ToList()
+                SpawnedSceneObjects = sc.SceneObjects.Where(so => so.IsSpawned).OrderByDescending(s => s.z).ToList(),
+                LevelId = lvlid ?? default(int)
             }).ToList();
             // Преобразование предметов инвенторя в модель
             var listinginventoryObjects = tmp.InventoryObjects.Select(sc => new InventoryObjectModel
@@ -232,48 +226,40 @@ namespace TextQuest.Controllers
             _memoryCache.Set(CacheKeys.Level, level,
                 new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(15)));
         }
-        public void PickItem(int id,int sceneId, List<Responce> responces)
+
+        //  Picking item in inventory
+        // Что быстрее: передавать больше данных через аргументы или производить более долгий поиск?
+        public void PickItem(SceneObject sceneObject,SceneModel scene,Interaction interaction, List<Responce> responces)//(int id,int sceneId, List<Responce> responces)
         {
-            var interacton = level.Interactions.FirstOrDefault(i => i.TargetObjectId == id);
-           // var interacton = UserSingleton.GetInteractionsBySceneObject(id).First();
-            int inventoryItemId = interacton.TargetInventoryObjectId.Value;
+            //var interacton = level.Interactions.FirstOrDefault(i => i.TargetObjectId == sceneObject.Id);
+            int inventoryItemId = interaction.TargetInventoryObjectId.Value;
             var inventoryObj = level.InventoryObjects.FirstOrDefault(io => io.Id == inventoryItemId);
-            var sceneObject = level.Scenes.FirstOrDefault(sc => sc.Id == sceneId).SceneObjects.FirstOrDefault(so => so.Id == id);
 
-
-            /*--
-                переделать инвентарь, сделать его единым на сессию, вынести из gamepageController 
-            --*/
-            if (UserSingleton.GetInventoryItem(inventoryItemId) == null)
+            if (userInventory.FirstOrDefault(ui=>ui.Id == inventoryItemId) == null)
             {
-               // UserSingleton.AddInventoryItem(UserSingleton.GetInventoryObject(inventoryItemId));
                 userInventory.Add(level.InventoryObjects.FirstOrDefault(io => io.Id == inventoryItemId));
             }
             else
             {
-                responces.Add(new Responce { interactionType = 1});
+                responces.Add(new Responce { interactionType = -1}); // изменил 1 на -1 потому что ничего же не произойдет
+                return;
             }
             var responce = new Responce()
             {
                 interactionType = 0,
-                oldId = id,
+                oldId = sceneObject.Id,
                 newId = inventoryItemId,
-                // Name = UserSingleton.GetInventoryObject(inventoryItemId).Name
-                // ImageUrl = UserSingleton.GetInventoryObject(inventoryItemId).ImageUrl,
                 Name = inventoryObj.Name,
                 ImageUrl = inventoryObj.ImageUrl
             };
-            if (!level.InventoryObjects.FirstOrDefault(io => io.Id == inventoryItemId).IsInfinite)
+            if (!inventoryObj.IsInfinite)
             {
-                level.Scenes.FirstOrDefault(sc => sc.Id == sceneId).SceneObjects.Remove(sceneObject);
-               // UserSingleton.GetScene(sceneId).SceneObjects.Remove(UserSingleton.GetScene(sceneId).SceneObjects.FirstOrDefault(so => so.Id == id));
-                //return Ok(new { interactionType = 0, id, remove = true, responce });
+                scene.SceneObjects.Remove(sceneObject);
                 responce.Action = 0;
             }
             else
             {
                 responce.Action = 2;
-               // return Ok(new { interactionType = 0, id, remove = false, responce });
             }
             responces.Add(responce);
         }
@@ -350,10 +336,26 @@ namespace TextQuest.Controllers
         }
         public IActionResult Reset()
         {
-            UserSingleton.Reset();
+            //UserSingleton.Reset();
             return Ok();
         }
-        
+        public void CacheLoad(int levelId)
+        {
+            // Кэширование загружаемого уровня и пребразование в LevelModel
+            if (!_memoryCache.TryGetValue(CacheKeys.Level, out level))
+            {
+                LoadLevel(levelId);
+                _memoryCache.Set("lvlId", levelId,
+                     new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(15)));
+            }
+            // Кэширование текущего инвентаря пользователя
+            if (!_memoryCache.TryGetValue(CacheKeys.Inventory, out userInventory))
+            {
+                userInventory = new List<InventoryObjectModel>();
+                _memoryCache.Set(CacheKeys.Inventory, userInventory,
+               new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(30)));
+            }
+        }
     }
 
     public class Responce
@@ -385,7 +387,7 @@ namespace TextQuest.Controllers
         public static string InventoryObject { get { return "_inventoryObject"; } }
     }
 
-    public class UserSingleton
+    /*public class UserSingleton
     {
         private static UserSingleton instance;
         private static Inventory Inventory;
@@ -556,7 +558,7 @@ namespace TextQuest.Controllers
             Inventory = null;
             remainingTime = 900;
         }
-    }
+    }*/
 
 }
 
