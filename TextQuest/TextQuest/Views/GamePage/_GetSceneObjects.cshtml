@@ -65,7 +65,11 @@
                     selectedinventoryId:String(selectedinventoryId)
                 },
             success: function (data) {
-                data.forEach(function (item, i, data) {
+                if (data.length === undefined){
+                    $(".textfield").append(document.createTextNode("Вы не можете это использовать."));
+                    return;
+                }
+                for (let item of data) {
                     console.log(item);
                     if (item.interactionType == 0) {
                         $(".itemsContainer")
@@ -79,30 +83,17 @@
                         $(".inventoryObject").removeClass("selectedInventoryObject");
                     }
                     if (item.interactionType == 1) {
-                        let i = document.getElementById("remain").getAttribute("data-remaining");
-                        //TODO: change sign
-                        if (i <= 0) {
+                       
+                        window.location.replace(item.nextSceneId);
 
-                        }
-                        else {
-                            //?????
-                            $.ajax({
-                                url: "/GamePage/HandleRemainingTime",
-                                type: "post",
-                                data: String(i),
-                                success: function () {
-                                    window.location.replace(item.nextSceneId);
-                                },
-                                error: function () {
-                                    alert("error");
-                                }
-                            });
-                        }
                     }
                     if (item.interactionType == 2) {
                         if (item.action == 0) {
                             $("#" + data_id).remove();
                             
+                        }
+                        if (selectedinventoryId) {
+                            $("#" + selectedinventoryId).remove();
                         }
                         if (item.specialEvent) {
                             window.eval(String(item.specialEvent + "(" + data_id + ")"));
@@ -125,14 +116,66 @@
                     }
                     if (item.interactionType == -1) {
                         $(".textfield").append(document.createTextNode("Вы не можете это использовать."));
+                        break;
                     }
-                });
+                }
+                @*data.forEach(function (item, i, data) {
+                    console.log(item);
+                    if (item.interactionType == 0) {
+                        $(".itemsContainer")
+                            .append($("<div>").attr("id", String(item.newId)).addClass("inventoryObject").attr("oncontextmenu", String("ShowInventoryInfo(" + item.newId + ");return false;")).attr("onclick", String("invObjHandler(" + item.newId + ")")).attr("title", String(item.name))
+                                .append($("<a>")
+                                    .append($("<img>").attr("src", item.imageUrl))));
+
+                        if (item.action == 0) {
+                            $("#" + item.oldId).remove();
+                        }
+                        $(".inventoryObject").removeClass("selectedInventoryObject");
+                    }
+                    if (item.interactionType == 1) {
+                       
+                        window.location.replace(item.nextSceneId);
+
+                    }
+                    if (item.interactionType == 2) {
+                        if (item.action == 0) {
+                            $("#" + data_id).remove();
+                            
+                        }
+                        if (selectedinventoryId) {
+                            $("#" + selectedinventoryId).remove();
+                        }
+                        if (item.specialEvent) {
+                            window.eval(String(item.specialEvent + "(" + data_id + ")"));
+                        }
+                        if (!item.isSpawn) {
+                            $("#" + item.oldId)
+                                .replaceWith($("<div>").attr("id", String(item.newId)).addClass("sceneObject").css("position", "absolute").css("left", item.x).css("top", item.y).attr("onmouseover", String("ShowAction(" + ShowAction(item.newId) + ")")).attr("title", item.name) //todo: не ставится hover text
+                                    .append($("<a>")
+                                        .append($("<img>").attr("src", item.imageUrl).attr("onclick", String("scObjHandler(" + item.newId + ",@Model.CurrentScene.Id,@Model.Inventory.Id,@Model.LevelId)")).attr("oncontextmenu", String("ShowInfo(" + item.newId + ");return false;")))));
+                            $("div.selectedInventoryObject").remove()
+
+                        }
+                        else {
+                            $('#scContainer').append($("<div>").attr("id", String(item.newId)).addClass("sceneObject").css("position", "absolute").css("left", item.x).css("top", item.y).attr("onmouseover", String("ShowAction(" + ShowAction(item.newId) + ")")).attr("title", item.name) //todo: не ставится hover text
+                                .append($("<a>")
+                                    .append($("<img>").attr("src", item.imageUrl).attr("onclick", String("scObjHandler(" + item.newId + ",@Model.CurrentScene.Id,@Model.Inventory.Id,@Model.LevelId)")).attr("oncontextmenu", String("ShowInfo(" + item.newId + ");return false;")))));
+                            $("div.selectedInventoryObject").remove()
+
+                        }
+                    }
+                    if (item.interactionType == -1) {
+                        $(".textfield").append(document.createTextNode("Вы не можете это использовать."));
+                        break;
+                    }*@
+                
             },
                 error: function () {
                     
             }
         });
         RemoveText();
+        $(".inventoryObject").removeClass("selectedInventoryObject");
     }
 </script>
 <script>

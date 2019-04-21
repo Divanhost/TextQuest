@@ -41,15 +41,15 @@ namespace TextQuest.Controllers
         }
         public LevelModel level;
         public List<InventoryObjectModel> userInventory;
-        public IActionResult Index(int? lvlid =1,int? id =4)
+        public IActionResult Index(int? lvlid = 1, int? id = 4)
         {
             level = null;
             userInventory = null;
-            CacheLoad(lvlid?? default(int));
+            CacheLoad(lvlid ?? default(int));
             Inventory inv = new Inventory();
             // Текущая сцена
             var currentScene = level.Scenes.FirstOrDefault(sc => sc.Id == id);
-           
+
             var model = new SceneListModel()
             {
                 Scenes = level.Scenes,
@@ -74,7 +74,7 @@ namespace TextQuest.Controllers
             StreamReader sr = new StreamReader(Request.Body);
             string data = sr.ReadToEnd();
             var items = data.Split('&');
-            
+
             //temp Variables
             int id = Int32.Parse(items[0].Split('=')[1]);
             int sceneId = Int32.Parse(items[1].Split('=')[1]);
@@ -82,7 +82,7 @@ namespace TextQuest.Controllers
             int levelId = Int32.Parse(items[3].Split('=')[1]);
             int? selectedInventoryObjectId = null;
             string temp = items[4].Split('=')[1];
-            if(temp != "undefined")
+            if (temp != "undefined")
             {
                 selectedInventoryObjectId = Int32.Parse(temp);
             }
@@ -108,7 +108,7 @@ namespace TextQuest.Controllers
             if (isInnerPass)
             {
                 int _nextSceneId = sceneObject.InnerPassSceneID;
-                responces.Add(new Responce { interactionType =1,nextSceneId = _nextSceneId});
+                responces.Add(new Responce { interactionType = 1, nextSceneId = _nextSceneId });
             }
             if (hasAction || isPickable)
             {
@@ -124,14 +124,14 @@ namespace TextQuest.Controllers
                         else
                         {
                             if (selectedInventoryObjectId != null)
-                                userInventory.Remove(level.InventoryObjects.FirstOrDefault(io=>io.Id == selectedInventoryObjectId));
+                                userInventory.Remove(level.InventoryObjects.FirstOrDefault(io => io.Id == selectedInventoryObjectId));
                             if (isPickable)
                             {
-                                PickItem(sceneObject, scene,interaction, responces);
+                                PickItem(sceneObject, scene, interaction, responces);
                             }
                             if (hasAction)
                             {
-                                DoActions(responces, id, sceneId, interaction.Id);
+                                DoActions(sceneObject, scene, interaction, responces);
                             }
                         }
                     }
@@ -141,12 +141,12 @@ namespace TextQuest.Controllers
                     }
                 }
             }
-            if(!hasAction&&!isInnerPass&&!isPickable) 
+            if (!hasAction && !isInnerPass && !isPickable)
             {
                 return Ok(new { interactionType = -1, id, responces });
             }
             return Ok(responces);
-            
+
         }
 
         // Side actions handlers
@@ -154,7 +154,7 @@ namespace TextQuest.Controllers
         {
             StreamReader sr = new StreamReader(Request.Body);
             string data = sr.ReadToEnd();
-           
+
             int id = Int32.Parse(data);
             return Ok(_sceneObject.GetSceneObject(id).Description);
         }
@@ -173,17 +173,9 @@ namespace TextQuest.Controllers
             string data = sr.ReadToEnd();
 
             int id = Int32.Parse(data);
-            return Ok(new { name = _sceneObject.GetName(id),description = _sceneObject.GetDescription(id)});
+            return Ok(new { name = _sceneObject.GetName(id), description = _sceneObject.GetDescription(id) });
         }
-        public IActionResult HandleRemainingTime()
-        {
-            StreamReader sr = new StreamReader(Request.Body);
-            string data = sr.ReadToEnd();
-
-            int rt = Int32.Parse(data);
-           // UserSingleton.remainingTime = rt;
-            return Ok();
-        }
+      
 
         // Load level from db
         public void LoadLevel(int? lvlid)
@@ -229,19 +221,19 @@ namespace TextQuest.Controllers
 
         //  Picking item in inventory
         // Что быстрее: передавать больше данных через аргументы или производить более долгий поиск?
-        public void PickItem(SceneObject sceneObject,SceneModel scene,Interaction interaction, List<Responce> responces)//(int id,int sceneId, List<Responce> responces)
+        public void PickItem(SceneObject sceneObject, SceneModel scene, Interaction interaction, List<Responce> responces)//(int id,int sceneId, List<Responce> responces)
         {
             //var interacton = level.Interactions.FirstOrDefault(i => i.TargetObjectId == sceneObject.Id);
             int inventoryItemId = interaction.TargetInventoryObjectId.Value;
             var inventoryObj = level.InventoryObjects.FirstOrDefault(io => io.Id == inventoryItemId);
 
-            if (userInventory.FirstOrDefault(ui=>ui.Id == inventoryItemId) == null)
+            if (userInventory.FirstOrDefault(ui => ui.Id == inventoryItemId) == null)
             {
                 userInventory.Add(level.InventoryObjects.FirstOrDefault(io => io.Id == inventoryItemId));
             }
             else
             {
-                responces.Add(new Responce { interactionType = -1}); // изменил 1 на -1 потому что ничего же не произойдет
+                responces.Add(new Responce { interactionType = -1 }); // изменил 1 на -1 потому что ничего же не произойдет
                 return;
             }
             var responce = new Responce()
@@ -264,19 +256,17 @@ namespace TextQuest.Controllers
             responces.Add(responce);
         }
         //Do action or sequence of actions
-        public void DoActions(List<Responce> responces,int id,int sceneId,int interactionId)
+        public void DoActions(SceneObject sceneObject, SceneModel scene, Interaction interacton, List<Responce> responces)
         {
-            var interacton = level.Interactions.FirstOrDefault(i => i.TargetObjectId == id);
-            var sceneObject = level.Scenes.FirstOrDefault(sc => sc.Id == sceneId).SceneObjects.FirstOrDefault(so => so.Id == id);
-            var associatedSceneObject = level.Scenes.FirstOrDefault(sc => sc.Id == sceneId).SpawnedSceneObjects.FirstOrDefault(sso => sso.Id == interacton.InteractingObjectId);
-            if (interacton.InteractingObjectId != id)
+            var associatedSceneObject = scene.SpawnedSceneObjects.FirstOrDefault(sso => sso.Id == interacton.InteractingObjectId);
+            if (interacton.InteractingObjectId != sceneObject.Id)
             {
-                //and interactingobjects exists
+                //and interacting objects exists
                 if (interacton.InteractingObjectId.HasValue)
                 {
                     var responce = new Responce()
                     {
-                        interactionType =2,
+                        interactionType = 2,
                         oldId = sceneObject.Id,
                         newId = associatedSceneObject.Id,
                         Name = associatedSceneObject.Name,
@@ -291,13 +281,10 @@ namespace TextQuest.Controllers
                         SpecialEvent = interacton.SpecialEvent
                     };
                     responces.Add(responce);
-                    level.Scenes.FirstOrDefault(sc => sc.Id == sceneId).SpawnedSceneObjects.Add(sceneObject);
-                    level.Scenes.FirstOrDefault(sc => sc.Id == sceneId).SceneObjects.Add(associatedSceneObject);
-                    //UserSingleton.GetScene(sceneId).SpawnedSceneObjects.Add(UserSingleton.GetScene(sceneId).SceneObjects.FirstOrDefault(so => so.Id == id));
-                    //UserSingleton.GetScene(sceneId).SceneObjects.Add(UserSingleton.GetScene(sceneId).SpawnedSceneObjects.FirstOrDefault(so => so.Id == associatedSceneObject.Id));
+                    scene.SpawnedSceneObjects.Add(sceneObject);
+                    scene.SceneObjects.Add(associatedSceneObject);
                     if (!interacton.IsSpawn)
-                        level.Scenes.FirstOrDefault(sc => sc.Id == sceneId).SceneObjects.Remove(sceneObject);
-                        //UserSingleton.GetScene(sceneId).SceneObjects.Remove(UserSingleton.GetScene(sceneId).SceneObjects.FirstOrDefault(so => so.Id == id));
+                        scene.SceneObjects.Remove(sceneObject);
                 }
                 else
                 {
@@ -308,13 +295,12 @@ namespace TextQuest.Controllers
                         isValid = true
                     };
                     responces.Add(responce);
-                    //UserSingleton.GetScene(sceneId).SceneObjects.Remove(UserSingleton.GetScene(sceneId).SceneObjects.FirstOrDefault(so => so.Id == id));
-                    level.Scenes.FirstOrDefault(sc => sc.Id == sceneId).SceneObjects.Remove(sceneObject);
+                    scene.SceneObjects.Remove(sceneObject);
                 }
             }
             else
             //if interaction does not change object, but does some events
-            if(interacton.SpecialEvent != null)
+            if (interacton.SpecialEvent != null)
             {
                 var responce = new Responce()
                 {
@@ -328,9 +314,10 @@ namespace TextQuest.Controllers
             }
             if (interacton.NextInteractionId.HasValue)
             {
-                interacton = _interaction.GetInteraction(interacton.NextInteractionId);
+                interacton = level.Interactions.FirstOrDefault(i => i.Id == interacton.NextInteractionId);
                 int newId = interacton.TargetObjectId ?? default(int);
-                DoActions(responces, newId,sceneId,interacton.Id);
+                sceneObject = scene.SceneObjects.FirstOrDefault(so => so.Id == newId);
+                ; DoActions(sceneObject, scene, interacton, responces);
             }
 
         }
@@ -387,178 +374,4 @@ namespace TextQuest.Controllers
         public static string InventoryObject { get { return "_inventoryObject"; } }
     }
 
-    /*public class UserSingleton
-    {
-        private static UserSingleton instance;
-        private static Inventory Inventory;
-        private static List<LevelModel> Levels;
-        private static List<SceneModel> Scenes;
-        private static List<InventoryObjectModel> InventoryObjects;
-        private static List<Interaction> Interactions;
-        private static List<InventoryObjectModel> InventoryItems;
-        public static int remainingTime;
-        private UserSingleton() { }
-        public static UserSingleton getInstance()
-        {
-            if (instance == null)
-            {
-                instance = new UserSingleton();
-                Inventory = new Inventory();
-                Levels = new List<LevelModel>();
-                Scenes = new List<SceneModel>();
-                InventoryObjects = new List<InventoryObjectModel>();
-                Interactions = new List<Interaction>();
-                InventoryItems = new List<InventoryObjectModel>();
-
-                remainingTime = 900;
-            }
-            return instance;
-        }
-        public void RemoveInstance()
-        {
-            instance = null;
-        }
-
-        public static void AddLevel(LevelModel level)
-        {
-            Levels.Add(level);
-        }
-        // Загрузка сцен
-        public static void LoadScenes(int lvlid)
-        {
-            var scenes = Levels.FirstOrDefault(lvl=>lvl.Id == lvlid).Scenes;
-            var listingScene = scenes.Select(sc => new SceneModel
-            {
-                Id = sc.Id,
-                Description = sc.Description,
-                BackgroundImageUrl = sc.BackgroundImageUrl,
-                SceneObjects = sc.SceneObjects.Where(so => !so.IsSpawned).OrderByDescending(s => s.z).ToList(),
-                SpawnedSceneObjects = sc.SceneObjects.Where(so => so.IsSpawned).OrderByDescending(s => s.z).ToList()
-            }).ToList();
-            Scenes.AddRange(listingScene);
-        }
-        // Загрузка подбираемых предметов
-        public static void LoadItems(int lvlid)
-        {
-            var inventoryObjects = Levels.FirstOrDefault(lvl => lvl.Id == lvlid).InventoryObjects;
-            var listinginventoryObjects = inventoryObjects.Select(sc => new InventoryObjectModel
-            {
-                Id = sc.Id,
-                Name = sc.Name,
-                Decription = sc.Decription,
-                IsInfinite = sc.IsInfinite,
-                ImageUrl = sc.ImageUrl
-            }).ToList();
-            InventoryObjects.AddRange(listinginventoryObjects);
-        }
-        // Загрузка взаимодействий
-        public static void LoadIteractions(int lvlid)
-        {
-            var interactions = Levels.FirstOrDefault(lvl => lvl.Id == lvlid).Interactions;
-            Interactions.AddRange(interactions);
-        }
-     
-        public static SceneModel GetScene(int id)
-        {
-            if (Scenes.Count > 0)
-            {
-                if (Scenes.Any(s => s.Id == id))
-                {
-                    return Scenes.FirstOrDefault(s => s.Id == id);
-                }
-            }
-            return null;
-        }
-        
-        public static List<SceneModel> GetScenes()
-        {
-            if(Scenes.Count == 0)
-            {
-                return null;
-            }
-            return Scenes;
-        }
-        
-        public static List<InventoryObjectModel> GetInventoryItems()
-        {
-            return InventoryItems;
-        }
-        public static InventoryObjectModel GetInventoryItem(int id)
-        {
-            if (InventoryItems.Count > 0)
-            {
-                if (InventoryItems.Any(s => s.Id == id))
-                {
-                    return InventoryItems.FirstOrDefault(s => s.Id == id);
-                }
-            }
-            return null;
-        }
-        public static void AddInventoryItem(InventoryObjectModel io)
-        {
-            InventoryItems.Add(io);
-        }
-        public static void RemoveInventoryItem(int id)
-        {
-            if (InventoryItems.Count > 0)
-            {
-                InventoryItems.Remove(InventoryItems.FirstOrDefault(io => io.Id == id));
-            }
-        }
-        public static List<Interaction> GetInteractionsBySceneObject(int id)
-        {
-            return Interactions.Where(inter => inter.TargetObjectId == id).ToList();
-        }
-
-
-        public static Interaction GetInteraction(int id)
-        {
-            return Interactions.FirstOrDefault(i => i.Id == id);
-        }
-        public static InventoryObjectModel GetInventoryObject(int id)
-        {
-            if (InventoryObjects.Count > 0)
-            {
-                if (InventoryObjects.Any(s => s.Id == id))
-                {
-                    return InventoryObjects.FirstOrDefault(s => s.Id == id);
-                }
-            }
-            return null;
-        }
-        public static void AddInventoryObject(InventoryObjectModel io)
-        {
-            InventoryObjects.Add(io);
-        }
-        public static List<InventoryObjectModel> GetInventoryObjects()
-        {
-            return InventoryObjects;
-        }
-        public static void RemoveInventoryObject(int id)
-        {
-            if (InventoryObjects.Count > 0)
-            {
-                InventoryObjects.Remove(InventoryObjects.FirstOrDefault(io => io.Id == id));
-            }
-        }
-        public static Inventory getInventory()
-        {
-            if (Inventory == null)
-            {
-                Inventory = new Inventory();
-
-            }
-            return Inventory;
-        }
-        public static void Reset()
-        {
-            InventoryObjects.Clear();
-            Scenes.Clear();
-            instance = null;
-            Inventory = null;
-            remainingTime = 900;
-        }
-    }*/
-
 }
-
