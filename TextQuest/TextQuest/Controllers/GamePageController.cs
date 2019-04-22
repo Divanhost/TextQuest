@@ -328,33 +328,15 @@ namespace TextQuest.Controllers
         }
         public IActionResult Reset()
         {
-            //UserSingleton.Reset();
+            string sessionId = HttpContext.Session.Id;
+            _memoryCache.Remove(CacheKeys.Level + sessionId);
+            _memoryCache.Remove(CacheKeys.Inventory + sessionId);
             return Ok();
         }
         public void CacheLoad(int levelId)
         {
-            /*  if (HttpContext.Session.Keys.Contains(CacheKeys.Level))
-              {
-                  level = HttpContext.Session.Get<LevelModel>(CacheKeys.Level);
-              }
-              else
-              {
-                  level = LoadLevel(levelId);
-                  HttpContext.Session.Set<LevelModel>(CacheKeys.Level, level);
-              }
-              if (HttpContext.Session.Keys.Contains(CacheKeys.Inventory))
-              {
-                  userInventory = HttpContext.Session.Get<List<InventoryObjectModel>>(CacheKeys.Inventory);
-              }
-              else
-              {
-                  userInventory = new List<InventoryObjectModel>();
-                  HttpContext.Session.Set<List<InventoryObjectModel>>(CacheKeys.Inventory, userInventory);
-              }
-
-              /**/
-           // int id = HttpContext.Session.Get<int>(CacheKeys.SessionId);
             string sessionId = HttpContext.Session.Id;
+
             // Кэширование загружаемого уровня и пребразование в LevelModel
             if (!_memoryCache.TryGetValue(CacheKeys.Level+sessionId, out level))
             {
