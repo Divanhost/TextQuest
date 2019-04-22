@@ -15,5 +15,6 @@ namespace TextQuest.Models
         public Inventory Inventory;
         public List<InventoryObjectModel> InventoryItems;
         public int RemainingTime;
+        public int? LevelId;
     }
 }

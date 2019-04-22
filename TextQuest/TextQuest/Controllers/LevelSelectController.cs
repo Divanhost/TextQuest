@@ -22,7 +22,7 @@ namespace TextQuest.Controllers
 
         public IActionResult Index()
         {
-            UserSingleton user = UserSingleton.getInstance();
+          //  UserSingleton user = UserSingleton.getInstance();
             
             var model = new LevelListModel()
             {

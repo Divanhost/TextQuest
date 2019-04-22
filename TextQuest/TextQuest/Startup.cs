@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using TextQuest.Data;
 using TextQuest.Services;
 
@@ -35,8 +36,11 @@ namespace TextQuest
             });
 
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            services.AddDbContext<TextQuestDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TextQuestConnectionString")));
+            services.AddDistributedMemoryCache();
+            services.AddMemoryCache();
+
+
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton(Configuration);
             services.AddScoped<IScene, SceneService>();
             services.AddScoped<IInteraction, InteractionService>();
@@ -45,6 +49,16 @@ namespace TextQuest
             services.AddScoped<IInventory_InventoryObject, Inventory_InventoryObjectService>();
             services.AddScoped<IInventoryObject, InventoryObjectService>();
             services.AddScoped<ILevel, LevelService>();
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddDbContext<TextQuestDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TextQuestConnectionString")));
+            services.AddSession(options =>
+            {
+                // Set a short timeout for easy testing.
+                options.IdleTimeout = TimeSpan.FromSeconds(10);
+                options.Cookie.HttpOnly = true;
+                // Make the session cookie essential
+                options.Cookie.IsEssential = true;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -59,17 +73,17 @@ namespace TextQuest
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
-
+            app.UseSession();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
         }
     }
 }

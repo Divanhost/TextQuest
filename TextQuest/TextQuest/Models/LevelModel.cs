@@ -11,8 +11,8 @@ namespace TextQuest.Models
         public int Id { get; set; }
         public string Name { get; set; }
         public string Creator { get; set; }
-        public List<Scene> Scenes { get; set; }
-        public List<InventoryObject> InventoryObjects { get; set; }
+        public List<SceneModel> Scenes { get; set; }
+        public List<InventoryObjectModel> InventoryObjects { get; set; }
         public List<Interaction> Interactions { get; set; }
     }
 }

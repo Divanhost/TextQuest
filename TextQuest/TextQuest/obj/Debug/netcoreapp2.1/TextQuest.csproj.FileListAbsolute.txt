@@ -152,3 +152,5 @@ C:\Users\Danil\Desktop\TQ PART 2\new\TextQuest\TextQuest-master\TextQuest\TextQu
 C:\Users\Danil\Desktop\TQ PART 2\new\TextQuest\TextQuest-master\TextQuest\TextQuest\obj\Debug\netcoreapp2.1\TextQuest.csproj.CopyComplete
 C:\Users\Danil\Desktop\TQ PART 2\new\TextQuest\TextQuest-master\TextQuest\TextQuest\obj\Debug\netcoreapp2.1\TextQuest.dll
 C:\Users\Danil\Desktop\TQ PART 2\new\TextQuest\TextQuest-master\TextQuest\TextQuest\obj\Debug\netcoreapp2.1\TextQuest.pdb
+D:\Projects\C#\TextQuest\TextQuest\TextQuest\obj\Debug\netcoreapp2.1\Razor\Views\LevelSelect\Index.g.cshtml.cs
+D:\Projects\C#\TextQuest\TextQuest\TextQuest\obj\Debug\netcoreapp2.1\Razor\Views\LevelSelect\_GetLevels.g.cshtml.cs
