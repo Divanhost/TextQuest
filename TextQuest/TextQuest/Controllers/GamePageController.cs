@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,6 +23,7 @@ namespace TextQuest.Controllers
         public IInventoryObject _inventoryObject;
         public ILevel _level;
         public IMemoryCache _memoryCache;
+        
         public GamePageController(IScene scene,
                                     ISceneObject sceneObject,
                                     IInteraction interaction,
@@ -38,6 +41,7 @@ namespace TextQuest.Controllers
             _inventoryObject = inventoryObject;
             _level = level;
             _memoryCache = memoryCache;
+            
         }
         public LevelModel level;
         public List<InventoryObjectModel> userInventory;
@@ -119,7 +123,7 @@ namespace TextQuest.Controllers
                     {
                         if (interaction.InteractingInventoryObjectId != selectedInventoryObjectId)
                         {
-                            responces.Add(new Responce { interactionType = -1 });
+                           // responces.Add(new Responce { interactionType = -1 });
                         }
                         else
                         {
@@ -178,7 +182,7 @@ namespace TextQuest.Controllers
       
 
         // Load level from db
-        public void LoadLevel(int? lvlid)
+        public LevelModel LoadLevel(int? lvlid)
         {
             var tmp = _level.GetLevel(lvlid ?? default(int));
             foreach (var scene in tmp.Scenes)
@@ -215,8 +219,9 @@ namespace TextQuest.Controllers
                 Interactions = tmp.Interactions.ToList()
             };
             // Загрузка в кэш
-            _memoryCache.Set(CacheKeys.Level, level,
-                new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(15)));
+            /*_memoryCache.Set(CacheKeys.Level, level,
+                new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(15)));*/
+            return level;
         }
 
         //  Picking item in inventory
@@ -328,12 +333,34 @@ namespace TextQuest.Controllers
         }
         public void CacheLoad(int levelId)
         {
+          /*  if (HttpContext.Session.Keys.Contains(CacheKeys.Level))
+            {
+                level = HttpContext.Session.Get<LevelModel>(CacheKeys.Level);
+            }
+            else
+            {
+                level = LoadLevel(levelId);
+                HttpContext.Session.Set<LevelModel>(CacheKeys.Level, level);
+            }
+            if (HttpContext.Session.Keys.Contains(CacheKeys.Inventory))
+            {
+                userInventory = HttpContext.Session.Get<List<InventoryObjectModel>>(CacheKeys.Inventory);
+            }
+            else
+            {
+                userInventory = new List<InventoryObjectModel>();
+                HttpContext.Session.Set<List<InventoryObjectModel>>(CacheKeys.Inventory, userInventory);
+            }
+
+            /**/
+
             // Кэширование загружаемого уровня и пребразование в LevelModel
             if (!_memoryCache.TryGetValue(CacheKeys.Level, out level))
             {
-                LoadLevel(levelId);
-                _memoryCache.Set("lvlId", levelId,
-                     new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(15)));
+                level = LoadLevel(levelId);
+                // Загрузка в кэш
+                _memoryCache.Set(CacheKeys.Level, level,
+                    new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(15)));
             }
             // Кэширование текущего инвентаря пользователя
             if (!_memoryCache.TryGetValue(CacheKeys.Inventory, out userInventory))
@@ -342,6 +369,7 @@ namespace TextQuest.Controllers
                 _memoryCache.Set(CacheKeys.Inventory, userInventory,
                new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(30)));
             }
+            
         }
     }
 
@@ -373,5 +401,17 @@ namespace TextQuest.Controllers
         public static string InventoryHelper { get { return "_inventoryHelper"; } }
         public static string InventoryObject { get { return "_inventoryObject"; } }
     }
+    public static class SessionExtensions
+    {
+        public static void Set<T>(this ISession session, string key, T value)
+        {
+            session.SetString(key, JsonConvert.SerializeObject(value));
+        }
 
+        public static T Get<T>(this ISession session, string key)
+        {
+            var value = session.GetString(key);
+            return JsonConvert.DeserializeObject<T>(value);
+        }
+    }
 }
