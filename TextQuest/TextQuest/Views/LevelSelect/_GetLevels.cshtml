@@ -24,7 +24,7 @@
                     </div>
                 </div>
                 <div class="playbutton">
-                    <button class="button" onclick="func(@id, 4)">
+                    <button class="button" onclick="func(@id)">
                         ▶
                     </button>
                 </div>
@@ -40,10 +40,38 @@
 </div>
 
 <script>
-    function func(_lvlid, _id) {
-        var route = "@Url.RouteUrl(new { controller = "GamePage", action = "Index", lvlid = "neededLVLid", id = "neededID" })";
-        route = route.replace("neededLVLid", _lvlid);
-        route = route.replace("neededID", _id);
-        window.location.replace(route);
+    function func(_lvlid) {
+        $.ajax({
+            url: "/LevelSelect/HandleLevelEntering",
+            type: "post",
+            data: String(_lvlid),
+            success: function (data) {
+                var route = "@Url.RouteUrl(new { controller = "GamePage", action = "Index", lvlid = "neededLVLid", id = "neededID" })";
+                route = route.replace("neededLVLid", _lvlid);
+                route = route.replace("neededID", data.id);
+                window.location.replace(route);
+            },
+            error: function () {
+
+            }
+        });
+       
+    }
+
+    function calltoserver(data) {
+        $.ajax({
+            url: "/LevelSelect/HandleInventoryInfoShowing",
+            type: "post",
+            data: String(id),
+            success: function (data) {
+                var element = document.createElement("div");
+                element.innerHTML = "<div class = \"centerthis\">" + data.name + "</div><div style=\"line-height: 50%;\"><br></div >" + data.description + ".";
+                $(".textfield").append(element);
+                //$(".textfield").append(document.createTextNode(data.name)).append(" ").append(document.createTextNode(data.description));
+            },
+            error: function () {
+
+            }
+        });
     }
 </script>

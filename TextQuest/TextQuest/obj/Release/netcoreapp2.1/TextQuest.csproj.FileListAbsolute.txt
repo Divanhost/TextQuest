@@ -76,3 +76,5 @@ C:\Users\Danil\Desktop\TQ PART 2\new\TextQuest\TextQuest-master\TextQuest\TextQu
 C:\Users\Danil\Desktop\TQ PART 2\new\TextQuest\TextQuest-master\TextQuest\TextQuest\obj\Release\netcoreapp2.1\TextQuest.pdb
 C:\Users\Danil\Desktop\TQ PART 2\new\TextQuest\TextQuest-master\TextQuest\TextQuest\obj\Release\netcoreapp2.1\Razor\Views\LevelSelect\Index.g.cshtml.cs
 C:\Users\Danil\Desktop\TQ PART 2\new\TextQuest\TextQuest-master\TextQuest\TextQuest\obj\Release\netcoreapp2.1\Razor\Views\LevelSelect\_GetLevels.g.cshtml.cs
+D:\Projects\C#\TextQuest\TextQuest\TextQuest\obj\Release\netcoreapp2.1\Razor\Views\LevelSelect\Index.g.cshtml.cs
+D:\Projects\C#\TextQuest\TextQuest\TextQuest\obj\Release\netcoreapp2.1\Razor\Views\LevelSelect\_GetLevels.g.cshtml.cs

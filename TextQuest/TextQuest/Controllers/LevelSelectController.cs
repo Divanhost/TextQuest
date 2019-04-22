@@ -39,6 +39,15 @@ namespace TextQuest.Controllers
             return PartialView("_GetLevelObjects");
         }
 
+        public IActionResult HandleLevelEntering()
+        {
+
+            StreamReader sr = new StreamReader(Request.Body);
+            string data = sr.ReadToEnd();
+            int lvlId = Int32.Parse(data);
+            int _id = _level.GetLevel(lvlId).Scenes.OrderBy(s => s.Id).First().Id;
+            return Ok(new { id =  _id});
+        }
 
     }
 }
