@@ -353,20 +353,21 @@ namespace TextQuest.Controllers
               }
 
               /**/
+            int id = HttpContext.Session.Get<int>(CacheKeys.SessionId);
 
             // Кэширование загружаемого уровня и пребразование в LevelModel
-            if (!_memoryCache.TryGetValue(CacheKeys.Level, out level))
+            if (!_memoryCache.TryGetValue(CacheKeys.Level+id.ToString(), out level))
             {
                 level = LoadLevel(levelId);
                 // Загрузка в кэш
-                _memoryCache.Set(CacheKeys.Level, level,
+                _memoryCache.Set(CacheKeys.Level + id.ToString(), level,
                     new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(15)));
             }
             // Кэширование текущего инвентаря пользователя
-            if (!_memoryCache.TryGetValue(CacheKeys.Inventory, out userInventory))
+            if (!_memoryCache.TryGetValue(CacheKeys.Inventory + id.ToString(), out userInventory))
             {
                 userInventory = new List<InventoryObjectModel>();
-                _memoryCache.Set(CacheKeys.Inventory, userInventory,
+                _memoryCache.Set(CacheKeys.Inventory + id.ToString(), userInventory,
                new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(30)));
             }
 
@@ -400,6 +401,8 @@ namespace TextQuest.Controllers
         public static string Inventory { get { return "_inventory"; } }
         public static string InventoryHelper { get { return "_inventoryHelper"; } }
         public static string InventoryObject { get { return "_inventoryObject"; } }
+        public static string SessionId { get { return "_sessionId"; } }
+
     }
     public static class SessionExtensions
     {

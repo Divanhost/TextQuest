@@ -22,8 +22,10 @@ namespace TextQuest.Controllers
 
         public IActionResult Index()
         {
-          //  UserSingleton user = UserSingleton.getInstance();
-            
+            //  UserSingleton user = UserSingleton.getInstance();
+            Random rnd = new Random((int)DateTime.Now.Ticks);
+            int id = rnd.Next(1000000);
+            HttpContext.Session.Set<int>(CacheKeys.SessionId, id);
             var model = new LevelListModel()
             {
                 Levels = _level.GetLevelsLike("Ivanov").ToList()
