@@ -26,6 +26,8 @@ namespace TextQuest.Controllers
             Random rnd = new Random((int)DateTime.Now.Ticks);
             int id = rnd.Next(1000000);
             HttpContext.Session.Set<int>(CacheKeys.SessionId, id);
+           // HttpContext.Session.LoadAsync();
+            
             var model = new LevelListModel()
             {
                 Levels = _level.GetLevelsLike("Ivanov").ToList()

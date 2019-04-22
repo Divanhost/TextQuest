@@ -353,21 +353,21 @@ namespace TextQuest.Controllers
               }
 
               /**/
-            int id = HttpContext.Session.Get<int>(CacheKeys.SessionId);
-
+           // int id = HttpContext.Session.Get<int>(CacheKeys.SessionId);
+            string sessionId = HttpContext.Session.Id;
             // Кэширование загружаемого уровня и пребразование в LevelModel
-            if (!_memoryCache.TryGetValue(CacheKeys.Level+id.ToString(), out level))
+            if (!_memoryCache.TryGetValue(CacheKeys.Level+sessionId, out level))
             {
                 level = LoadLevel(levelId);
                 // Загрузка в кэш
-                _memoryCache.Set(CacheKeys.Level + id.ToString(), level,
+                _memoryCache.Set(CacheKeys.Level + sessionId, level,
                     new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(15)));
             }
             // Кэширование текущего инвентаря пользователя
-            if (!_memoryCache.TryGetValue(CacheKeys.Inventory + id.ToString(), out userInventory))
+            if (!_memoryCache.TryGetValue(CacheKeys.Inventory + sessionId, out userInventory))
             {
                 userInventory = new List<InventoryObjectModel>();
-                _memoryCache.Set(CacheKeys.Inventory + id.ToString(), userInventory,
+                _memoryCache.Set(CacheKeys.Inventory + sessionId, userInventory,
                new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(30)));
             }
 
