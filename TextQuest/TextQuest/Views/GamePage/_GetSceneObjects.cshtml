@@ -83,9 +83,10 @@
                         $(".inventoryObject").removeClass("selectedInventoryObject");
                     }
                     if (item.interactionType == 1) {
-
-                        window.location.replace(item.nextSceneId);
-
+                        var route = "@Url.RouteUrl(new { controller = "GamePage", action = "Index", lvlid = "LvlId", id = "SceneId" })";
+                        route = route.replace("LvlId", @Model.LevelId);
+                        route = route.replace("SceneId", item.nextSceneId);
+                        window.location.replace(route);
                     }
                     if (item.interactionType == 2) {
                         if (item.action == 0) {

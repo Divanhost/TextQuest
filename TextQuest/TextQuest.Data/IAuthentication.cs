@@ -9,6 +9,7 @@ namespace TextQuest.Data
     {
         Authentication GetUser(int id);
         void AddUser(string login,string password,string acesslevel);
+        void AddUser(Authentication user);
         void DeleteUser(int id);
         string GetLogin(int id);
         IEnumerable<Level> GetUsersLevels(int id);
@@ -16,5 +17,6 @@ namespace TextQuest.Data
         IEnumerable<Level> GetUsersFavouriteLevels(int id);
         void AddLevelToFavourites(int id);
         Inventory GetInventory(int id);
+        bool LoginIsValid(string log, string pas);
     }
 }

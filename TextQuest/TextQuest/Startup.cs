@@ -49,6 +49,7 @@ namespace TextQuest
             services.AddScoped<IInventory_InventoryObject, Inventory_InventoryObjectService>();
             services.AddScoped<IInventoryObject, InventoryObjectService>();
             services.AddScoped<ILevel, LevelService>();
+            services.AddScoped<IAuthentication, AuthenticationService>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddDbContext<TextQuestDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("TextQuestConnectionString")));
             services.AddSession(options =>
@@ -81,7 +82,7 @@ namespace TextQuest
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=LevelSelect}/{action=Index}/{id?}");
+                    template: "{controller=Log}/{action=Index}/{id?}");
             });
 
         }
