@@ -47,6 +47,11 @@ namespace TextQuest.Controllers
         public List<InventoryObjectModel> userInventory;
         public IActionResult Index(int? lvlid = 1, int? id = 4)
         {
+            // штука для проверки аутентификации
+            if (HttpContext.Session.Get<bool>(CacheKeys.LoggedIn))
+            {
+                level = null;
+            }
             level = null;
             userInventory = null;
             CacheLoad(lvlid ?? default(int));
@@ -384,6 +389,7 @@ namespace TextQuest.Controllers
         public static string InventoryHelper { get { return "_inventoryHelper"; } }
         public static string InventoryObject { get { return "_inventoryObject"; } }
         public static string SessionId { get { return "_sessionId"; } }
+        public static string LoggedIn { get { return "_authenticate"; } }
 
     }
     public static class SessionExtensions
