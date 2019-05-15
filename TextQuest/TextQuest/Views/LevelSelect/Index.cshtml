@@ -6,8 +6,79 @@
     <link href="https://fonts.googleapis.com/css?family=Oswald|Share+Tech+Mono|Montserrat" rel="stylesheet">
 </head>
 <body>
+    <div class="sidenav">
+        <a id="main" href="#about">● На главную</a>
+    </div>
     <div class="back-container">
-        @Html.Partial("_GetLevels", Model)
+        <div class="background2">
+            <div class="searchbar">
+                Поиск:
+                <input class="search" id="input" type="text" size="18">
+                Сортировать по
+                <select class="search" id="dropdwn" name="dropdown">
+                    <option value="0" selected>Название</option>
+                    <option value="1">Автор</option>
+                    <option value="2">Просмотры</option>
+                    <option value="3">Понравилось</option>
+                    <option value="4">Не понравилось</option>
+                </select>
+                <b>
+                    <button class="search" id="myDIV" onclick="changeSort()">⇧</button>
+                </b>
+                <button class="search" onclick="searchLevels()">
+                    <b>Найти</b>
+                </button>
+            </div>
+            <div id="partial">@Html.Partial("_GetLevels", Model)</div>
+        </div>
     </div>
 </body>
 
+<script>
+
+    var main = document.getElementById('main');
+    main.onclick = toMain;
+
+    function toMain() {
+        window.location.replace("@Url.RouteUrl(new { controller = "Log", action = "Index" })");
+    }
+
+
+    function changeSort() {
+        var x = document.getElementById("myDIV");
+        if (x.innerHTML === "⇧") {
+            x.innerHTML = "⇩";
+        } else {
+            x.innerHTML = "⇧";
+        }
+    }
+
+    function searchLevels() {
+        var query = document.getElementById("input").value;
+        var sort = document.getElementById("dropdwn").value;
+        var order = document.getElementById("myDIV").innerHTML;
+        if (order === "⇧") order = "0";
+        else order = "1";
+        //query = encodeURI(query);
+        $.ajax({
+            url: "/LevelSelect/GetLevelList",
+            type: "post",
+            data: {
+                query: String(query),
+                sort: String(sort),
+                order: String(order),
+            },
+            success: function (data) {
+                //alert("success?");
+                //$('#partial').load(data)
+                $("#partial").html(data);
+                //document.getElementById("partial").innerHTML = "";
+                //document.getElementById("partial").innerHTML = Html.Partial("_GetLevels", Model);
+            },
+            error: function () {
+                //alert("no?");
+            }
+        });
+       
+    }
+</script>

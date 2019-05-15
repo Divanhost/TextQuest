@@ -6,6 +6,10 @@
     <link href="https://fonts.googleapis.com/css?family=Oswald|Share+Tech+Mono|Montserrat" rel="stylesheet">
 </head>
 <body>
+    <div class="sidenav">
+        <a id="main" href="#about">● На главную</a>
+        <a id="select" href="#services">● Выбор уровня</a>
+    </div>
     <div class="back-container">
         <div class="allgame">
 
@@ -14,3 +18,22 @@
     </div>
 </body>
 
+<script>
+    var main = document.getElementById('main');
+    var select = document.getElementById('select');
+    main.onclick = toMain;
+    select.onclick = toSelect;
+
+    function toMain() {
+        window.location.replace("@Url.RouteUrl(new { controller = "Log", action = "Index" })");
+    }
+
+    function toSelect() {
+        window.location.replace("@Url.RouteUrl(new { controller = "LevelSelect", action = "Index" })");
+    }
+
+
+
+
+
+</script>

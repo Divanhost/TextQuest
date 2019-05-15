@@ -68,9 +68,9 @@ namespace TextQuest.Services
             return _context.Levels.Where(lvl => lvl.Creator == creator);
         }
 
-        public IEnumerable<Level> GetLevelsLike(string creator)
+        public IEnumerable<Level> GetLevelsLike(string str)
         {
-            return _context.Levels.Where(lvl => lvl.Creator.Contains(creator));
+            return _context.Levels.Where(lvl => lvl.Creator.Contains(str) || lvl.Name.Contains(str));
         }
 
         public string GetName(int id)

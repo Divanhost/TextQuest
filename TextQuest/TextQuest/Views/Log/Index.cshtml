@@ -4,55 +4,103 @@
 
 <html>
 <head>
+    <link rel="stylesheet" type="text/css" href="~/css/login.css" runat="server">
+    <link href="https://fonts.googleapis.com/css?family=Oswald|Share+Tech+Mono|Montserrat" rel="stylesheet">
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
 </head>
 <body>
-    <form method="post" asp-controller="Log" asp-action="Index">
-        <h2>Регистрация нового пользователя</h2>
-        <div asp-validation-summary="ModelOnly"></div>
-        <div>
-            <label asp-for="Username"></label><br />
-            <input asp-for="Username" />
-            <span asp-validation-for="Username"></span>
+    <div class="signinholder">
+        <button class="collapsible active" id="loginform">
+            <p>Вход</p>
+        </button>
+        <div class="content" id="log">
+            <div class="inputholder">
+                <form method="post" asp-controller="Log" asp-action="Enter">
+                    <br />
+                    <div asp-validation-summary="ModelOnly"></div>
+                    <div class="field">
+                        <label asp-for="Username">Логин</label><br />
+                        <input asp-for="Username" />
+                        <span asp-validation-for="Username"></span>
+                    </div>
+                    <div class="field">
+                        <label asp-for="Password">Пароль</label><br />
+                        <input asp-for="Password" />
+                        <span asp-validation-for="Password"></span>
+                    </div>
+                    <br />
+                    <div class="enterb">
+                        <input type="submit" value="Войти" />
+                    </div>
+                    <br />
+                </form>
+            </div>
         </div>
-        <div>
-            <label asp-for="Password"></label><br />
-            <input asp-for="Password" />
-            <span asp-validation-for="Password"></span>
-        </div>
-        <div>
-            <label asp-for="PasswordConfirm"></label><br />
-            <input asp-for="PasswordConfirm" />
-            <span asp-validation-for="PasswordConfirm"></span>
-        </div>
-        <div>
-            <input type="submit" value="Регистрация" />
-        </div>
-    </form>
 
-    <form method="post" asp-controller="Log" asp-action="Enter">
-        <h2>Вход</h2>
-        <div asp-validation-summary="ModelOnly"></div>
-        <div>
-            <label asp-for="Username"></label><br />
-            <input asp-for="Username" />
-            <span asp-validation-for="Username"></span>
+        <button class="collapsible"  id="regform">
+            <p>Регистрация</p>
+        </button>
+        <div class="content" id="reg">
+            <div class="inputholder">
+                <br />
+                <form method="post" asp-controller="Log" asp-action="Index">
+                    <div asp-validation-summary="ModelOnly"></div>
+                    <div class="field">
+                        <label asp-for="Username">Логин</label><br />
+                        <input asp-for="Username" />
+                        <span asp-validation-for="Username"></span>
+                    </div>
+                    <div class="field">
+                        <label asp-for="Password">Пароль</label><br />
+                        <input asp-for="Password" />
+                        <span asp-validation-for="Password"></span>
+                    </div>
+                    <div class="field">
+                        <label asp-for="PasswordConfirm">Повторите пароль</label><br />
+                        <input asp-for="PasswordConfirm" />
+                        <span asp-validation-for="PasswordConfirm"></span>
+                    </div>
+                    <br />
+                    <div class="enterb">
+                        <input type="submit" value="Зарегистрироваться" />
+                    </div>
+                    <br />
+                </form>
+            </div>
         </div>
-        <div>
-            <label asp-for="Password"></label><br />
-            <input asp-for="Password" />
-            <span asp-validation-for="Password"></span>
+            <form method="post" asp-controller="Log" asp-action="Skip">
+                <div id="noreg">
+                    <input type="submit" value="Продолжить без регистрации" />
+                </div>
+            </form>
         </div>
-        <div>
-            <input type="submit" value="Вход" />
-        </div>
-    </form>
-
-    <form method="post" asp-controller="Log" asp-action="Skip">
-        <div>
-            <input type="submit" value="Продолжить без регистрации" />
-        </div>
-    </form>
 </body>
 </html>
+
+<script>
+    var coll = document.getElementsByClassName("collapsible");
+    var i;
+
+    var log = document.getElementById("loginform");
+    var reg = document.getElementById("regform");
+    var logform = log.nextElementSibling;
+    var regform = reg.nextElementSibling;
+    regform.style.maxHeight = null;
+    logform.style.maxHeight = logform.scrollHeight + "px";
+
+    for (i = 0; i < coll.length; i++) {
+      coll[i].addEventListener("click", function() {
+          log.classList.toggle("active");
+          reg.classList.toggle("active");
+        //var content = this.nextElementSibling;
+          if (logform.style.maxHeight){
+              logform.style.maxHeight = null;
+              regform.style.maxHeight = regform.scrollHeight + "px";
+          } else {
+              regform.style.maxHeight = null;
+              logform.style.maxHeight = logform.scrollHeight + "px";
+        }
+      });
+    }
+</script>

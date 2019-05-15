@@ -6,6 +6,36 @@ body {
     background-color: #f1f1f1;
 }
 
+
+.sidenav {
+    font-family: 'Oswald', sans-serif;
+    width: 180px;
+    position: absolute;
+    z-index: 1;
+    top: 20px;
+    left: 20px;
+    background: dimgray;
+    overflow-x: hidden;
+    padding: 8px 0;
+    outline: 2px solid black;
+}
+
+    .sidenav a {
+        padding: 8px;
+        text-decoration: none;
+        font-size: 26px;
+        color: lightgray;
+        display: block;
+    }
+
+        .sidenav a:hover {
+            color: white;
+        }
+
+.background2{
+    margin: auto;
+}
+
 /* Wrapping element */
 /* Set some basic padding to keep content from hitting the edges */
 .body-content {
@@ -79,6 +109,29 @@ body {
     background-color: lightgrey;
     display: flex;
     flex-direction: row;
+}
+
+.searchbar {
+    /*text-indent: 1em;*/
+    text-align:center;
+    width: 800px;
+    font-family: 'Oswald', sans-serif;
+    padding: 4px;
+    font-size: 22px;
+    background-color: darkgray;
+    outline: 2px solid black;
+    margin: auto;
+    margin-bottom: 10px;
+}
+
+.search {
+    font-family: 'Montserrat', sans-serif;
+    outline: 2px solid black;
+    font-size: 20px;
+    background-color: lightgrey;
+    margin: 4px;
+    /*display: flex;
+    flex-direction: row;*/
 }
 
 .views {

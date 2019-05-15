@@ -155,3 +155,44 @@ C:\Users\Danil\Desktop\TQ PART 2\new\TextQuest\TextQuest-master\TextQuest\TextQu
 D:\Projects\C#\TextQuest\TextQuest\TextQuest\obj\Debug\netcoreapp2.1\Razor\Views\LevelSelect\Index.g.cshtml.cs
 D:\Projects\C#\TextQuest\TextQuest\TextQuest\obj\Debug\netcoreapp2.1\Razor\Views\LevelSelect\_GetLevels.g.cshtml.cs
 D:\Projects\C#\TextQuest\TextQuest\TextQuest\obj\Debug\netcoreapp2.1\Razor\Views\Log\Index.g.cshtml.cs
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest\bin\Debug\netcoreapp2.1\TextQuest.deps.json
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest\bin\Debug\netcoreapp2.1\TextQuest.runtimeconfig.json
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest\bin\Debug\netcoreapp2.1\TextQuest.runtimeconfig.dev.json
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest\bin\Debug\netcoreapp2.1\TextQuest.dll
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest\bin\Debug\netcoreapp2.1\TextQuest.pdb
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest\bin\Debug\netcoreapp2.1\TextQuest.Views.dll
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest\bin\Debug\netcoreapp2.1\TextQuest.Views.pdb
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest\bin\Debug\netcoreapp2.1\TextQuest.Data.dll
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest\bin\Debug\netcoreapp2.1\TextQuest.Services.dll
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest\bin\Debug\netcoreapp2.1\TextQuest.Data.pdb
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest\bin\Debug\netcoreapp2.1\TextQuest.Services.pdb
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest\obj\Debug\netcoreapp2.1\TextQuest.csprojAssemblyReference.cache
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest\obj\Debug\netcoreapp2.1\TextQuest.csproj.CoreCompileInputs.cache
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest\obj\Debug\netcoreapp2.1\TextQuest.RazorAssemblyInfo.cache
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest\obj\Debug\netcoreapp2.1\TextQuest.RazorAssemblyInfo.cs
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest\obj\Debug\netcoreapp2.1\TextQuest.AssemblyInfoInputs.cache
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest\obj\Debug\netcoreapp2.1\TextQuest.AssemblyInfo.cs
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest\obj\Debug\netcoreapp2.1\TextQuest.TagHelpers.input.cache
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest\obj\Debug\netcoreapp2.1\TextQuest.TagHelpers.output.cache
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest\obj\Debug\netcoreapp2.1\TextQuest.RazorCoreGenerate.cache
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest\obj\Debug\netcoreapp2.1\Razor\Views\GamePage\Index.g.cshtml.cs
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest\obj\Debug\netcoreapp2.1\Razor\Views\GamePage\_GetSceneObjects.g.cshtml.cs
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest\obj\Debug\netcoreapp2.1\Razor\Views\Home\About.g.cshtml.cs
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest\obj\Debug\netcoreapp2.1\Razor\Views\Home\Contact.g.cshtml.cs
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest\obj\Debug\netcoreapp2.1\Razor\Views\Home\Index.g.cshtml.cs
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest\obj\Debug\netcoreapp2.1\Razor\Views\Home\Privacy.g.cshtml.cs
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest\obj\Debug\netcoreapp2.1\Razor\Views\LevelSelect\Index.g.cshtml.cs
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest\obj\Debug\netcoreapp2.1\Razor\Views\LevelSelect\_GetLevels.g.cshtml.cs
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest\obj\Debug\netcoreapp2.1\Razor\Views\Log\Index.g.cshtml.cs
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest\obj\Debug\netcoreapp2.1\Razor\Views\Shared\Error.g.cshtml.cs
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_CookieConsentPartial.g.cshtml.cs
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_Layout.g.cshtml.cs
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest\obj\Debug\netcoreapp2.1\Razor\Views\Shared\_ValidationScriptsPartial.g.cshtml.cs
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest\obj\Debug\netcoreapp2.1\Razor\Views\_ViewImports.g.cshtml.cs
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest\obj\Debug\netcoreapp2.1\Razor\Views\_ViewStart.g.cshtml.cs
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest\obj\Debug\netcoreapp2.1\TextQuest.RazorTargetAssemblyInfo.cache
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest\obj\Debug\netcoreapp2.1\TextQuest.RazorTargetAssemblyInfo.cs
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest\obj\Debug\netcoreapp2.1\TextQuest.Views.pdb
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest\obj\Debug\netcoreapp2.1\TextQuest.csproj.CopyComplete
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest\obj\Debug\netcoreapp2.1\TextQuest.dll
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest\obj\Debug\netcoreapp2.1\TextQuest.pdb

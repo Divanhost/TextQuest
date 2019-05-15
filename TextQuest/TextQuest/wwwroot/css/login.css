@@ -1,0 +1,130 @@
+﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification\ 
+for details on configuring this project to bundle and minify static web assets. */
+body {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #f1f1f1;
+}
+
+
+.collapsible {
+    font-family: 'Oswald', sans-serif;
+    background-color: dimgray;
+    font-size: 36px;
+    color: white;
+    cursor: pointer;
+    padding: 0px;
+    width: 100%;
+    border: none;
+    outline: none;
+}
+
+    .active, .collapsible:hover {
+        background-color: #555;
+    }
+
+    .collapsible:after {
+        color: white;
+        font-weight: bold;
+        float: right;
+        margin-left: 5px;
+    }
+
+#noreg{
+    margin-top:20px;
+}
+
+.active:after {
+}
+
+/*#log{
+    max-height:203px;
+}*/
+
+.field{
+    margin:5px;
+}
+
+.enterb {
+    text-align: center;
+}
+
+.inputholder {
+    margin:auto;
+    width:174px;
+    text-align: left;
+}
+
+.content {
+    border: 2px solid #555;
+    margin: 0px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    background-color: lightgrey;
+    text-align:center;
+}
+
+.signinholder {
+    padding: 20px;
+    width: 400px;
+    background-color: darkgray;
+    border: 2px solid black;
+    text-align: center;
+    margin: auto;
+}
+
+/* Wrapping element */
+/* Set some basic padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Carousel */
+.carousel-caption p {
+    font-size: 20px;
+    line-height: 1.4;
+}
+
+/* Make .svg files in the carousel display properly in older browsers */
+.carousel-inner .item img[src$=".svg"] {
+    width: 100%;
+}
+
+/* QR code generator */
+#qrCode {
+    margin: 15px;
+}
+
+/* Hide/rearrange for smaller screens */
+@media screen and (max-width: 767px) {
+    /* Hide captions */
+    .carousel-caption {
+        display: none;
+    }
+}
+
+.button {
+    margin: auto;
+    background-color: dimgray;
+    border: 2px solid black;
+    color: white;
+    padding: 4px 34px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 90px;
+    cursor: pointer;
+    transition-duration: 0.1s;
+}
+
+    .button:hover {
+        background-color: white;
+        color: dimgray;
+    }
+
+    .button:active {
+        background-color: lightgrey;
+        color: black;
+    }

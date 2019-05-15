@@ -46,3 +46,15 @@ C:\Users\Danil\Desktop\TQ PART 2\new\TextQuest\TextQuest-master\TextQuest\TextQu
 C:\Users\Danil\Desktop\TQ PART 2\new\TextQuest\TextQuest-master\TextQuest\TextQuest.Services\obj\Debug\netcoreapp2.1\TextQuest.Services.csproj.CopyComplete
 C:\Users\Danil\Desktop\TQ PART 2\new\TextQuest\TextQuest-master\TextQuest\TextQuest.Services\obj\Debug\netcoreapp2.1\TextQuest.Services.dll
 C:\Users\Danil\Desktop\TQ PART 2\new\TextQuest\TextQuest-master\TextQuest\TextQuest.Services\obj\Debug\netcoreapp2.1\TextQuest.Services.pdb
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest.Services\bin\Debug\netcoreapp2.1\TextQuest.Services.deps.json
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest.Services\bin\Debug\netcoreapp2.1\TextQuest.Services.dll
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest.Services\bin\Debug\netcoreapp2.1\TextQuest.Services.pdb
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest.Services\bin\Debug\netcoreapp2.1\TextQuest.Data.dll
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest.Services\bin\Debug\netcoreapp2.1\TextQuest.Data.pdb
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest.Services\obj\Debug\netcoreapp2.1\TextQuest.Services.csprojAssemblyReference.cache
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest.Services\obj\Debug\netcoreapp2.1\TextQuest.Services.csproj.CoreCompileInputs.cache
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest.Services\obj\Debug\netcoreapp2.1\TextQuest.Services.AssemblyInfoInputs.cache
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest.Services\obj\Debug\netcoreapp2.1\TextQuest.Services.AssemblyInfo.cs
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest.Services\obj\Debug\netcoreapp2.1\TextQuest.Services.csproj.CopyComplete
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest.Services\obj\Debug\netcoreapp2.1\TextQuest.Services.dll
+C:\Users\Danil\Desktop\TQ PART 2\newest\TextQuest\TextQuest\TextQuest.Services\obj\Debug\netcoreapp2.1\TextQuest.Services.pdb

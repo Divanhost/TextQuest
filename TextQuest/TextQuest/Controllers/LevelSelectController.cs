@@ -2,6 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
+using System.Web;
 using System.Linq;
 using System.Threading.Tasks;
 using TextQuest.Data;
@@ -30,7 +32,7 @@ namespace TextQuest.Controllers
             
             var model = new LevelListModel()
             {
-                Levels = _level.GetLevelsLike("Ivanov").ToList()
+                Levels = _level.GetLevelsLike("").ToList()
 
             };
 
@@ -40,8 +42,75 @@ namespace TextQuest.Controllers
 
         public IActionResult GetLevelObjects()
         {
-            return PartialView("_GetLevelObjects");
+            return PartialView("_GetLevels");
         }
+
+        public IActionResult GetLevelList()
+        {
+            StreamReader sr = new StreamReader(Request.Body);
+            string data = sr.ReadToEnd();
+            var items = data.Split('&');
+
+            //temp Variables
+            string query = items[0].Split('=')[1];
+            int sort = Int32.Parse(items[1].Split('=')[1]);
+            int order = Int32.Parse(items[2].Split('=')[1]);
+            Encoding e = Encoding.UTF8;
+            query = System.Web.HttpUtility.UrlDecode(query, e);
+            //string s = Encoding.UTF8.GetString(Encoding.Unicode.GetBytes(query));
+            //query = Encoding.UTF8.GetString(array);
+
+
+            var tempLevels = _level.GetLevelsLike(query).ToList();
+            
+            if (order == 0)
+                switch (sort)
+                {
+                    case 0:
+                        tempLevels = tempLevels.OrderBy(level => level.Name).ToList();
+                        break;
+                    case 1:
+                        tempLevels = tempLevels.OrderBy(level => level.Creator).ToList();
+                        break;
+                    case 2:
+                        tempLevels = tempLevels.OrderBy(level => level.Views).ToList();
+                        break;
+                    case 3:
+                        tempLevels = tempLevels.OrderBy(level => level.Likes).ToList();
+                        break;
+                    default:
+                        tempLevels = tempLevels.OrderBy(level => level.Dislikes).ToList();
+                        break;
+                }
+            else
+                switch (sort)
+                {
+                    case 0:
+                        tempLevels = tempLevels.OrderByDescending(level => level.Name).ToList();
+                        break;
+                    case 1:
+                        tempLevels = tempLevels.OrderByDescending(level => level.Creator).ToList();
+                        break;
+                    case 2:
+                        tempLevels = tempLevels.OrderByDescending(level => level.Views).ToList();
+                        break;
+                    case 3:
+                        tempLevels = tempLevels.OrderByDescending(level => level.Likes).ToList();
+                        break;
+                    default:
+                        tempLevels = tempLevels.OrderByDescending(level => level.Dislikes).ToList();
+                        break;
+                }
+
+            var model = new LevelListModel()
+            {
+                Levels = tempLevels
+
+            };
+            return PartialView("_GetLevels", model);
+            //return View(model);
+        }
+
 
         public IActionResult HandleLevelEntering()
         {

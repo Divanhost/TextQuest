@@ -1,7 +1,7 @@
 ﻿@model TextQuest.Models.LevelListModel
 
-<div class="background">
 
+    
     <div class="levelContainer">
         @foreach (var lvl in Model.Levels)
         {
@@ -36,8 +36,6 @@
 
 
     </div>
-
-</div>
 
 <script>
     function func(_lvlid) {
@@ -74,4 +72,5 @@
             }
         });
     }
+
 </script>
