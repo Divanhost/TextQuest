@@ -43,7 +43,7 @@ namespace TextQuest.Controllers
             if (!_memoryCache.TryGetValue(CacheKeys.User + sessionId, out userId))
             {
                 // если время истекло, то пусть заново входит
-                RedirectToAction("Index", "Log");
+               return RedirectToAction("Index", "Log");
             } 
             // Вот твой пользователь
            Authentication mainUser =  _authentication.GetUser(userId);
