@@ -68,12 +68,12 @@ using TextQuest.Models;
             WriteLiteral("\r\n");
             EndContext();
             BeginContext(44, 214, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "3ce6710e1b514dd9b01a36be0bbbe5b1", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "bde41484db3b40559f22c78c3c8fb5d3", async() => {
                 BeginContext(50, 6, true);
                 WriteLiteral("\r\n    ");
                 EndContext();
                 BeginContext(56, 83, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "d285d5943ca842478a2c258eead17045", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "1a834ff4fa43424a8d1bb25dfa8a3376", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -109,7 +109,7 @@ using TextQuest.Models;
             WriteLiteral("\r\n");
             EndContext();
             BeginContext(260, 1119, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "acc7101b55c2489895e55b5d5b0b2267", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "56a031e838e3429baf458deda8bdc5a4", async() => {
                 BeginContext(266, 419, true);
                 WriteLiteral(@"
     <div class=""sidenav"">
@@ -125,7 +125,7 @@ using TextQuest.Models;
                     ");
                 EndContext();
                 BeginContext(685, 44, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e6c17a4c2e1a4a0ab27520baa5529b88", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "96c33000662545ec8e5f2f6e2309c405", async() => {
                     BeginContext(712, 8, true);
                     WriteLiteral("Название");
                     EndContext();
@@ -150,7 +150,7 @@ using TextQuest.Models;
                 WriteLiteral("\r\n                    ");
                 EndContext();
                 BeginContext(751, 32, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "da7ca0bf61ee48aea5e314a27e5fda4d", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14d74e00956c4bccaf10e4804c79bb26", async() => {
                     BeginContext(769, 5, true);
                     WriteLiteral("Автор");
                     EndContext();
@@ -172,7 +172,7 @@ using TextQuest.Models;
                 WriteLiteral("\r\n                    ");
                 EndContext();
                 BeginContext(805, 36, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "714e28b37fcc402686e114dfd76176bb", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "abc8e4d6592b4934ad2b09cb499e38fa", async() => {
                     BeginContext(823, 9, true);
                     WriteLiteral("Просмотры");
                     EndContext();
@@ -194,7 +194,7 @@ using TextQuest.Models;
                 WriteLiteral("\r\n                    ");
                 EndContext();
                 BeginContext(863, 38, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "08b3a48ca559452693c56c2bc5668b60", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "12126aed91664ae7a1a60460a69b459c", async() => {
                     BeginContext(881, 11, true);
                     WriteLiteral("Понравилось");
                     EndContext();
@@ -216,7 +216,7 @@ using TextQuest.Models;
                 WriteLiteral("\r\n                    ");
                 EndContext();
                 BeginContext(923, 41, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "e33dc35851af4d8bb6cf45f52aadf262", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "fc0e201643ea427087dc72a1ba544f35", async() => {
                     BeginContext(941, 14, true);
                     WriteLiteral("Не понравилось");
                     EndContext();

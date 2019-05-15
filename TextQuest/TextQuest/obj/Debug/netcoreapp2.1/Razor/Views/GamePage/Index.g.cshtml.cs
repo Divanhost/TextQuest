@@ -62,12 +62,12 @@ using TextQuest.Models;
             WriteLiteral("\r\n");
             EndContext();
             BeginContext(44, 222, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "f85e8599895b439b8d5086a1b97f9f2f", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "cd08778ace3d45b9b860ff259d35b40b", async() => {
                 BeginContext(65, 6, true);
                 WriteLiteral("\r\n    ");
                 EndContext();
                 BeginContext(71, 76, false);
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "c9dd4cfcd96445978fb674d22fb40d96", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagOnly, "5797bf1a4c454d1a9d929ba9cd94002f", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -104,7 +104,7 @@ using TextQuest.Models;
             WriteLiteral("\r\n");
             EndContext();
             BeginContext(268, 316, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ab4523a68f0247b08842e9bb1514e087", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "42bcd3c301814ab989116f294b2d932e", async() => {
                 BeginContext(274, 233, true);
                 WriteLiteral("\r\n    <div class=\"sidenav\">\r\n        <a id=\"main\" href=\"#about\">● На главную</a>\r\n        <a id=\"select\" href=\"#services\">● Выбор уровня</a>\r\n    </div>\r\n    <div class=\"back-container\">\r\n        <div class=\"allgame\">\r\n\r\n            ");
                 EndContext();
