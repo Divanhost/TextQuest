@@ -54,7 +54,12 @@ namespace TextQuest.Services
 
         public Authentication GetUser(int id)
         {
-            throw new NotImplementedException();
+            return _context.Authentications.FirstOrDefault(u =>u.Id == id);
+        }
+
+        public Authentication GetUser(string login, string password)
+        {
+            return _context.Authentications.FirstOrDefault(u => u.Login == login && u.Password == password);
         }
 
         public IEnumerable<Level> GetUsersFavouriteLevels(int id)

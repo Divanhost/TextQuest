@@ -8,6 +8,7 @@ namespace TextQuest.Data
     public interface IAuthentication
     {
         Authentication GetUser(int id);
+        Authentication GetUser(string login, string password);
         void AddUser(string login,string password,string acesslevel);
         void AddUser(Authentication user);
         void DeleteUser(int id);

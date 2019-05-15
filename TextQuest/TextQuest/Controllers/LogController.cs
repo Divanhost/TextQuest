@@ -34,8 +34,8 @@ namespace TextQuest.Controllers
 
             }
             //  UserSingleton user = UserSingleton.getInstance();
-            Random rnd = new Random((int)DateTime.Now.Ticks);
-            int id = rnd.Next(1000000);
+          //  Random rnd = new Random((int)DateTime.Now.Ticks);
+          //  int id = rnd.Next(1000000);
             HttpContext.Session.Set<bool>(CacheKeys.LoggedIn, false);
             // HttpContext.Session.LoadAsync();
 
@@ -47,13 +47,13 @@ namespace TextQuest.Controllers
         [HttpPost]
         public IActionResult Index(LogModel model)
         {
-            if (ModelState.IsValid && model.Password == model.PasswordConfirm &&model.Password !=null)
+            if (ModelState.IsValid && model.Password == model.PasswordConfirm &&model.Password !=null &&model.Username !=null)
             {
                 // User user = new User { Email = model.Username, UserName = model.Email, Year = model.Year };
                 Authentication user = new Authentication { Login = model.Username, Password = model.Password, AccessLevel = 0, AssociatedInventory = 0 };
                 // добавляем пользователя
                 _authentication.AddUser(user);
-                HttpContext.Session.Set<bool>(CacheKeys.LoggedIn, true);
+                CachingUserData(model.Username, model.Password);
                 return RedirectToAction("Index", "LevelSelect");
             }
             return View(model);
@@ -72,13 +72,21 @@ namespace TextQuest.Controllers
         {
             if (_authentication.LoginIsValid(model.Username, model.Password))
             {
-                HttpContext.Session.Set<bool>(CacheKeys.LoggedIn, true);
+                CachingUserData(model.Username, model.Password);
                 return RedirectToAction("Index", "LevelSelect");
             }
             else
             {
                 return RedirectToAction("Index", "Log");
             }
+        }
+        public void CachingUserData(string login,string password)
+        {
+            string sessionId = HttpContext.Session.Id;
+            int userId = _authentication.GetUser(login, password).Id;
+            HttpContext.Session.Set<bool>(CacheKeys.LoggedIn, true);
+            _memoryCache.Set(CacheKeys.User + sessionId, userId,
+                   new MemoryCacheEntryOptions().SetAbsoluteExpiration(TimeSpan.FromMinutes(60)));
         }
     }
 }

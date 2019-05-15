@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using TextQuest.Data;
 using TextQuest.Data.Models;
 using TextQuest.Models;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace TextQuest.Controllers
 {
@@ -16,21 +17,38 @@ namespace TextQuest.Controllers
     {
 
         public ILevel _level;
+        public IMemoryCache _memoryCache;
+        public IAuthentication _authentication;
         public LevelSelectController(
-                                    ILevel level)
+                                    ILevel level,IMemoryCache memoryCache,IAuthentication authentication)
         {
             _level = level;
+            _memoryCache = memoryCache;
+            _authentication = authentication;
         }
 
         public IActionResult Index()
         {
             //  UserSingleton user = UserSingleton.getInstance();
-            Random rnd = new Random((int)DateTime.Now.Ticks);
-            int id = rnd.Next(1000000);
-            HttpContext.Session.Set<int>(CacheKeys.SessionId, id);
-           // HttpContext.Session.LoadAsync();
+            //Random rnd = new Random((int)DateTime.Now.Ticks);
+            //int id = rnd.Next(1000000);
+            // HttpContext.Session.Set<int>(CacheKeys.SessionId, id);
             
-            var model = new LevelListModel()
+            // Вот твоя проверка пользователя
+            // Id пользователя
+            int userId;
+            // Id сессии
+            string sessionId = HttpContext.Session.Id;
+            // Пытаемся получить данные из кэша
+            if (!_memoryCache.TryGetValue(CacheKeys.User + sessionId, out userId))
+            {
+                // если время истекло, то пусть заново входит
+                RedirectToAction("Index", "Log");
+            } 
+            // Вот твой пользователь
+           Authentication mainUser =  _authentication.GetUser(userId);
+            // Дальше делай то, что тебе нужно
+                var model = new LevelListModel()
             {
                 Levels = _level.GetLevelsLike("").ToList()
 

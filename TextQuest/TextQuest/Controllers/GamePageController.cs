@@ -392,6 +392,7 @@ namespace TextQuest.Controllers
         public static string InventoryObject { get { return "_inventoryObject"; } }
         public static string SessionId { get { return "_sessionId"; } }
         public static string LoggedIn { get { return "_authenticate"; } }
+        public static string User { get { return "_user"; } }
 
     }
     public static class SessionExtensions
