@@ -129,6 +129,120 @@ namespace TextQuest.Controllers
             //return View(model);
         }
 
+        public IActionResult CheckRights()
+        {
+
+            int userId;
+            // Id сессии
+            string sessionId = HttpContext.Session.Id;
+            // Пытаемся получить данные из кэша
+            if (!_memoryCache.TryGetValue(CacheKeys.User + sessionId, out userId))
+            {
+                // если время истекло, то пусть заново входит
+                return RedirectToAction("Index", "Log");
+            }
+            // Вот твой пользователь
+            Authentication mainUser = _authentication.GetUser(userId);
+            return Ok(new { accLevel = mainUser.AccessLevel });
+        }
+
+        public IActionResult HandleDeleting()
+        {
+
+            int userId;
+            // Id сессии
+            string sessionId = HttpContext.Session.Id;
+            // Пытаемся получить данные из кэша
+            if (!_memoryCache.TryGetValue(CacheKeys.User + sessionId, out userId))
+            {
+                // если время истекло, то пусть заново входит
+                return RedirectToAction("Index", "Log");
+            }
+            // Вот твой пользователь
+            Authentication mainUser = _authentication.GetUser(userId);
+
+            StreamReader sr = new StreamReader(Request.Body);
+            string data = sr.ReadToEnd();
+            int lvlId = Int32.Parse(data);
+            if (mainUser.AccessLevel == 0) {
+                //_level.DeleteLevel(lvlId);
+                    }
+
+            return Ok();
+        }
+
+        public IActionResult HandleLike()
+        {
+
+            int userId;
+            // Id сессии
+            string sessionId = HttpContext.Session.Id;
+            // Пытаемся получить данные из кэша
+            if (!_memoryCache.TryGetValue(CacheKeys.User + sessionId, out userId))
+            {
+                // если время истекло, то пусть заново входит
+                return RedirectToAction("Index", "Log");
+            }
+            // Вот твой пользователь
+            Authentication mainUser = _authentication.GetUser(userId);
+
+            StreamReader sr = new StreamReader(Request.Body);
+            string data = sr.ReadToEnd();
+            int lvlId = Int32.Parse(data);
+            Level templevel = _level.GetLevel(lvlId);
+            List<Level> testlist = new List<Level>();
+            if (mainUser.UserFavoriteLevels != null) testlist = mainUser.UserFavoriteLevels.ToList();
+            if (testlist != null && testlist.Contains(templevel)){
+                testlist.Remove(templevel);
+                mainUser.UserFavoriteLevels = testlist;
+                _level.SubLike(lvlId);
+            }
+            else
+            {
+                testlist.Add(templevel);
+                mainUser.UserFavoriteLevels = testlist;
+                _level.AddLike(lvlId);
+
+            }
+            return Ok();
+        }
+
+        public IActionResult HandleDislike()
+        {
+
+            int userId;
+            // Id сессии
+            string sessionId = HttpContext.Session.Id;
+            // Пытаемся получить данные из кэша
+            if (!_memoryCache.TryGetValue(CacheKeys.User + sessionId, out userId))
+            {
+                // если время истекло, то пусть заново входит
+                return RedirectToAction("Index", "Log");
+            }
+            // Вот твой пользователь
+            Authentication mainUser = _authentication.GetUser(userId);
+
+            StreamReader sr = new StreamReader(Request.Body);
+            string data = sr.ReadToEnd();
+            int lvlId = Int32.Parse(data);
+            Level templevel = _level.GetLevel(lvlId);
+            List<Level> testlist = new List<Level>();
+            if (mainUser.UserDislikedLevels != null) testlist = mainUser.UserDislikedLevels.ToList();
+            if (testlist != null && testlist.Contains(templevel))
+            {
+                testlist.Remove(templevel);
+                mainUser.UserDislikedLevels = testlist;
+                _level.SubDislike(lvlId);
+            }
+            else
+            {
+                testlist.Add(templevel);
+                mainUser.UserDislikedLevels = testlist;
+                _level.AddDislike(lvlId);
+
+            }
+            return Ok();
+        }
 
         public IActionResult HandleLevelEntering()
         {
@@ -137,6 +251,7 @@ namespace TextQuest.Controllers
             string data = sr.ReadToEnd();
             int lvlId = Int32.Parse(data);
             int _id = _level.GetLevel(lvlId).Scenes.OrderBy(s => s.Id).First().Id;
+            _level.AddViewcount(lvlId);
             return Ok(new { id =  _id});
         }
 

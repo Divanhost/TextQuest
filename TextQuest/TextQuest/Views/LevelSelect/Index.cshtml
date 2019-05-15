@@ -38,6 +38,70 @@
 
 <script>
 
+    /*$.ajax({
+        url: "/LevelSelect/CheckRights",
+        type: "post",
+        success: function (data) {
+            if (data.id == 0) {
+                var buttons = document.getElementsByClass("deletebutton");
+                var i;
+                for (i = 0; i < buttons.length; i++) {
+                    buttons[i].style.visibility = "visible";
+                }
+            }
+        },
+        error: function () {
+
+        }
+    });*/
+    
+    function deleteLevel(_lvlid) {
+        alert("Не работает.");
+        /*$.ajax({
+            url: "/LevelSelect/HandleDeleting",
+            type: "post",
+            data: String(_lvlid),
+            success: function (data) {
+                searchLevels();
+            },
+            error: function () {
+
+            }
+        });*/
+       
+    }
+
+    function giveLike(_lvlid) {
+        //alert("like " + _lvlid);
+        $.ajax({
+            url: "/LevelSelect/HandleLike",
+            type: "post",
+            data: String(_lvlid),
+            success: function (data) {
+                searchLevels();
+            },
+            error: function () {
+
+            }
+        });
+    }
+
+    function giveDislike(_lvlid) {
+        //alert("dislike " + _lvlid);
+        $.ajax({
+            url: "/LevelSelect/HandleDislike",
+            type: "post",
+            data: String(_lvlid),
+            success: function (data) {
+                searchLevels();
+            },
+            error: function () {
+
+            }
+        });
+    }
+    
+
     function handleEnter(e) {
         var keycode = (e.keyCode ? e.keyCode : e.which);
         if (keycode == '13') {
@@ -82,6 +146,7 @@
             error: function () {
             }
         });
+
        
     }
 </script>

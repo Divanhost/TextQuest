@@ -17,6 +17,37 @@ namespace TextQuest.Services
             _context = context;
         }
 
+
+        public void AddViewcount(int id)
+        {
+            GetLevel(id).Views += 1;
+            _context.SaveChanges();
+        }
+
+        public void AddLike(int id)
+        {
+            GetLevel(id).Likes += 1;
+            _context.SaveChanges();
+        }
+
+        public void AddDislike(int id)
+        {
+            GetLevel(id).Dislikes += 1;
+            _context.SaveChanges();
+        }
+
+        public void SubLike(int id)
+        {
+            GetLevel(id).Likes -= 1;
+            _context.SaveChanges();
+        }
+
+        public void SubDislike(int id)
+        {
+            GetLevel(id).Dislikes -= 1;
+            _context.SaveChanges();
+        }
+
         public void AddLevel(Level lvl)
         {
             _context.Add(lvl);

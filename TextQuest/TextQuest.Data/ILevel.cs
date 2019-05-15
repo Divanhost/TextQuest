@@ -13,6 +13,11 @@ namespace TextQuest.Data
         IEnumerable<Scene> GetScenes(int id);
         IEnumerable<Interaction> GetInteractions(int id);
         IEnumerable<InventoryObject> GetItems(int id);
+        void AddViewcount(int id);
+        void AddLike(int id);
+        void AddDislike(int id);
+        void SubLike(int id);
+        void SubDislike(int id);
         void AddLevel(Level lvl);
         void DeleteLevel(int id);
         string GetName(int id);

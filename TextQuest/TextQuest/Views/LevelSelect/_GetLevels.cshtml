@@ -22,7 +22,7 @@
                     <div class="views">👁️@views</div>
                     <div class="likes"><a class="like" href="#like" onclick="giveLike(@id)">👍</a>  @likes</div>
                     <div class="dislikes"><a class="dislike" href="#dislike" onclick="giveDislike(@id)">👎</a> @dislikes</div>
-                    <div class="deletebutton" style="visibility: hidden"><button>🗑️</button></div>
+                    <div class="deletebutton" style="visibility: hidden"><button onclick="deleteLevel(@id)">🗑️</button></div>
                 </div>
             </div>
             <div class="playbutton">
@@ -47,14 +47,7 @@
 
 <script>
 
-    function giveLike(id) {
-        alert("like " + id);
-    }
 
-    function giveDislike(id) {
-        alert("dislike " + id);
-
-    }
 
     function func(_lvlid) {
         $.ajax({
