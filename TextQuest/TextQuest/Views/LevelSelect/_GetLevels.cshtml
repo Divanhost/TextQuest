@@ -2,48 +2,68 @@
 
 
     
-    <div class="levelContainer">
-        @foreach (var lvl in Model.Levels)
-        {
-            string name = lvl.Name;
-            string creator = lvl.Creator;
-            int views = lvl.Views;
-            int likes = lvl.Likes;
-            int dislikes = lvl.Dislikes;
-            int id = lvl.Id;
-            //int sceneid = lvl.FirstSceneID;
-            <div class="level">
-                <div class="info">
-                    <div class="title">@name</div>
-                    <div class="creator"><b>Автор:</b> @creator</div>
-                    <div class="stats">
-                        <div class="views">👁️ @views</div>
-                        <div class="likes">👍 @likes</div>
-                        <div class="dislikes">👎 @dislikes</div>
-                        <div class="deletebutton"><button>УДАЛИТЬ 🗑️</button></div>
-                    </div>
+<div class="levelContainer">
+    @foreach (var lvl in Model.Levels)
+    {
+        string name = lvl.Name;
+        string creator = lvl.Creator;
+        int views = lvl.Views;
+        int likes = lvl.Likes;
+        int dislikes = lvl.Dislikes;
+        int id = lvl.Id;
+        string image = lvl.ImageUrl;
+        //if (image != null)
+        //int sceneid = lvl.FirstSceneID;
+        <div class="level">
+            <div class="info" style="background-image: url(@image)">
+                <div class="title">@name</div>
+                <div class="creator">Автор: @creator</div>
+                <div class="stats">
+                    <div class="views">👁️@views</div>
+                    <div class="likes"><a class="like" href="#like" onclick="giveLike(@id)">👍</a>  @likes</div>
+                    <div class="dislikes"><a class="dislike" href="#dislike" onclick="giveDislike(@id)">👎</a> @dislikes</div>
+                    <div class="deletebutton" style="visibility: hidden"><button>🗑️</button></div>
                 </div>
-                <div class="playbutton">
-                    <button class="button" onclick="func(@id)">
-                        ▶
-                    </button>
-                </div>
-
             </div>
-        }
+            <div class="playbutton">
+                <button class="button" onclick="func(@id)">
+                    ▶
+                </button>
+            </div>
+
+        </div>
+    }
+    @if (Model.Levels.Count == 0)
+    {
+        <div class="nolevel">
+            Уровни не найдены
+        </div>
+    }
 
 
 
 
-    </div>
+</div>
 
 <script>
+
+    function giveLike(id) {
+        alert("like " + id);
+    }
+
+    function giveDislike(id) {
+        alert("dislike " + id);
+
+    }
+
     function func(_lvlid) {
         $.ajax({
             url: "/LevelSelect/HandleLevelEntering",
             type: "post",
             data: String(_lvlid),
             success: function (data) {
+                document.getElementById("overlay").style.visibility = "visible";
+                document.getElementById("spinner").style.visibility = "visible";
                 var route = "@Url.RouteUrl(new { controller = "GamePage", action = "Index", lvlid = "neededLVLid", id = "neededID" })";
                 route = route.replace("neededLVLid", _lvlid);
                 route = route.replace("neededID", data.id);

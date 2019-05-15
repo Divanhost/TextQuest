@@ -333,6 +333,7 @@ namespace TextQuest.Controllers
         }
         public IActionResult Reset()
         {
+            //add levelid?
             string sessionId = HttpContext.Session.Id;
             _memoryCache.Remove(CacheKeys.Level + sessionId);
             _memoryCache.Remove(CacheKeys.Inventory + sessionId);
@@ -341,6 +342,7 @@ namespace TextQuest.Controllers
         public void CacheLoad(int levelId)
         {
             string sessionId = HttpContext.Session.Id;
+            string levelid = levelId.ToString();
 
             // Кэширование загружаемого уровня и пребразование в LevelModel
             if (!_memoryCache.TryGetValue(CacheKeys.Level+sessionId, out level))

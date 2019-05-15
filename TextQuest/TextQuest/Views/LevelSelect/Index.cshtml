@@ -5,9 +5,11 @@
     <link rel="stylesheet" type="text/css" href="~/css/levelselect.css" runat="server">
     <link href="https://fonts.googleapis.com/css?family=Oswald|Share+Tech+Mono|Montserrat" rel="stylesheet">
 </head>
-<body>
+<body onkeypress="handleEnter(event)">
+    <div id="overlay" style="visibility: hidden"></div>
+    <div id="spinner" style="visibility: hidden"></div>
     <div class="sidenav">
-        <a id="main" href="#about">● На главную</a>
+        <a id="main" href="#about">● Выход</a>
     </div>
     <div class="back-container">
         <div class="background2">
@@ -36,6 +38,13 @@
 
 <script>
 
+    function handleEnter(e) {
+        var keycode = (e.keyCode ? e.keyCode : e.which);
+        if (keycode == '13') {
+            searchLevels();
+        }
+    }
+
     var main = document.getElementById('main');
     main.onclick = toMain;
 
@@ -59,7 +68,6 @@
         var order = document.getElementById("myDIV").innerHTML;
         if (order === "⇧") order = "0";
         else order = "1";
-        //query = encodeURI(query);
         $.ajax({
             url: "/LevelSelect/GetLevelList",
             type: "post",
@@ -69,14 +77,9 @@
                 order: String(order),
             },
             success: function (data) {
-                //alert("success?");
-                //$('#partial').load(data)
                 $("#partial").html(data);
-                //document.getElementById("partial").innerHTML = "";
-                //document.getElementById("partial").innerHTML = Html.Partial("_GetLevels", Model);
             },
             error: function () {
-                //alert("no?");
             }
         });
        

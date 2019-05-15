@@ -31,7 +31,7 @@
                     </div>
                     <br />
                     <div class="enterb">
-                        <input type="submit" value="Войти" />
+                        <input class="buttonpress" type="submit" value="Войти" />
                     </div>
                     <br />
                 </form>
@@ -63,7 +63,7 @@
                     </div>
                     <br />
                     <div class="enterb">
-                        <input type="submit" value="Зарегистрироваться" />
+                        <input class="buttonpress" type="submit" value="Зарегистрироваться" />
                     </div>
                     <br />
                 </form>
@@ -71,7 +71,7 @@
         </div>
             <form method="post" asp-controller="Log" asp-action="Skip">
                 <div id="noreg">
-                    <input type="submit" value="Продолжить без регистрации" />
+                    <input class="buttonpress" type="submit" value="Продолжить без регистрации" />
                 </div>
             </form>
         </div>
@@ -89,12 +89,32 @@
     regform.style.maxHeight = null;
     logform.style.maxHeight = logform.scrollHeight + "px";
 
-    for (i = 0; i < coll.length; i++) {
+    reg.addEventListener("click", function () {
+        //var content = this.nextElementSibling;
+        if (logform.style.maxHeight) {
+            log.classList.toggle("active");
+            reg.classList.toggle("active");
+            logform.style.maxHeight = null;
+            regform.style.maxHeight = regform.scrollHeight + "px";
+        } 
+    });
+
+    log.addEventListener("click", function () {
+        //var content = this.nextElementSibling;
+        if (regform.style.maxHeight) {
+            log.classList.toggle("active");
+            reg.classList.toggle("active");
+            regform.style.maxHeight = null;
+            logform.style.maxHeight = logform.scrollHeight + "px";
+        }
+    });
+
+    /*for (i = 0; i < coll.length; i++) {
       coll[i].addEventListener("click", function() {
           log.classList.toggle("active");
           reg.classList.toggle("active");
         //var content = this.nextElementSibling;
-          if (logform.style.maxHeight){
+          if (logform.style.maxHeight and ){
               logform.style.maxHeight = null;
               regform.style.maxHeight = regform.scrollHeight + "px";
           } else {
@@ -102,5 +122,5 @@
               logform.style.maxHeight = logform.scrollHeight + "px";
         }
       });
-    }
+    }*/
 </script>

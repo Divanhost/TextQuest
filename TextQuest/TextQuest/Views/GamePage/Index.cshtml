@@ -25,11 +25,27 @@
     select.onclick = toSelect;
 
     function toMain() {
-        window.location.replace("@Url.RouteUrl(new { controller = "Log", action = "Index" })");
+        $.ajax({
+            url: "/GamePage/Reset",
+            type: "post",
+            success: function () {
+                window.location.replace("@Url.RouteUrl(new { controller = "Log", action = "Index" })");
+            },
+            error: function () {
+            }
+        });
     }
 
     function toSelect() {
-        window.location.replace("@Url.RouteUrl(new { controller = "LevelSelect", action = "Index" })");
+        $.ajax({
+            url: "/GamePage/Reset",
+            type: "post",
+            success: function () {
+                window.location.replace("@Url.RouteUrl(new { controller = "LevelSelect", action = "Index" })");
+            },
+            error: function () {
+            }
+        });
     }
 
 

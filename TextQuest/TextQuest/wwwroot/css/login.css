@@ -6,6 +6,17 @@ body {
     background-color: #f1f1f1;
 }
 
+.buttonpress {
+    font-family: 'Montserrat', sans-serif;
+    background-color: dimgray;
+    font-size: 15px;
+    color: white;
+}
+
+    .buttonpress:active {
+        background-color: lightgrey;
+        color: black;
+    }
 
 .collapsible {
     font-family: 'Oswald', sans-serif;
@@ -41,8 +52,9 @@ body {
     max-height:203px;
 }*/
 
-.field{
-    margin:5px;
+.field {
+    margin: auto;
+    width:174px;
 }
 
 .enterb {
@@ -51,18 +63,18 @@ body {
 
 .inputholder {
     margin:auto;
-    width:174px;
     text-align: left;
 }
 
 .content {
+    margin: auto;
     border: 2px solid #555;
     margin: 0px;
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.2s ease-out;
     background-color: lightgrey;
-    text-align:center;
+    text-align: center;
 }
 
 .signinholder {
