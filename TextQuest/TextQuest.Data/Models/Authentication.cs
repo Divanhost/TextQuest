@@ -12,6 +12,7 @@ namespace TextQuest.Data.Models
         public int AccessLevel { get; set; }
         IEnumerable<Level> UserLevels { get; set; }
         IEnumerable<Level> UserFavoriteLevels { get; set; }
+        IEnumerable<Level> UserDislikedLevels { get; set; }
         public int AssociatedInventory { get; set; }
     }
 }
